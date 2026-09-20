@@ -3,7 +3,7 @@ import json
 import unittest
 import zlib
 
-from dock_to_dollar.case_data import CLOSEOUT_FIELDS, DECISIONS
+from dock_to_dollar.case_data import CLOSEOUT_FIELDS, DECISIONS, STATEMENT_QUESTIONS
 from dock_to_dollar.engine import final_values
 from dock_to_dollar.progress import (
     SNAPSHOT_PARAM,
@@ -14,6 +14,7 @@ from dock_to_dollar.progress import (
     reset_saved_progress,
     restore_session_state,
     score_summary,
+    snapshot_from_state,
 )
 
 
@@ -28,6 +29,7 @@ def completed_state():
     state["dd_decision_index"] = len(DECISIONS) - 1
     state["dd_responses"] = {item.id: item.correct for item in DECISIONS}
     state["dd_closeout_responses"] = final_values()
+    state["dd_statement_responses"] = {item.id: item.correct for item in STATEMENT_QUESTIONS}
     state["dd_closeout_submitted"] = True
     return state
 
@@ -42,6 +44,7 @@ class ProgressSnapshotTests(unittest.TestCase):
         self.assertIsNotNone(restored)
         self.assertEqual(restored["dd_page"], 3)
         self.assertEqual(restored["dd_closeout_responses"]["income_effect"], 795)
+        self.assertEqual(len(restored["dd_statement_responses"]), len(STATEMENT_QUESTIONS))
         self.assertNotIn("name", token.lower())
         self.assertNotIn("email", token.lower())
 
@@ -63,17 +66,19 @@ class ProgressSnapshotTests(unittest.TestCase):
 
     def test_tampered_completed_amount_is_rejected(self):
         state = completed_state()
-        raw = {
-            "v": 1,
-            "p": 3,
-            "i": len(DECISIONS) - 1,
-            "r": state["dd_responses"],
-            "c": dict(state["dd_closeout_responses"], inventory=2_750),
-            "cs": True,
-            "a": {},
-            "f": {},
-        }
+        raw = snapshot_from_state(state)
+        raw["c"] = dict(raw["c"], inventory=2_750)
         self.assertIsNone(decode_snapshot(encode_raw(raw)))
+
+    def test_drafts_and_shuffle_seed_round_trip(self):
+        state = activity_defaults()
+        state["dd_page"] = 1
+        state["dd_shuffle_seed"] = 34107
+        state["dd_decision_drafts"] = {DECISIONS[0].id: DECISIONS[0].options[-1]}
+        restored = decode_snapshot(encode_state(state))
+        self.assertIsNotNone(restored)
+        self.assertEqual(restored["dd_shuffle_seed"], 34107)
+        self.assertEqual(restored["dd_decision_drafts"], state["dd_decision_drafts"])
 
     def test_malformed_and_oversized_tokens_are_rejected(self):
         self.assertIsNone(decode_snapshot("not-a-valid-token"))

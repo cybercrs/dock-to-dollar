@@ -1,11 +1,12 @@
 import re
 import unittest
 
-from dock_to_dollar.case_data import ACCOUNT_EVENTS, CLOSEOUT_FIELDS, DECISIONS, OPENING_BALANCES
+from dock_to_dollar.case_data import ACCOUNT_EVENTS, CLOSEOUT_FIELDS, DECISIONS, OPENING_BALANCES, STATEMENT_QUESTIONS
 from dock_to_dollar.engine import (
     balances_after,
     evaluate_closeout,
     evaluate_decision,
+    evaluate_statement_responses,
     event_position,
     final_values,
     format_currency,
@@ -99,6 +100,13 @@ class DockToDollarCalculationTests(unittest.TestCase):
         self.assertTrue(results["net_sales"]["correct"])
         self.assertEqual(set(results), {key for key, _label in CLOSEOUT_FIELDS})
 
+    def test_statement_questions_check_the_full_merchandise_story(self):
+        responses = {item.id: item.correct for item in STATEMENT_QUESTIONS}
+        results = evaluate_statement_responses(responses)
+        self.assertTrue(all(result["correct"] for result in results.values()))
+        responses[STATEMENT_QUESTIONS[0].id] = STATEMENT_QUESTIONS[0].options[-1]
+        self.assertFalse(evaluate_statement_responses(responses)[STATEMENT_QUESTIONS[0].id]["correct"])
+
     def test_opening_balances_and_currency_format_are_stable(self):
         self.assertEqual(OPENING_BALANCES["Cash"], 10_000)
         self.assertEqual(format_currency(-100), "-$100")
@@ -119,6 +127,8 @@ class DockToDollarCalculationTests(unittest.TestCase):
                     *item.options,
                 )
             )
+        for item in STATEMENT_QUESTIONS:
+            fields.extend((item.prompt, item.correct, item.explanation, *item.options))
         student_text = " ".join(fields).lower()
         for banned in (r"\bdebits?\b", r"\bjournal\b", r"\bledger\b", r"\bposting\b"):
             self.assertIsNone(re.search(banned, student_text), banned)

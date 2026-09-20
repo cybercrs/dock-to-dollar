@@ -9,6 +9,7 @@ from dock_to_dollar.case_data import (
     CLOSEOUT_FIELDS,
     DECISIONS,
     OPENING_BALANCES,
+    STATEMENT_QUESTIONS,
     AccountEvent,
     Decision,
 )
@@ -97,6 +98,19 @@ def evaluate_closeout(responses: Mapping[str, int]) -> dict[str, dict[str, objec
             "correct": int(responses.get(key, 0)) == expected[key],
         }
         for key, label in CLOSEOUT_FIELDS
+    }
+
+
+def evaluate_statement_responses(responses: Mapping[str, str]) -> dict[str, dict[str, object]]:
+    return {
+        item.id: {
+            "prompt": item.prompt,
+            "selected": responses.get(item.id),
+            "expected": item.correct,
+            "correct": responses.get(item.id) == item.correct,
+            "explanation": item.explanation,
+        }
+        for item in STATEMENT_QUESTIONS
     }
 
 

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import hashlib
+import random
 from html import escape
 
 import streamlit as st
@@ -13,12 +15,14 @@ from dock_to_dollar.case_data import (
     OPENING_BALANCES,
     PHASE_LABELS,
     PRODUCT_NAME,
+    STATEMENT_QUESTIONS,
 )
 from dock_to_dollar.engine import (
     account_rows,
     balances_after,
     evaluate_closeout,
     evaluate_decision,
+    evaluate_statement_responses,
     event_by_id,
     event_position,
     event_rows,
@@ -150,7 +154,7 @@ APP_CSS = f"""
     .statement-line.grand {{ border-bottom: 3px double var(--ink); border-top: 1px solid var(--ink); font-weight: 850; margin-top: 0.2rem; padding: 0.42rem 0 0.34rem; }}
     .amount {{ font-variant-numeric: tabular-nums; white-space: nowrap; }}
 
-    .score-grid {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.65rem; margin: 1rem 0; }}
+    .score-grid {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.65rem; margin: 1rem 0; }}
     .score-box {{ background: #FFFFFF; border: 1px solid #D9E0EA; border-radius: 12px; padding: 0.85rem; text-align: center; }}
     .score-box strong {{ color: var(--ud-blue); display: block; font-size: 1.45rem; }}
     .score-box span {{ color: var(--muted); font-size: 0.82rem; }}
@@ -333,6 +337,48 @@ def currency_markdown(text: object) -> str:
     return str(text).replace("$", r"\$")
 
 
+def selected_index(options: tuple | list, selected: str | None) -> int | None:
+    return list(options).index(selected) if selected in options else None
+
+
+def shuffled(items: tuple | list, salt: str) -> list:
+    """Return a stable per-student order that survives reruns and refreshes."""
+
+    digest = hashlib.sha256(f"{st.session_state.dd_shuffle_seed}:{salt}".encode("utf-8")).digest()
+    rng = random.Random(int.from_bytes(digest[:8], "big"))
+    ordered = list(items)
+    rng.shuffle(ordered)
+    if len(ordered) > 1 and ordered == list(items):
+        ordered = ordered[1:] + ordered[:1]
+    return ordered
+
+
+def save_decision_draft(item_id: str, widget_key: str) -> None:
+    drafts = dict(st.session_state.dd_decision_drafts)
+    value = st.session_state.get(widget_key)
+    if value is None:
+        drafts.pop(item_id, None)
+    else:
+        drafts[item_id] = str(value)
+    st.session_state.dd_decision_drafts = drafts
+
+
+def save_closeout_draft(answer_key: str, widget_key: str) -> None:
+    drafts = dict(st.session_state.dd_closeout_drafts)
+    drafts[answer_key] = int(st.session_state.get(widget_key, 0))
+    st.session_state.dd_closeout_drafts = drafts
+
+
+def save_statement_draft(answer_key: str, widget_key: str) -> None:
+    drafts = dict(st.session_state.dd_statement_drafts)
+    value = st.session_state.get(widget_key)
+    if value is None:
+        drafts.pop(answer_key, None)
+    else:
+        drafts[answer_key] = str(value)
+    st.session_state.dd_statement_drafts = drafts
+
+
 def render_event_effect(event_id: str) -> None:
     event = event_by_id(event_id)
     items = []
@@ -409,15 +455,18 @@ def render_decision_stage() -> None:
 
     response = st.session_state.dd_responses.get(item.id)
     if response is None:
-        with st.form(f"decision_form_{item.id}"):
-            selected = st.radio(
-                item.prompt,
-                item.options,
-                index=None,
-                key=f"widget_decision_{item.id}",
-                format_func=currency_markdown,
-            )
-            submitted = st.form_submit_button("Check the account analysis", type="primary", width="stretch")
+        widget_key = f"widget_decision_{item.id}"
+        options = shuffled(item.options, f"decision-answer-order:{item.id}")
+        selected = st.radio(
+            item.prompt,
+            options,
+            index=selected_index(options, st.session_state.dd_decision_drafts.get(item.id)),
+            key=widget_key,
+            format_func=currency_markdown,
+            on_change=save_decision_draft,
+            args=(item.id, widget_key),
+        )
+        submitted = st.button("Check the account analysis", type="primary", width="stretch")
         if submitted:
             if selected is None:
                 st.warning("Choose a response before checking your analysis.")
@@ -484,7 +533,7 @@ def render_closeout() -> None:
     st.markdown('<div class="eyebrow">Financial story</div>', unsafe_allow_html=True)
     st.header("Reconcile the merchandise cycle")
     st.markdown(
-        '<p class="lead">Use the opening balances and the complete event trail to calculate the ending account balances and income-statement effects.</p>',
+        '<p class="lead">Use the opening balances and complete event trail to calculate the ending amounts, then explain how those amounts become the financial-statement story.</p>',
         unsafe_allow_html=True,
     )
     col1, col2, col3 = st.columns(3)
@@ -495,52 +544,101 @@ def render_closeout() -> None:
     with st.expander("Review the complete event trail"):
         st.dataframe(event_rows(), width="stretch", hide_index=True)
 
-    if not st.session_state.dd_closeout_submitted:
-        prior = dict(st.session_state.dd_closeout_responses)
-        with st.form("closeout_form"):
-            responses = {}
-            cols = st.columns(2)
-            for index, (key, label) in enumerate(CLOSEOUT_FIELDS):
-                responses[key] = int(
-                    cols[index % 2].number_input(
-                        label,
-                        min_value=0,
-                        max_value=10_000_000,
-                        value=int(prior.get(key, 0)),
-                        step=5,
-                        key=f"widget_closeout_{key}",
-                    )
-                )
-            submitted = st.form_submit_button("Check the ending financial story", type="primary", width="stretch")
-        if submitted:
-            results = evaluate_closeout(responses)
-            previous = dict(st.session_state.dd_closeout_responses)
-            for key, result in results.items():
-                score_key = f"closeout:{key}"
-                if score_key not in st.session_state.dd_first_pass or previous.get(key) != responses[key]:
-                    record_attempt(st.session_state, score_key, bool(result["correct"]))
-            st.session_state.dd_closeout_responses = responses
-            st.session_state.dd_closeout_submitted = True
-            st.rerun()
-
     if st.session_state.dd_closeout_submitted:
-        results = evaluate_closeout(st.session_state.dd_closeout_responses)
-        all_correct = all(bool(result["correct"]) for result in results.values())
-        for result in results.values():
+        amount_results = evaluate_closeout(st.session_state.dd_closeout_responses)
+        statement_results = evaluate_statement_responses(st.session_state.dd_statement_responses)
+        all_correct = all(bool(result["correct"]) for result in (*amount_results.values(), *statement_results.values()))
+        st.subheader("Ending amounts")
+        for result in amount_results.values():
+            detail = "Use the opening balance and all related increases and decreases."
+            value = format_currency(int(result["expected"]))
+            if not result["correct"]:
+                detail = f"Your answer: {format_currency(int(result['submitted']))}. {detail}"
+                value = f"Correct: {value}"
             render_feedback_row(
                 str(result["label"]),
                 bool(result["correct"]),
-                "Use the opening balance and all related increases and decreases.",
-                format_currency(int(result["expected"])),
+                detail,
+                value,
             )
+        st.subheader("Financial-statement connections")
+        for index, result in enumerate(statement_results.values(), start=1):
+            detail = str(result["explanation"])
+            if not result["correct"]:
+                detail = f"Best analysis: {result['expected']}. {detail}"
+            render_feedback_row(f"Connection {index}", bool(result["correct"]), detail)
         if all_correct:
             st.success("The merchandise, account balances, and financial-statement effects now tell one consistent story.")
             render_completed_statements()
             st.button("Finish the case", type="primary", width="stretch", on_click=set_page, args=(3,))
+            return
         else:
-            st.warning("Some amounts do not yet include every related event. Trace each account from opening balance to ending balance and try again.")
-            if st.button("Revise the ending balances", width="stretch"):
+            st.warning("Some amounts or statement connections still need revision. Trace the event trail from account changes to the final reports and try again.")
+            if st.button("Revise the financial story", width="stretch"):
                 st.session_state.dd_closeout_submitted = False
+                st.rerun()
+            return
+
+    st.subheader("1. Calculate the ending amounts")
+    prior_amounts = dict(st.session_state.dd_closeout_responses)
+    amount_drafts = dict(st.session_state.dd_closeout_drafts)
+    responses = {}
+    cols = st.columns(2)
+    for index, (key, label) in enumerate(CLOSEOUT_FIELDS):
+        widget_key = f"widget_closeout_{key}"
+        responses[key] = int(
+            cols[index % 2].number_input(
+                label,
+                min_value=0,
+                max_value=10_000_000,
+                value=int(amount_drafts.get(key, prior_amounts.get(key, 0))),
+                step=5,
+                key=widget_key,
+                on_change=save_closeout_draft,
+                args=(key, widget_key),
+            )
+        )
+
+    st.subheader("2. Connect the amounts to the financial statements")
+    st.caption("The completed statements appear only after both the amounts and the conceptual connections are correct.")
+    prior_statements = dict(st.session_state.dd_statement_responses)
+    statement_drafts = dict(st.session_state.dd_statement_drafts)
+    statement_responses = {}
+    for item in STATEMENT_QUESTIONS:
+        widget_key = f"widget_statement_{item.id}"
+        options = shuffled(item.options, f"statement-answer-order:{item.id}")
+        selected = statement_drafts.get(item.id, prior_statements.get(item.id))
+        statement_responses[item.id] = st.radio(
+            item.prompt,
+            options,
+            index=selected_index(options, selected),
+            key=widget_key,
+            format_func=currency_markdown,
+            on_change=save_statement_draft,
+            args=(item.id, widget_key),
+        )
+
+    if st.button("Check the ending financial story", type="primary", width="stretch"):
+        if any(value is None for value in statement_responses.values()):
+            st.warning("Answer all three financial-statement questions before checking the complete story.")
+            return
+        statement_responses = {key: str(value) for key, value in statement_responses.items()}
+        amount_results = evaluate_closeout(responses)
+        statement_results = evaluate_statement_responses(statement_responses)
+        for key, result in amount_results.items():
+            score_key = f"closeout:{key}"
+            if score_key not in st.session_state.dd_first_pass or prior_amounts.get(key) != responses[key]:
+                record_attempt(st.session_state, score_key, bool(result["correct"]))
+        for key, result in statement_results.items():
+            score_key = f"statement:{key}"
+            if score_key not in st.session_state.dd_first_pass or prior_statements.get(key) != statement_responses[key]:
+                record_attempt(st.session_state, score_key, bool(result["correct"]))
+        st.session_state.dd_closeout_drafts = dict(responses)
+        st.session_state.dd_closeout_responses = responses
+        st.session_state.dd_statement_drafts = dict(statement_responses)
+        st.session_state.dd_statement_responses = statement_responses
+        st.session_state.dd_closeout_submitted = True
+        st.rerun()
 
 
 def category_score(prefix: str, keys: list[str]) -> str:
@@ -562,6 +660,7 @@ def render_completion() -> None:
           <div class="score-box"><strong>{category_score('decision:', ownership_ids)}</strong><span>Ownership and timing first pass</span></div>
           <div class="score-box"><strong>{category_score('decision:', account_ids)}</strong><span>Account analysis first pass</span></div>
           <div class="score-box"><strong>{category_score('closeout:', closeout_keys)}</strong><span>Ending amounts first pass</span></div>
+          <div class="score-box"><strong>{category_score('statement:', [item.id for item in STATEMENT_QUESTIONS])}</strong><span>Statement connections first pass</span></div>
         </div>
         """,
         unsafe_allow_html=True,

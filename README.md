@@ -12,6 +12,7 @@ The activity is framed entirely through account increases and decreases, ending 
 4. Distinguish customer returns and sales discounts from supplier-side events.
 5. Reconcile the perpetual inventory record to a physical count and identify shrinkage.
 6. Calculate ending account balances, net sales, Cost of Goods Sold, Freight-Out Expense, and the resulting income effect.
+7. Explain how contra-revenue accounts, merchandise costs, delivery expense, and physical-count shrinkage connect the account balances to the financial statements.
 
 ## Run locally
 
@@ -31,7 +32,7 @@ python -m py_compile streamlit_app.py dock_to_dollar/*.py
 
 ## Privacy and progress
 
-The app requires no login, database, or student name. It stores only compact answer selections, numeric responses, activity position, and scoring flags in a validated URL parameter so browser refreshes can restore progress. No written response or identifying information is included.
+The app requires no login, database, or student name. It stores only compact answer selections, in-progress drafts, numeric responses, activity position, a stable answer-order seed, and scoring flags in a validated URL parameter so browser refreshes can restore progress without reshuffling choices. No written response or identifying information is included.
 
 ## Deployment
 

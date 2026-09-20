@@ -29,6 +29,15 @@ class Decision:
     event_id: str | None
 
 
+@dataclass(frozen=True)
+class StatementQuestion:
+    id: str
+    prompt: str
+    options: tuple[str, ...]
+    correct: str
+    explanation: str
+
+
 COMPANY_NAME = "Gem City Goods"
 PRODUCT_NAME = "Trailblazer daypacks"
 CASE_PERIOD = "November"
@@ -414,4 +423,50 @@ CLOSEOUT_FIELDS = (
     ("cost_of_goods_sold", "Cost of Goods Sold"),
     ("freight_out_expense", "Freight-Out Expense"),
     ("income_effect", "Income effect from the case events"),
+)
+
+
+STATEMENT_QUESTIONS = (
+    StatementQuestion(
+        id="income_bridge",
+        prompt="How does the completed merchandise cycle produce the case's income effect?",
+        options=(
+            "Subtract Cost of Goods Sold and Freight-Out Expense from Net Sales",
+            "Add ending Inventory to Net Sales, then subtract Accounts Payable",
+            "Subtract the supplier payment from the cash collected from the customer",
+        ),
+        correct="Subtract Cost of Goods Sold and Freight-Out Expense from Net Sales",
+        explanation=(
+            "Net Sales reflects the sale after customer returns and discounts. Cost of Goods Sold "
+            "and Freight-Out Expense are then subtracted to determine the $795 income effect."
+        ),
+    ),
+    StatementQuestion(
+        id="contra_revenue",
+        prompt="Which events reduce Net Sales without changing the $2,700 balance in Sales Revenue?",
+        options=(
+            "The customer return and the sales discount",
+            "The supplier return and the purchase discount",
+            "The inbound freight and the outbound freight",
+        ),
+        correct="The customer return and the sales discount",
+        explanation=(
+            "Sales Returns and Allowances and Sales Discounts are separate contra-revenue accounts. "
+            "They reduce Net Sales while the original Sales Revenue remains visible."
+        ),
+    ),
+    StatementQuestion(
+        id="count_ripple",
+        prompt="What is the financial-statement effect of updating the perpetual record to the physical count?",
+        options=(
+            "Inventory and income each decrease $100 because Cost of Goods Sold increases $100",
+            "Inventory and income each increase $100 because the missing units are added back",
+            "Accounts Payable decreases $100 while assets and income stay unchanged",
+        ),
+        correct="Inventory and income each decrease $100 because Cost of Goods Sold increases $100",
+        explanation=(
+            "The two missing daypacks create $100 of shrinkage. Inventory decreases and Cost of Goods "
+            "Sold increases, reducing both assets and income by $100."
+        ),
+    ),
 )

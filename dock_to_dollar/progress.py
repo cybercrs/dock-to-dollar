@@ -4,16 +4,17 @@ from __future__ import annotations
 
 import base64
 import json
+import secrets
 import zlib
 from collections.abc import MutableMapping
 from typing import Any
 
-from dock_to_dollar.case_data import CLOSEOUT_FIELDS, DECISIONS
+from dock_to_dollar.case_data import CLOSEOUT_FIELDS, DECISIONS, STATEMENT_QUESTIONS
 from dock_to_dollar.engine import final_values
 
 
 SNAPSHOT_PARAM = "progress"
-SNAPSHOT_VERSION = 1
+SNAPSHOT_VERSION = 2
 MAX_TOKEN_LENGTH = 12_000
 MAX_JSON_BYTES = 24_000
 
@@ -22,8 +23,13 @@ def activity_defaults() -> dict[str, Any]:
     return {
         "dd_page": 0,
         "dd_decision_index": 0,
+        "dd_shuffle_seed": secrets.randbits(63),
+        "dd_decision_drafts": {},
         "dd_responses": {},
+        "dd_closeout_drafts": {},
         "dd_closeout_responses": {},
+        "dd_statement_drafts": {},
+        "dd_statement_responses": {},
         "dd_closeout_submitted": False,
         "dd_attempts": {},
         "dd_first_pass": {},
@@ -64,6 +70,20 @@ def _answer_prefix(raw: object) -> dict[str, str]:
     return normalized
 
 
+def _decision_drafts(raw: object) -> dict[str, str]:
+    if not isinstance(raw, dict):
+        raise ValueError("Decision drafts must be an object")
+    decisions = {item.id: item for item in DECISIONS}
+    if set(raw) - set(decisions):
+        raise ValueError("Unknown decision draft")
+    normalized = {}
+    for item_id, value in raw.items():
+        if not isinstance(value, str) or value not in decisions[item_id].options:
+            raise ValueError("Invalid decision draft")
+        normalized[item_id] = value
+    return normalized
+
+
 def _validate_closeout(raw: object, submitted: bool) -> dict[str, int]:
     if not isinstance(raw, dict):
         raise ValueError("Closeout answers must be an object")
@@ -80,14 +100,31 @@ def _validate_closeout(raw: object, submitted: bool) -> dict[str, int]:
     return normalized
 
 
+def _validate_statement_answers(raw: object, submitted: bool) -> dict[str, str]:
+    if not isinstance(raw, dict):
+        raise ValueError("Statement answers must be an object")
+    questions = {item.id: item for item in STATEMENT_QUESTIONS}
+    if set(raw) - set(questions):
+        raise ValueError("Unknown statement question")
+    if submitted and set(raw) != set(questions):
+        raise ValueError("Submitted statement answers are incomplete")
+    normalized = {}
+    for item_id, value in raw.items():
+        if not isinstance(value, str) or value not in questions[item_id].options:
+            raise ValueError("Invalid statement answer")
+        normalized[item_id] = value
+    return normalized
+
+
 def _valid_score_keys() -> set[str]:
     keys = {f"decision:{item.id}" for item in DECISIONS}
     keys |= {f"closeout:{key}" for key, _label in CLOSEOUT_FIELDS}
+    keys |= {f"statement:{item.id}" for item in STATEMENT_QUESTIONS}
     return keys
 
 
 def validate_snapshot(raw: object) -> dict[str, Any]:
-    expected_keys = {"v", "p", "i", "r", "c", "cs", "a", "f"}
+    expected_keys = {"v", "p", "i", "z", "d", "r", "cd", "c", "qd", "q", "cs", "a", "f"}
     if not isinstance(raw, dict) or set(raw) != expected_keys or raw["v"] != SNAPSHOT_VERSION:
         raise ValueError("Unsupported snapshot")
 
@@ -99,11 +136,19 @@ def validate_snapshot(raw: object) -> dict[str, Any]:
     if type(index) is not int or not 0 <= index < len(DECISIONS):
         raise ValueError("Invalid decision index")
 
+    shuffle_seed = raw["z"]
+    if type(shuffle_seed) is not int or not 0 <= shuffle_seed < 2**63:
+        raise ValueError("Invalid shuffle seed")
+
+    decision_drafts = _decision_drafts(raw["d"])
     responses = _answer_prefix(raw["r"])
     submitted = raw["cs"]
     if type(submitted) is not bool:
         raise ValueError("Invalid closeout status")
+    closeout_drafts = _validate_closeout(raw["cd"], False)
     closeout = _validate_closeout(raw["c"], submitted)
+    statement_drafts = _validate_statement_answers(raw["qd"], False)
+    statements = _validate_statement_answers(raw["q"], submitted)
 
     if not isinstance(raw["a"], dict) or not isinstance(raw["f"], dict):
         raise ValueError("Invalid score history")
@@ -119,33 +164,43 @@ def validate_snapshot(raw: object) -> dict[str, Any]:
             raise ValueError("Invalid first-pass history")
         first_pass[key] = value
 
-    if page == 0 and responses:
-        raise ValueError("Briefing cannot contain event answers")
+    if page == 0 and (decision_drafts or responses):
+        raise ValueError("Briefing cannot contain event work")
     if page >= 2:
         if len(responses) != len(DECISIONS):
             raise ValueError("Event trail is incomplete")
         if any(responses[item.id] != item.correct for item in DECISIONS):
             raise ValueError("Event trail contains an unresolved answer")
-    if page < 2 and submitted:
-        raise ValueError("Closeout cannot be submitted early")
+    if page < 2 and (closeout_drafts or closeout or statement_drafts or statements or submitted):
+        raise ValueError("Closeout work cannot appear early")
     if page == 3:
         expected = final_values()
         if not submitted or any(closeout.get(key) != expected[key] for key, _label in CLOSEOUT_FIELDS):
             raise ValueError("Completed closeout is unresolved")
+        if any(statements.get(item.id) != item.correct for item in STATEMENT_QUESTIONS):
+            raise ValueError("Completed statement reasoning is unresolved")
 
     for item in DECISIONS[: max(0, index)]:
         if responses.get(item.id) != item.correct:
             raise ValueError("A prior decision is unresolved")
     if page == 1 and len(responses) not in {index, index + 1}:
         raise ValueError("Decision position is inconsistent")
+    allowed_drafts = {item.id for item in DECISIONS[: index + 1]} if page == 1 else {item.id for item in DECISIONS}
+    if set(decision_drafts) - allowed_drafts:
+        raise ValueError("Future decision draft is not allowed")
     if page >= 2 and index != len(DECISIONS) - 1:
         raise ValueError("Completed event trail has an invalid position")
 
     return {
         "dd_page": page,
         "dd_decision_index": index,
+        "dd_shuffle_seed": shuffle_seed,
+        "dd_decision_drafts": decision_drafts,
         "dd_responses": responses,
+        "dd_closeout_drafts": closeout_drafts,
         "dd_closeout_responses": closeout,
+        "dd_statement_drafts": statement_drafts,
+        "dd_statement_responses": statements,
         "dd_closeout_submitted": submitted,
         "dd_attempts": attempts,
         "dd_first_pass": first_pass,
@@ -157,8 +212,13 @@ def snapshot_from_state(state: MutableMapping[str, Any]) -> dict[str, Any]:
         "v": SNAPSHOT_VERSION,
         "p": state["dd_page"],
         "i": state["dd_decision_index"],
+        "z": state["dd_shuffle_seed"],
+        "d": state["dd_decision_drafts"],
         "r": state["dd_responses"],
+        "cd": state["dd_closeout_drafts"],
         "c": state["dd_closeout_responses"],
+        "qd": state["dd_statement_drafts"],
+        "q": state["dd_statement_responses"],
         "cs": state["dd_closeout_submitted"],
         "a": state["dd_attempts"],
         "f": state["dd_first_pass"],
