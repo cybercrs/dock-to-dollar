@@ -9,12 +9,11 @@ import zlib
 from collections.abc import MutableMapping
 from typing import Any
 
-from dock_to_dollar.case_data import CLOSEOUT_FIELDS, DECISIONS, STATEMENT_QUESTIONS
-from dock_to_dollar.engine import final_values
+from dock_to_dollar.case_data import DECISIONS, STATEMENT_QUESTIONS
 
 
 SNAPSHOT_PARAM = "progress"
-SNAPSHOT_VERSION = 2
+SNAPSHOT_VERSION = 3
 MAX_TOKEN_LENGTH = 12_000
 MAX_JSON_BYTES = 24_000
 
@@ -26,11 +25,9 @@ def activity_defaults() -> dict[str, Any]:
         "dd_shuffle_seed": secrets.randbits(63),
         "dd_decision_drafts": {},
         "dd_responses": {},
-        "dd_closeout_drafts": {},
-        "dd_closeout_responses": {},
         "dd_statement_drafts": {},
         "dd_statement_responses": {},
-        "dd_closeout_submitted": False,
+        "dd_statement_submitted": False,
         "dd_attempts": {},
         "dd_first_pass": {},
     }
@@ -84,22 +81,6 @@ def _decision_drafts(raw: object) -> dict[str, str]:
     return normalized
 
 
-def _validate_closeout(raw: object, submitted: bool) -> dict[str, int]:
-    if not isinstance(raw, dict):
-        raise ValueError("Closeout answers must be an object")
-    valid_keys = {key for key, _label in CLOSEOUT_FIELDS}
-    if set(raw) - valid_keys:
-        raise ValueError("Unknown closeout field")
-    if submitted and set(raw) != valid_keys:
-        raise ValueError("Submitted closeout is incomplete")
-    normalized = {}
-    for key, value in raw.items():
-        if type(value) is not int or not 0 <= value <= 10_000_000:
-            raise ValueError("Invalid closeout amount")
-        normalized[key] = value
-    return normalized
-
-
 def _validate_statement_answers(raw: object, submitted: bool) -> dict[str, str]:
     if not isinstance(raw, dict):
         raise ValueError("Statement answers must be an object")
@@ -118,13 +99,12 @@ def _validate_statement_answers(raw: object, submitted: bool) -> dict[str, str]:
 
 def _valid_score_keys() -> set[str]:
     keys = {f"decision:{item.id}" for item in DECISIONS}
-    keys |= {f"closeout:{key}" for key, _label in CLOSEOUT_FIELDS}
     keys |= {f"statement:{item.id}" for item in STATEMENT_QUESTIONS}
     return keys
 
 
 def validate_snapshot(raw: object) -> dict[str, Any]:
-    expected_keys = {"v", "p", "i", "z", "d", "r", "cd", "c", "qd", "q", "cs", "a", "f"}
+    expected_keys = {"v", "p", "i", "z", "d", "r", "qd", "q", "qs", "a", "f"}
     if not isinstance(raw, dict) or set(raw) != expected_keys or raw["v"] != SNAPSHOT_VERSION:
         raise ValueError("Unsupported snapshot")
 
@@ -142,11 +122,9 @@ def validate_snapshot(raw: object) -> dict[str, Any]:
 
     decision_drafts = _decision_drafts(raw["d"])
     responses = _answer_prefix(raw["r"])
-    submitted = raw["cs"]
+    submitted = raw["qs"]
     if type(submitted) is not bool:
-        raise ValueError("Invalid closeout status")
-    closeout_drafts = _validate_closeout(raw["cd"], False)
-    closeout = _validate_closeout(raw["c"], submitted)
+        raise ValueError("Invalid statement status")
     statement_drafts = _validate_statement_answers(raw["qd"], False)
     statements = _validate_statement_answers(raw["q"], submitted)
 
@@ -171,13 +149,10 @@ def validate_snapshot(raw: object) -> dict[str, Any]:
             raise ValueError("Event trail is incomplete")
         if any(responses[item.id] != item.correct for item in DECISIONS):
             raise ValueError("Event trail contains an unresolved answer")
-    if page < 2 and (closeout_drafts or closeout or statement_drafts or statements or submitted):
-        raise ValueError("Closeout work cannot appear early")
+    if page < 2 and (statement_drafts or statements or submitted):
+        raise ValueError("Statement work cannot appear early")
     if page == 3:
-        expected = final_values()
-        if not submitted or any(closeout.get(key) != expected[key] for key, _label in CLOSEOUT_FIELDS):
-            raise ValueError("Completed closeout is unresolved")
-        if any(statements.get(item.id) != item.correct for item in STATEMENT_QUESTIONS):
+        if not submitted or any(statements.get(item.id) != item.correct for item in STATEMENT_QUESTIONS):
             raise ValueError("Completed statement reasoning is unresolved")
 
     for item in DECISIONS[: max(0, index)]:
@@ -197,11 +172,9 @@ def validate_snapshot(raw: object) -> dict[str, Any]:
         "dd_shuffle_seed": shuffle_seed,
         "dd_decision_drafts": decision_drafts,
         "dd_responses": responses,
-        "dd_closeout_drafts": closeout_drafts,
-        "dd_closeout_responses": closeout,
         "dd_statement_drafts": statement_drafts,
         "dd_statement_responses": statements,
-        "dd_closeout_submitted": submitted,
+        "dd_statement_submitted": submitted,
         "dd_attempts": attempts,
         "dd_first_pass": first_pass,
     }
@@ -215,11 +188,9 @@ def snapshot_from_state(state: MutableMapping[str, Any]) -> dict[str, Any]:
         "z": state["dd_shuffle_seed"],
         "d": state["dd_decision_drafts"],
         "r": state["dd_responses"],
-        "cd": state["dd_closeout_drafts"],
-        "c": state["dd_closeout_responses"],
         "qd": state["dd_statement_drafts"],
         "q": state["dd_statement_responses"],
-        "cs": state["dd_closeout_submitted"],
+        "qs": state["dd_statement_submitted"],
         "a": state["dd_attempts"],
         "f": state["dd_first_pass"],
     }

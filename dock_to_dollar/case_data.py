@@ -39,7 +39,7 @@ class StatementQuestion:
 
 
 COMPANY_NAME = "Gem City Goods"
-PRODUCT_NAME = "Trailblazer daypacks"
+PRODUCT_NAME = "insulated water bottles"
 CASE_PERIOD = "November"
 
 PHASE_LABELS = (
@@ -81,7 +81,7 @@ ACCOUNT_EVENTS = (
     AccountEvent(
         id="purchase_return",
         date="Nov. 5",
-        label="Return 20 defective daypacks to supplier",
+        label="Return 20 defective water bottles to supplier",
         changes=(("Inventory", -1_000), ("Accounts Payable", -1_000)),
         unit_change=-20,
     ),
@@ -94,7 +94,7 @@ ACCOUNT_EVENTS = (
     AccountEvent(
         id="sale",
         date="Nov. 16",
-        label="Complete sale of 30 daypacks on account",
+        label="Complete sale of 30 water bottles on account",
         changes=(
             ("Accounts Receivable", 2_700),
             ("Sales Revenue", 2_700),
@@ -112,7 +112,7 @@ ACCOUNT_EVENTS = (
     AccountEvent(
         id="sales_return",
         date="Nov. 19",
-        label="Accept five resalable daypacks from customer",
+        label="Accept five resalable water bottles from customer",
         changes=(
             ("Sales Returns and Allowances", 450),
             ("Accounts Receivable", -450),
@@ -148,9 +148,9 @@ DECISIONS = (
         document="Supplier invoice and carrier scan",
         title="The shipment leaves the supplier",
         story=(
-            "Gem City Goods orders 100 daypacks at $50 each. Terms are FOB shipping point. "
+            "Gem City Goods orders 100 insulated water bottles at $50 each. Terms are FOB shipping point. "
             "The carrier accepts the shipment at the supplier's dock on November 2, and the "
-            "daypacks arrive at Gem City Goods on November 3."
+            "water bottles arrive at Gem City Goods on November 3."
         ),
         prompt="When does Gem City Goods become the owner and assume the risk of loss?",
         options=(
@@ -164,7 +164,7 @@ DECISIONS = (
             "the seller. Arrival and payment occur later."
         ),
         statement_effect=(
-            "The ownership point determines whose inventory is at risk while the daypacks are in transit."
+            "The ownership point determines whose inventory is at risk while the water bottles are in transit."
         ),
         event_id=None,
     ),
@@ -172,9 +172,9 @@ DECISIONS = (
         id="purchase_effect",
         phase=1,
         document="Purchase invoice GCG-1103",
-        title="One hundred daypacks arrive",
+        title="One hundred water bottles arrive",
         story=(
-            "The November 3 invoice totals $5,000 and is due later. The daypacks are accepted "
+            "The November 3 invoice totals $5,000 and is due later. The water bottles are accepted "
             "into the stockroom."
         ),
         prompt="How does receiving the inventory on account change the accounts?",
@@ -186,7 +186,7 @@ DECISIONS = (
         correct="Inventory increases $5,000 and Accounts Payable increases $5,000",
         explanation=(
             "The company now controls $5,000 of merchandise and owes the supplier $5,000. "
-            "The daypacks do not become Cost of Goods Sold until they are sold."
+            "The water bottles do not become Cost of Goods Sold until they are sold."
         ),
         statement_effect=(
             "Assets increase $5,000 and liabilities increase $5,000; income is unchanged."
@@ -200,7 +200,7 @@ DECISIONS = (
         title="The buyer pays inbound transportation",
         story=(
             "Because the terms are FOB shipping point, Gem City Goods pays the $80 cost to "
-            "transport the daypacks from the supplier to its store."
+            "transport the water bottles from the supplier to its store."
         ),
         prompt="How should the $80 transportation cost affect the accounts?",
         options=(
@@ -222,10 +222,10 @@ DECISIONS = (
         id="purchase_return_effect",
         phase=1,
         document="Supplier return authorization",
-        title="Twenty defective daypacks go back",
+        title="Twenty defective water bottles go back",
         story=(
-            "On November 5, the supplier approves a return of 20 defective daypacks. The "
-            "invoice price was $50 per daypack, and Gem City Goods has not yet paid the invoice."
+            "On November 5, the supplier approves a return of 20 defective water bottles. The "
+            "invoice price was $50 per bottle, and Gem City Goods has not yet paid the invoice."
         ),
         prompt="What is the account effect of the $1,000 purchase return?",
         options=(
@@ -274,7 +274,7 @@ DECISIONS = (
         document="Customer order and delivery confirmation",
         title="The customer order is in transit",
         story=(
-            "A customer orders 30 daypacks for $90 each on account. Terms are FOB destination. "
+            "A customer orders 30 insulated water bottles for $90 each on account. Terms are FOB destination. "
             "The carrier picks them up November 15 and confirms delivery November 16."
         ),
         prompt="When should Gem City Goods report the sale?",
@@ -297,7 +297,7 @@ DECISIONS = (
         id="sale_two_effects",
         phase=2,
         document="Sales invoice and perpetual inventory record",
-        title="Thirty daypacks reach the customer",
+        title="Thirty water bottles reach the customer",
         story=(
             "The delivered order has a selling price of $2,700 and a cost of $1,500. The customer "
             "will pay later."
@@ -344,9 +344,9 @@ DECISIONS = (
         id="sales_return_effect",
         phase=3,
         document="Customer return form",
-        title="Five resalable daypacks come back",
+        title="Five resalable water bottles come back",
         story=(
-            "On November 19, the customer returns five daypacks. Their selling price was $450, "
+            "On November 19, the customer returns five water bottles. Their selling price was $450, "
             "their cost was $250, and they can be resold. The customer has not yet paid."
         ),
         prompt="Which choice captures both effects of the customer return?",
@@ -358,7 +358,7 @@ DECISIONS = (
         correct="Sales Returns and Allowances increases and Accounts Receivable decreases $450; Inventory increases and Cost of Goods Sold decreases $250",
         explanation=(
             "The customer no longer owes the selling price of the returned goods. Because the "
-            "daypacks can be resold, their cost returns to Inventory and reduces Cost of Goods Sold."
+            "water bottles can be resold, their cost returns to Inventory and reduces Cost of Goods Sold."
         ),
         statement_effect=(
             "Net sales decrease $450 and expense decreases $250, so income decreases a net $200."
@@ -394,8 +394,8 @@ DECISIONS = (
         document="November 30 physical count sheet",
         title="The shelves and the record disagree",
         story=(
-            "The perpetual record predicts 55 daypacks at $50 each, or $2,750. The physical count "
-            "finds only 53 daypacks."
+            "The perpetual record predicts 55 water bottles at $50 each, or $2,750. The physical count "
+            "finds only 53 water bottles."
         ),
         prompt="How should Gem City Goods reflect the shortage?",
         options=(
@@ -405,24 +405,12 @@ DECISIONS = (
         ),
         correct="Inventory decreases $100 and Cost of Goods Sold increases $100",
         explanation=(
-            "Two missing daypacks at $50 each create $100 of shrinkage. The physical count verifies "
+            "Two missing water bottles at $50 each create $100 of shrinkage. The physical count verifies "
             "what is actually on hand and brings the perpetual record down to that amount."
         ),
         statement_effect="Assets and income decrease $100; Cost of Goods Sold increases $100.",
         event_id="shrinkage",
     ),
-)
-
-
-CLOSEOUT_FIELDS = (
-    ("cash", "Ending Cash"),
-    ("accounts_receivable", "Ending Accounts Receivable"),
-    ("inventory", "Ending Inventory"),
-    ("accounts_payable", "Ending Accounts Payable"),
-    ("net_sales", "Net Sales"),
-    ("cost_of_goods_sold", "Cost of Goods Sold"),
-    ("freight_out_expense", "Freight-Out Expense"),
-    ("income_effect", "Income effect from the case events"),
 )
 
 
@@ -456,17 +444,17 @@ STATEMENT_QUESTIONS = (
         ),
     ),
     StatementQuestion(
-        id="count_ripple",
-        prompt="What is the financial-statement effect of updating the perpetual record to the physical count?",
+        id="cash_vs_income",
+        prompt="Why is the $795 income effect different from the $1,855 decrease in Cash during the case?",
         options=(
-            "Inventory and income each decrease $100 because Cost of Goods Sold increases $100",
-            "Inventory and income each increase $100 because the missing units are added back",
-            "Accounts Payable decreases $100 while assets and income stay unchanged",
+            "Cash reflects when amounts were paid or collected; income reflects Net Sales minus the related expenses",
+            "Income always equals ending Cash minus opening Cash once Accounts Receivable reaches zero",
+            "The difference exists only because the physical count changed the number of units on hand",
         ),
-        correct="Inventory and income each decrease $100 because Cost of Goods Sold increases $100",
+        correct="Cash reflects when amounts were paid or collected; income reflects Net Sales minus the related expenses",
         explanation=(
-            "The two missing daypacks create $100 of shrinkage. Inventory decreases and Cost of Goods "
-            "Sold increases, reducing both assets and income by $100."
+            "Paying the supplier reduces Cash but is not an immediate expense, while a credit sale creates "
+            "revenue before collection. Cash movement and income therefore measure different parts of the story."
         ),
     ),
 )

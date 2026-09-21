@@ -1,10 +1,9 @@
 import re
 import unittest
 
-from dock_to_dollar.case_data import ACCOUNT_EVENTS, CLOSEOUT_FIELDS, DECISIONS, OPENING_BALANCES, STATEMENT_QUESTIONS
+from dock_to_dollar.case_data import ACCOUNT_EVENTS, DECISIONS, OPENING_BALANCES, STATEMENT_QUESTIONS
 from dock_to_dollar.engine import (
     balances_after,
-    evaluate_closeout,
     evaluate_decision,
     evaluate_statement_responses,
     event_position,
@@ -90,15 +89,6 @@ class DockToDollarCalculationTests(unittest.TestCase):
             self.assertTrue(evaluate_decision(item.id, item.correct)["correct"], item.id)
             wrong = next(option for option in item.options if option != item.correct)
             self.assertFalse(evaluate_decision(item.id, wrong)["correct"], item.id)
-
-    def test_closeout_feedback_is_item_level(self):
-        expected = final_values()
-        responses = dict(expected, inventory=2_750)
-        results = evaluate_closeout(responses)
-        self.assertFalse(results["inventory"]["correct"])
-        self.assertEqual(results["inventory"]["expected"], 2_650)
-        self.assertTrue(results["net_sales"]["correct"])
-        self.assertEqual(set(results), {key for key, _label in CLOSEOUT_FIELDS})
 
     def test_statement_questions_check_the_full_merchandise_story(self):
         responses = {item.id: item.correct for item in STATEMENT_QUESTIONS}

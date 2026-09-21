@@ -6,7 +6,6 @@ from collections.abc import Mapping
 
 from dock_to_dollar.case_data import (
     ACCOUNT_EVENTS,
-    CLOSEOUT_FIELDS,
     DECISIONS,
     OPENING_BALANCES,
     STATEMENT_QUESTIONS,
@@ -88,19 +87,6 @@ def final_values() -> dict[str, int]:
     }
 
 
-def evaluate_closeout(responses: Mapping[str, int]) -> dict[str, dict[str, object]]:
-    expected = final_values()
-    return {
-        key: {
-            "label": label,
-            "submitted": int(responses.get(key, 0)),
-            "expected": expected[key],
-            "correct": int(responses.get(key, 0)) == expected[key],
-        }
-        for key, label in CLOSEOUT_FIELDS
-    }
-
-
 def evaluate_statement_responses(responses: Mapping[str, str]) -> dict[str, dict[str, object]]:
     return {
         item.id: {
@@ -112,31 +98,3 @@ def evaluate_statement_responses(responses: Mapping[str, str]) -> dict[str, dict
         }
         for item in STATEMENT_QUESTIONS
     }
-
-
-def event_rows() -> list[dict[str, str]]:
-    rows = []
-    for event in ACCOUNT_EVENTS:
-        changes = []
-        for account, amount in event.changes:
-            direction = "increases" if amount > 0 else "decreases"
-            changes.append(f"{account} {direction} {format_currency(abs(amount))}")
-        rows.append({"Date": event.date, "Event": event.label, "Account effects": "; ".join(changes)})
-    return rows
-
-
-def account_rows() -> list[dict[str, str]]:
-    ending = balances_after()
-    rows = []
-    for account, opening in OPENING_BALANCES.items():
-        change = ending[account] - opening
-        sign = "+" if change > 0 else ""
-        rows.append(
-            {
-                "Account": account,
-                "Opening": format_currency(opening),
-                "Net change": f"{sign}{format_currency(change)}",
-                "Ending": format_currency(ending[account]),
-            }
-        )
-    return rows

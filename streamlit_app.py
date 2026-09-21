@@ -9,7 +9,6 @@ from html import escape
 import streamlit as st
 
 from dock_to_dollar.case_data import (
-    CLOSEOUT_FIELDS,
     COMPANY_NAME,
     DECISIONS,
     OPENING_BALANCES,
@@ -18,14 +17,11 @@ from dock_to_dollar.case_data import (
     STATEMENT_QUESTIONS,
 )
 from dock_to_dollar.engine import (
-    account_rows,
     balances_after,
-    evaluate_closeout,
     evaluate_decision,
     evaluate_statement_responses,
     event_by_id,
     event_position,
-    event_rows,
     final_values,
     format_currency,
     units_after,
@@ -125,14 +121,14 @@ APP_CSS = f"""
     .rule {{ background: #FFF5F7; border-left: 5px solid var(--ud-red); border-radius: 9px; margin: 0.7rem 0 1rem; padding: 0.82rem 0.95rem; }}
     .rule strong {{ color: var(--ud-red); }}
 
-    .effect-list {{ background: #FFFFFF; border: 1px solid #D9E0EA; border-radius: 12px; margin: 0.75rem 0; padding: 0.85rem 1rem; }}
-    .effect-list strong {{ color: var(--ud-blue); }}
-    .effect-list ul {{ margin-bottom: 0; }}
-
     .account-board {{ display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.62rem; margin: 0.8rem 0 1.05rem; }}
     .account-box {{ background: #EEF4FF; border: 1px solid #C6D7F2; border-radius: 12px; padding: 0.78rem 0.9rem; }}
-    .account-box span {{ color: var(--muted); display: block; font-size: 0.76rem; font-weight: 720; }}
-    .account-box strong {{ color: var(--ud-blue); display: block; font-size: 1.2rem; margin-top: 0.14rem; }}
+    .account-label {{ color: var(--muted); display: block; font-size: 0.76rem; font-weight: 720; min-height: 2.1em; }}
+    .account-value {{ color: var(--ud-blue); display: block; font-size: 1.2rem; margin-top: 0.14rem; }}
+    .account-delta {{ display: block; font-size: 0.82rem; font-weight: 850; min-height: 1.15rem; margin-top: 0.2rem; }}
+    .account-delta.positive {{ color: var(--success); }}
+    .account-delta.negative {{ color: #B42318; }}
+    .account-delta.neutral {{ color: #7C8796; }}
 
     .feedback-row {{
         align-items: flex-start; background: #FFFFFF; border: 1px solid #D9E0EA; border-radius: 10px;
@@ -154,7 +150,7 @@ APP_CSS = f"""
     .statement-line.grand {{ border-bottom: 3px double var(--ink); border-top: 1px solid var(--ink); font-weight: 850; margin-top: 0.2rem; padding: 0.42rem 0 0.34rem; }}
     .amount {{ font-variant-numeric: tabular-nums; white-space: nowrap; }}
 
-    .score-grid {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.65rem; margin: 1rem 0; }}
+    .score-grid {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.65rem; margin: 1rem 0; }}
     .score-box {{ background: #FFFFFF; border: 1px solid #D9E0EA; border-radius: 12px; padding: 0.85rem; text-align: center; }}
     .score-box strong {{ color: var(--ud-blue); display: block; font-size: 1.45rem; }}
     .score-box span {{ color: var(--muted); font-size: 0.82rem; }}
@@ -286,7 +282,7 @@ def render_hero() -> None:
     st.markdown(
         """
         <div class="hero">
-          <div class="hero-kicker">CHAPTER 7 MERCHANDISING CASE</div>
+          <div class="hero-kicker">MERCHANDISING CASE</div>
           <h1>Dock to Dollar</h1>
           <p><span class="hero-accent">One shipment. One customer order. One complete financial story.</span> Follow the merchandise, the documents, the accounts, and the statements.</p>
         </div>
@@ -363,12 +359,6 @@ def save_decision_draft(item_id: str, widget_key: str) -> None:
     st.session_state.dd_decision_drafts = drafts
 
 
-def save_closeout_draft(answer_key: str, widget_key: str) -> None:
-    drafts = dict(st.session_state.dd_closeout_drafts)
-    drafts[answer_key] = int(st.session_state.get(widget_key, 0))
-    st.session_state.dd_closeout_drafts = drafts
-
-
 def save_statement_draft(answer_key: str, widget_key: str) -> None:
     drafts = dict(st.session_state.dd_statement_drafts)
     value = st.session_state.get(widget_key)
@@ -379,31 +369,35 @@ def save_statement_draft(answer_key: str, widget_key: str) -> None:
     st.session_state.dd_statement_drafts = drafts
 
 
-def render_event_effect(event_id: str) -> None:
-    event = event_by_id(event_id)
-    items = []
-    for account, amount in event.changes:
-        direction = "increases" if amount > 0 else "decreases"
-        items.append(f"<li><strong>{escape(account)}</strong> {direction} {escape(format_currency(abs(amount)))}</li>")
-    st.markdown(
-        f'<div class="effect-list"><strong>{escape(event.date)} account effects</strong><ul>{"".join(items)}</ul></div>',
-        unsafe_allow_html=True,
-    )
+def delta_markup(amount: int, *, currency: bool) -> str:
+    if amount == 0:
+        return '<span class="account-delta neutral">—</span>'
+    css_class = "positive" if amount > 0 else "negative"
+    sign = "+" if amount > 0 else "−"
+    displayed = format_currency(abs(amount)) if currency else str(abs(amount))
+    return f'<span class="account-delta {css_class}">{sign}{displayed}</span>'
 
 
-def render_account_board(event_count: int) -> None:
+def render_account_board(event_count: int | None, event_id: str | None = None) -> None:
     balances = balances_after(event_count)
     units = units_after(event_count)
+    event = event_by_id(event_id) if event_id is not None else None
+    changes = dict(event.changes) if event is not None else {}
+    unit_change = event.unit_change if event is not None else 0
+    boxes = [
+        (
+            f'<div class="account-box"><span class="account-label">{escape(PRODUCT_NAME.title())} on hand</span>'
+            f'<strong class="account-value">{units}</strong>{delta_markup(unit_change, currency=False)}</div>'
+        )
+    ]
+    for account in OPENING_BALANCES:
+        boxes.append(
+            f'<div class="account-box"><span class="account-label">{escape(account)}</span>'
+            f'<strong class="account-value">{format_currency(balances[account])}</strong>'
+            f'{delta_markup(changes.get(account, 0), currency=True)}</div>'
+        )
     st.markdown(
-        f"""
-        <div class="account-board">
-          <div class="account-box"><span>Units on hand</span><strong>{units}</strong></div>
-          <div class="account-box"><span>Cash</span><strong>{format_currency(balances['Cash'])}</strong></div>
-          <div class="account-box"><span>Inventory</span><strong>{format_currency(balances['Inventory'])}</strong></div>
-          <div class="account-box"><span>Accounts Receivable</span><strong>{format_currency(balances['Accounts Receivable'])}</strong></div>
-          <div class="account-box"><span>Accounts Payable</span><strong>{format_currency(balances['Accounts Payable'])}</strong></div>
-        </div>
-        """,
+        f'<div class="account-board">{"".join(boxes)}</div>',
         unsafe_allow_html=True,
     )
 
@@ -430,10 +424,9 @@ def render_briefing() -> None:
         '<div class="rule"><strong>Working method:</strong> For every event, determine which accounts increase or decrease, calculate the resulting balances, and explain the financial-statement effect.</div>',
         unsafe_allow_html=True,
     )
-    col1, col2, col3 = st.columns(3)
-    col1.metric("Opening cash", format_currency(OPENING_BALANCES["Cash"]))
-    col2.metric("Opening inventory", format_currency(OPENING_BALANCES["Inventory"]))
-    col3.metric("Opening amount owed", format_currency(OPENING_BALANCES["Accounts Payable"]))
+    st.subheader("Opening running balances")
+    st.caption("Every account used in the case remains visible as the merchandise cycle unfolds.")
+    render_account_board(0)
     st.button("Open the receiving file", type="primary", width="stretch", on_click=set_page, args=(1,))
 
 
@@ -454,6 +447,16 @@ def render_decision_stage() -> None:
     render_case_card(item.document, item.title, item.story)
 
     response = st.session_state.dd_responses.get(item.id)
+    st.subheader("Running balances")
+    if response is None:
+        st.caption("Balances before this decision. Changes appear after you check your analysis.")
+        render_account_board(event_count_through(index - 1))
+    else:
+        st.caption("Balances after this event. Green amounts increased; red amounts decreased.")
+        render_account_board(event_count_through(index), item.event_id)
+        if item.event_id is None:
+            st.caption("This ownership-and-timing decision does not change an account balance by itself.")
+
     if response is None:
         widget_key = f"widget_decision_{item.id}"
         options = shuffled(item.options, f"decision-answer-order:{item.id}")
@@ -486,13 +489,9 @@ def render_decision_stage() -> None:
             st.warning(currency_markdown(f"Review this event. {result['explanation']}"))
             st.caption(currency_markdown(f"Best analysis: {result['expected']}"))
 
-        if item.event_id is not None:
-            render_event_effect(item.event_id)
         st.info(currency_markdown(f"Financial-statement effect: {result['statement_effect']}"))
 
         if result["correct"]:
-            st.subheader("Running account board")
-            render_account_board(event_count_through(index))
             st.button("Continue", type="primary", width="stretch", on_click=advance_decision)
         else:
             st.button("Revise my analysis", width="stretch", on_click=remove_response, args=(item.id,))
@@ -531,36 +530,18 @@ def render_completed_statements() -> None:
 
 def render_closeout() -> None:
     st.markdown('<div class="eyebrow">Financial story</div>', unsafe_allow_html=True)
-    st.header("Reconcile the merchandise cycle")
+    st.header("Connect the running balances to the financial statements")
     st.markdown(
-        '<p class="lead">Use the opening balances and complete event trail to calculate the ending amounts, then explain how those amounts become the financial-statement story.</p>',
+        '<p class="lead">The completed event trail has already produced the ending balances. Explain how those account balances combine into the final financial story.</p>',
         unsafe_allow_html=True,
     )
-    col1, col2, col3 = st.columns(3)
-    col1.metric("Opening Cash", format_currency(OPENING_BALANCES["Cash"]))
-    col2.metric("Opening Inventory", format_currency(OPENING_BALANCES["Inventory"]))
-    col3.metric("Physical count", "53 daypacks")
+    st.subheader("Ending running balances")
+    st.caption("All accounts used in the case are shown before you make the statement connections.")
+    render_account_board(None)
 
-    with st.expander("Review the complete event trail"):
-        st.dataframe(event_rows(), width="stretch", hide_index=True)
-
-    if st.session_state.dd_closeout_submitted:
-        amount_results = evaluate_closeout(st.session_state.dd_closeout_responses)
+    if st.session_state.dd_statement_submitted:
         statement_results = evaluate_statement_responses(st.session_state.dd_statement_responses)
-        all_correct = all(bool(result["correct"]) for result in (*amount_results.values(), *statement_results.values()))
-        st.subheader("Ending amounts")
-        for result in amount_results.values():
-            detail = "Use the opening balance and all related increases and decreases."
-            value = format_currency(int(result["expected"]))
-            if not result["correct"]:
-                detail = f"Your answer: {format_currency(int(result['submitted']))}. {detail}"
-                value = f"Correct: {value}"
-            render_feedback_row(
-                str(result["label"]),
-                bool(result["correct"]),
-                detail,
-                value,
-            )
+        all_correct = all(bool(result["correct"]) for result in statement_results.values())
         st.subheader("Financial-statement connections")
         for index, result in enumerate(statement_results.values(), start=1):
             detail = str(result["explanation"])
@@ -572,35 +553,14 @@ def render_closeout() -> None:
             render_completed_statements()
             st.button("Finish the case", type="primary", width="stretch", on_click=set_page, args=(3,))
             return
-        else:
-            st.warning("Some amounts or statement connections still need revision. Trace the event trail from account changes to the final reports and try again.")
-            if st.button("Revise the financial story", width="stretch"):
-                st.session_state.dd_closeout_submitted = False
-                st.rerun()
-            return
+        st.warning("Some statement connections still need revision. Use the ending balances and the event trail to reconsider the financial story.")
+        if st.button("Revise the financial-statement connections", width="stretch"):
+            st.session_state.dd_statement_submitted = False
+            st.rerun()
+        return
 
-    st.subheader("1. Calculate the ending amounts")
-    prior_amounts = dict(st.session_state.dd_closeout_responses)
-    amount_drafts = dict(st.session_state.dd_closeout_drafts)
-    responses = {}
-    cols = st.columns(2)
-    for index, (key, label) in enumerate(CLOSEOUT_FIELDS):
-        widget_key = f"widget_closeout_{key}"
-        responses[key] = int(
-            cols[index % 2].number_input(
-                label,
-                min_value=0,
-                max_value=10_000_000,
-                value=int(amount_drafts.get(key, prior_amounts.get(key, 0))),
-                step=5,
-                key=widget_key,
-                on_change=save_closeout_draft,
-                args=(key, widget_key),
-            )
-        )
-
-    st.subheader("2. Connect the amounts to the financial statements")
-    st.caption("The completed statements appear only after both the amounts and the conceptual connections are correct.")
+    st.subheader("Financial-statement connections")
+    st.caption("The completed statements appear after all three conceptual connections are correct.")
     prior_statements = dict(st.session_state.dd_statement_responses)
     statement_drafts = dict(st.session_state.dd_statement_drafts)
     statement_responses = {}
@@ -623,21 +583,14 @@ def render_closeout() -> None:
             st.warning("Answer all three financial-statement questions before checking the complete story.")
             return
         statement_responses = {key: str(value) for key, value in statement_responses.items()}
-        amount_results = evaluate_closeout(responses)
         statement_results = evaluate_statement_responses(statement_responses)
-        for key, result in amount_results.items():
-            score_key = f"closeout:{key}"
-            if score_key not in st.session_state.dd_first_pass or prior_amounts.get(key) != responses[key]:
-                record_attempt(st.session_state, score_key, bool(result["correct"]))
         for key, result in statement_results.items():
             score_key = f"statement:{key}"
             if score_key not in st.session_state.dd_first_pass or prior_statements.get(key) != statement_responses[key]:
                 record_attempt(st.session_state, score_key, bool(result["correct"]))
-        st.session_state.dd_closeout_drafts = dict(responses)
-        st.session_state.dd_closeout_responses = responses
         st.session_state.dd_statement_drafts = dict(statement_responses)
         st.session_state.dd_statement_responses = statement_responses
-        st.session_state.dd_closeout_submitted = True
+        st.session_state.dd_statement_submitted = True
         st.rerun()
 
 
@@ -651,7 +604,6 @@ def render_completion() -> None:
     score = score_summary(st.session_state)
     st.success("Case complete. The shipment has been traced from the supplier's dock to the financial statements.")
 
-    closeout_keys = [key for key, _label in CLOSEOUT_FIELDS]
     ownership_ids = [item.id for item in DECISIONS if item.phase in {0, 2} and item.event_id is None]
     account_ids = [item.id for item in DECISIONS if item.id not in ownership_ids]
     st.markdown(
@@ -659,7 +611,6 @@ def render_completion() -> None:
         <div class="score-grid">
           <div class="score-box"><strong>{category_score('decision:', ownership_ids)}</strong><span>Ownership and timing first pass</span></div>
           <div class="score-box"><strong>{category_score('decision:', account_ids)}</strong><span>Account analysis first pass</span></div>
-          <div class="score-box"><strong>{category_score('closeout:', closeout_keys)}</strong><span>Ending amounts first pass</span></div>
           <div class="score-box"><strong>{category_score('statement:', [item.id for item in STATEMENT_QUESTIONS])}</strong><span>Statement connections first pass</span></div>
         </div>
         """,
@@ -669,12 +620,12 @@ def render_completion() -> None:
         f"First-pass decisions: {score['correct']} of {score['total']} | Practice revisions used: {score['revisions']} | Final mastery: complete"
     )
 
+    st.subheader("Final running balances")
+    render_account_board(None)
     st.subheader("Completed financial story")
     render_completed_statements()
-    with st.expander("See every account from opening to ending balance"):
-        st.dataframe(account_rows(), width="stretch", hide_index=True)
 
-    st.subheader("The complete Chapter 7 chain")
+    st.subheader("The complete merchandising chain")
     st.markdown(
         """
         1. Freight terms establish when ownership and risk transfer.

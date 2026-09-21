@@ -3,8 +3,7 @@ import json
 import unittest
 import zlib
 
-from dock_to_dollar.case_data import CLOSEOUT_FIELDS, DECISIONS, STATEMENT_QUESTIONS
-from dock_to_dollar.engine import final_values
+from dock_to_dollar.case_data import DECISIONS, STATEMENT_QUESTIONS
 from dock_to_dollar.progress import (
     SNAPSHOT_PARAM,
     activity_defaults,
@@ -28,9 +27,8 @@ def completed_state():
     state["dd_page"] = 3
     state["dd_decision_index"] = len(DECISIONS) - 1
     state["dd_responses"] = {item.id: item.correct for item in DECISIONS}
-    state["dd_closeout_responses"] = final_values()
     state["dd_statement_responses"] = {item.id: item.correct for item in STATEMENT_QUESTIONS}
-    state["dd_closeout_submitted"] = True
+    state["dd_statement_submitted"] = True
     return state
 
 
@@ -43,7 +41,6 @@ class ProgressSnapshotTests(unittest.TestCase):
         restored = decode_snapshot(token)
         self.assertIsNotNone(restored)
         self.assertEqual(restored["dd_page"], 3)
-        self.assertEqual(restored["dd_closeout_responses"]["income_effect"], 795)
         self.assertEqual(len(restored["dd_statement_responses"]), len(STATEMENT_QUESTIONS))
         self.assertNotIn("name", token.lower())
         self.assertNotIn("email", token.lower())
@@ -64,10 +61,11 @@ class ProgressSnapshotTests(unittest.TestCase):
         state["dd_page"] = 2
         self.assertIsNone(decode_snapshot(encode_state(state)))
 
-    def test_tampered_completed_amount_is_rejected(self):
+    def test_tampered_completed_statement_answer_is_rejected(self):
         state = completed_state()
         raw = snapshot_from_state(state)
-        raw["c"] = dict(raw["c"], inventory=2_750)
+        first = STATEMENT_QUESTIONS[0]
+        raw["q"] = dict(raw["q"], **{first.id: first.options[-1]})
         self.assertIsNone(decode_snapshot(encode_raw(raw)))
 
     def test_drafts_and_shuffle_seed_round_trip(self):
@@ -105,13 +103,6 @@ class ProgressSnapshotTests(unittest.TestCase):
         self.assertEqual(score["attempted"], 2)
         self.assertEqual(score["correct"], 1)
         self.assertEqual(score["revisions"], 1)
-
-    def test_closeout_schema_matches_case_values(self):
-        self.assertEqual(
-            {key for key, _label in CLOSEOUT_FIELDS},
-            set(final_values()),
-        )
-
 
 if __name__ == "__main__":
     unittest.main()
