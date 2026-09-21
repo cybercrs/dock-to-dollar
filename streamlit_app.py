@@ -144,6 +144,7 @@ APP_CSS = f"""
     .statement {{ background: #FFFFFF; border: 1px solid #D9E0EA; border-radius: 13px; padding: 1rem; }}
     .statement-title {{ color: var(--ud-blue); font-size: 1.05rem; font-weight: 850; text-align: center; }}
     .statement-period {{ color: var(--muted); font-size: 0.8rem; margin-bottom: 0.65rem; text-align: center; }}
+    .statement-section {{ color: var(--ud-blue); font-size: 0.86rem; font-weight: 850; margin-top: 0.55rem; text-transform: uppercase; }}
     .statement-line {{ display: flex; gap: 0.7rem; justify-content: space-between; padding: 0.27rem 0; }}
     .statement-line.indent {{ padding-left: 0.85rem; }}
     .statement-line.total {{ border-top: 1px solid #7F8999; font-weight: 800; margin-top: 0.18rem; padding-top: 0.4rem; }}
@@ -425,7 +426,12 @@ def render_briefing() -> None:
         unsafe_allow_html=True,
     )
     st.subheader("Opening running balances")
-    st.caption("Every account used in the case remains visible as the merchandise cycle unfolds.")
+    st.caption(
+        currency_markdown(
+            "Gem City Goods begins after issuing $10,000 of Common Stock for $10,000 cash; "
+            "all other opening account balances are zero. Every account used in the case remains visible as the merchandise cycle unfolds."
+        )
+    )
     render_account_board(0)
     st.button("Open the receiving file", type="primary", width="stretch", on_click=set_page, args=(1,))
 
@@ -447,9 +453,13 @@ def render_decision_stage() -> None:
     render_case_card(item.document, item.title, item.story)
 
     response = st.session_state.dd_responses.get(item.id)
+    result = evaluate_decision(item.id, response) if response is not None else None
     st.subheader("Running balances")
-    if response is None:
-        st.caption("Balances before this decision. Changes appear after you check your analysis.")
+    if result is None or not result["correct"]:
+        if result is None:
+            st.caption("Balances before this decision. Changes appear after you check your analysis.")
+        else:
+            st.caption("Balances remain at their pre-event amounts while you revise your analysis.")
         render_account_board(event_count_through(index - 1))
     else:
         st.caption("Balances after this event. Green amounts increased; red amounts decreased.")
@@ -461,7 +471,7 @@ def render_decision_stage() -> None:
         widget_key = f"widget_decision_{item.id}"
         options = shuffled(item.options, f"decision-answer-order:{item.id}")
         selected = st.radio(
-            item.prompt,
+            currency_markdown(item.prompt),
             options,
             index=selected_index(options, st.session_state.dd_decision_drafts.get(item.id)),
             key=widget_key,
@@ -482,14 +492,12 @@ def render_decision_stage() -> None:
                 st.rerun()
 
     if response is not None:
-        result = evaluate_decision(item.id, response)
+        assert result is not None
         if result["correct"]:
             st.success(currency_markdown(f"Correct. {result['explanation']}"))
+            st.info(currency_markdown(f"Financial-statement effect: {result['statement_effect']}"))
         else:
-            st.warning(currency_markdown(f"Review this event. {result['explanation']}"))
-            st.caption(currency_markdown(f"Best analysis: {result['expected']}"))
-
-        st.info(currency_markdown(f"Financial-statement effect: {result['statement_effect']}"))
+            st.warning(currency_markdown(f"Not quite. Hint: {result['hint']}"))
 
         if result["correct"]:
             st.button("Continue", type="primary", width="stretch", on_click=advance_decision)
@@ -504,23 +512,32 @@ def render_completed_statements() -> None:
         f"""
         <div class="statement-grid">
           <div class="statement">
-            <div class="statement-title">Income Statement Effects</div><div class="statement-period">November case events</div>
+            <div class="statement-title">Income Statement</div><div class="statement-period">For the month ended November 30</div>
             <div class="statement-line"><span>Sales Revenue</span><span class="amount">{format_currency(balances['Sales Revenue'])}</span></div>
             <div class="statement-line indent"><span>Less: Sales Returns and Allowances</span><span class="amount">{format_currency(balances['Sales Returns and Allowances'])}</span></div>
             <div class="statement-line indent"><span>Less: Sales Discounts</span><span class="amount">{format_currency(balances['Sales Discounts'])}</span></div>
             <div class="statement-line total"><span>Net Sales</span><span class="amount">{format_currency(values['net_sales'])}</span></div>
             <div class="statement-line"><span>Cost of Goods Sold</span><span class="amount">{format_currency(values['cost_of_goods_sold'])}</span></div>
-            <div class="statement-line"><span>Freight-Out Expense</span><span class="amount">{format_currency(values['freight_out_expense'])}</span></div>
-            <div class="statement-line grand"><span>Income effect</span><span class="amount">{format_currency(values['income_effect'])}</span></div>
+            <div class="statement-line total"><span>Gross Profit</span><span class="amount">{format_currency(values['gross_profit'])}</span></div>
+            <div class="statement-section">Operating Expenses</div>
+            <div class="statement-line indent"><span>Freight-Out Expense</span><span class="amount">{format_currency(values['freight_out_expense'])}</span></div>
+            <div class="statement-line grand"><span>Net Income</span><span class="amount">{format_currency(values['income_effect'])}</span></div>
           </div>
           <div class="statement">
-            <div class="statement-title">Ending Balance Sheet Accounts</div><div class="statement-period">After all case events</div>
-            <div class="statement-line"><span>Cash</span><span class="amount">{format_currency(balances['Cash'])}</span></div>
-            <div class="statement-line"><span>Accounts Receivable</span><span class="amount">{format_currency(balances['Accounts Receivable'])}</span></div>
-            <div class="statement-line"><span>Inventory</span><span class="amount">{format_currency(balances['Inventory'])}</span></div>
-            <div class="statement-line total"><span>Case assets</span><span class="amount">{format_currency(balances['Cash'] + balances['Accounts Receivable'] + balances['Inventory'])}</span></div>
-            <div class="statement-line"><span>Accounts Payable</span><span class="amount">{format_currency(balances['Accounts Payable'])}</span></div>
-            <div class="statement-line grand"><span>Physical units on hand</span><span class="amount">{units_after()}</span></div>
+            <div class="statement-title">Balance Sheet</div><div class="statement-period">November 30</div>
+            <div class="statement-section">Assets</div>
+            <div class="statement-line indent"><span>Cash</span><span class="amount">{format_currency(balances['Cash'])}</span></div>
+            <div class="statement-line indent"><span>Accounts Receivable</span><span class="amount">{format_currency(balances['Accounts Receivable'])}</span></div>
+            <div class="statement-line indent"><span>Inventory</span><span class="amount">{format_currency(balances['Inventory'])}</span></div>
+            <div class="statement-line total"><span>Total Assets</span><span class="amount">{format_currency(values['total_assets'])}</span></div>
+            <div class="statement-section">Liabilities</div>
+            <div class="statement-line indent"><span>Accounts Payable</span><span class="amount">{format_currency(balances['Accounts Payable'])}</span></div>
+            <div class="statement-line total"><span>Total Liabilities</span><span class="amount">{format_currency(values['total_liabilities'])}</span></div>
+            <div class="statement-section">Stockholders' Equity</div>
+            <div class="statement-line indent"><span>Common Stock</span><span class="amount">{format_currency(values['common_stock'])}</span></div>
+            <div class="statement-line indent"><span>Retained Earnings</span><span class="amount">{format_currency(values['retained_earnings'])}</span></div>
+            <div class="statement-line total"><span>Total Stockholders' Equity</span><span class="amount">{format_currency(values['total_equity'])}</span></div>
+            <div class="statement-line grand"><span>Total Liabilities and Stockholders' Equity</span><span class="amount">{format_currency(values['total_liabilities_and_equity'])}</span></div>
           </div>
         </div>
         """,
@@ -544,9 +561,7 @@ def render_closeout() -> None:
         all_correct = all(bool(result["correct"]) for result in statement_results.values())
         st.subheader("Financial-statement connections")
         for index, result in enumerate(statement_results.values(), start=1):
-            detail = str(result["explanation"])
-            if not result["correct"]:
-                detail = f"Best analysis: {result['expected']}. {detail}"
+            detail = str(result["explanation"] if result["correct"] else f"Hint: {result['hint']}")
             render_feedback_row(f"Connection {index}", bool(result["correct"]), detail)
         if all_correct:
             st.success("The merchandise, account balances, and financial-statement effects now tell one consistent story.")
@@ -569,7 +584,7 @@ def render_closeout() -> None:
         options = shuffled(item.options, f"statement-answer-order:{item.id}")
         selected = statement_drafts.get(item.id, prior_statements.get(item.id))
         statement_responses[item.id] = st.radio(
-            item.prompt,
+            currency_markdown(item.prompt),
             options,
             index=selected_index(options, selected),
             key=widget_key,

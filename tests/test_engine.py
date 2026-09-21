@@ -36,6 +36,7 @@ class DockToDollarCalculationTests(unittest.TestCase):
             "Accounts Receivable": 0,
             "Inventory": 2_650,
             "Accounts Payable": 0,
+            "Common Stock": 10_000,
             "Sales Revenue": 2_700,
             "Sales Returns and Allowances": 450,
             "Sales Discounts": 45,
@@ -53,10 +54,18 @@ class DockToDollarCalculationTests(unittest.TestCase):
                 "accounts_payable": 0,
                 "net_sales": 2_205,
                 "cost_of_goods_sold": 1_350,
+                "gross_profit": 855,
                 "freight_out_expense": 60,
                 "income_effect": 795,
+                "total_assets": 10_795,
+                "total_liabilities": 0,
+                "common_stock": 10_000,
+                "retained_earnings": 795,
+                "total_equity": 10_795,
+                "total_liabilities_and_equity": 10_795,
             },
         )
+        self.assertEqual(final_values()["total_assets"], final_values()["total_liabilities_and_equity"])
 
     def test_every_event_preserves_nonnegative_key_balances_and_units(self):
         for event_count in range(len(ACCOUNT_EVENTS) + 1):
@@ -90,6 +99,21 @@ class DockToDollarCalculationTests(unittest.TestCase):
             wrong = next(option for option in item.options if option != item.correct)
             self.assertFalse(evaluate_decision(item.id, wrong)["correct"], item.id)
 
+    def test_timing_and_discount_decisions_preserve_the_evidence_sequence(self):
+        items = {item.id: item for item in DECISIONS}
+        self.assertIn("seller's invoice", items["ownership_inbound"].explanation)
+        self.assertIn("internal perpetual inventory record", items["sale_recognition"].explanation)
+
+        purchase_discount = items["purchase_discount_effect"]
+        self.assertIn("original purchase transaction date was November 3", purchase_discount.story)
+        self.assertIn("quantity does not", purchase_discount.explanation)
+        self.assertNotIn("within the discount period", purchase_discount.story)
+
+        sales_discount = items["sales_discount_effect"]
+        self.assertIn("original sale transaction date was November 16", sales_discount.story)
+        self.assertIn("Payment arrives on November 24", sales_discount.story)
+        self.assertNotIn("within the discount period", sales_discount.story)
+
     def test_statement_questions_check_the_full_merchandise_story(self):
         responses = {item.id: item.correct for item in STATEMENT_QUESTIONS}
         results = evaluate_statement_responses(responses)
@@ -99,6 +123,7 @@ class DockToDollarCalculationTests(unittest.TestCase):
 
     def test_opening_balances_and_currency_format_are_stable(self):
         self.assertEqual(OPENING_BALANCES["Cash"], 10_000)
+        self.assertEqual(OPENING_BALANCES["Common Stock"], 10_000)
         self.assertEqual(format_currency(-100), "-$100")
         self.assertEqual(format_currency(8_145), "$8,145")
 
@@ -113,12 +138,13 @@ class DockToDollarCalculationTests(unittest.TestCase):
                     item.prompt,
                     item.correct,
                     item.explanation,
+                    item.hint,
                     item.statement_effect,
                     *item.options,
                 )
             )
         for item in STATEMENT_QUESTIONS:
-            fields.extend((item.prompt, item.correct, item.explanation, *item.options))
+            fields.extend((item.prompt, item.correct, item.explanation, item.hint, *item.options))
         student_text = " ".join(fields).lower()
         for banned in (r"\bdebits?\b", r"\bjournal\b", r"\bledger\b", r"\bposting\b"):
             self.assertIsNone(re.search(banned, student_text), banned)

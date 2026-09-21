@@ -25,6 +25,7 @@ class Decision:
     options: tuple[str, ...]
     correct: str
     explanation: str
+    hint: str
     statement_effect: str
     event_id: str | None
 
@@ -36,6 +37,7 @@ class StatementQuestion:
     options: tuple[str, ...]
     correct: str
     explanation: str
+    hint: str
 
 
 COMPANY_NAME = "Gem City Goods"
@@ -56,6 +58,7 @@ OPENING_BALANCES = {
     "Accounts Receivable": 0,
     "Inventory": 0,
     "Accounts Payable": 0,
+    "Common Stock": 10_000,
     "Sales Revenue": 0,
     "Sales Returns and Allowances": 0,
     "Sales Discounts": 0,
@@ -161,8 +164,11 @@ DECISIONS = (
         correct="November 2, when the carrier accepts the shipment",
         explanation=(
             "FOB shipping point transfers ownership when the carrier accepts the goods from "
-            "the seller. Arrival and payment occur later."
+            "the seller. Arrival and payment occur later. The shipment establishes the transaction "
+            "date, but Gem City Goods still needs the seller's invoice for the price, payment terms, "
+            "and other details needed to record the purchase."
         ),
+        hint="Focus on the FOB term and the carrier's role. Separate the ownership date from arrival and payment.",
         statement_effect=(
             "The ownership point determines whose inventory is at risk while the water bottles are in transit."
         ),
@@ -188,6 +194,7 @@ DECISIONS = (
             "The company now controls $5,000 of merchandise and owes the supplier $5,000. "
             "The water bottles do not become Cost of Goods Sold until they are sold."
         ),
+        hint="Identify the resource received and determine whether Gem City Goods paid for it on that date.",
         statement_effect=(
             "Assets increase $5,000 and liabilities increase $5,000; income is unchanged."
         ),
@@ -213,6 +220,7 @@ DECISIONS = (
             "A buyer's transportation cost is part of acquiring inventory. It becomes part "
             "of Inventory rather than an immediate operating expense."
         ),
+        hint="Ask whether this transportation cost brings merchandise in for sale or delivers sold goods to a customer.",
         statement_effect=(
             "One asset increases while another asset decreases; total assets and income are unchanged."
         ),
@@ -238,6 +246,7 @@ DECISIONS = (
             "The buyer sends merchandise back before paying. Inventory falls, and the amount "
             "owed to the supplier falls by the same invoice price."
         ),
+        hint="The buyer has not paid yet. Trace both the merchandise sent back and the outstanding supplier obligation.",
         statement_effect=(
             "Assets and liabilities each decrease $1,000; income is unchanged."
         ),
@@ -249,8 +258,8 @@ DECISIONS = (
         document="Supplier payment screen",
         title="The discount clock is still running",
         story=(
-            "Terms are 2/10, n/30. After the return, $4,000 remains due. Gem City Goods pays "
-            "on November 10, within the discount period."
+            "The original purchase transaction date was November 3, and the terms are 2/10, n/30. "
+            "After the return, $4,000 remains due. Gem City Goods pays on November 10."
         ),
         prompt="Which analysis correctly reflects the payment?",
         options=(
@@ -260,8 +269,14 @@ DECISIONS = (
         ),
         correct="Pay $3,920; Accounts Payable decreases $4,000 and Inventory decreases $80",
         explanation=(
-            "The 2% discount applies to the $4,000 remaining after the return: $80. The company "
-            "pays $3,920, removes the $4,000 obligation, and reduces the cost of Inventory by $80."
+            "November 10 is within ten days of the November 3 purchase date, so the 2% discount "
+            "applies to the $4,000 remaining after the return: $80. The company pays $3,920, removes "
+            "the $4,000 obligation, and reduces the cost of Inventory by $80. The inventory's recorded "
+            "value changes, but its quantity does not: 80 water bottles are still on hand."
+        ),
+        hint=(
+            "Count from the November 3 transaction date to the November 10 payment date, then apply "
+            "the terms to the amount remaining after the return."
         ),
         statement_effect=(
             "Cash and liabilities decrease; Inventory also decreases $80. Income is unchanged until the merchandise is sold."
@@ -286,8 +301,11 @@ DECISIONS = (
         correct="November 16, when the goods reach the customer",
         explanation=(
             "Under FOB destination, the seller retains ownership until delivery. The goods "
-            "transfer to the customer on November 16, so that is when the sale is reported."
+            "transfer to the customer on November 16, so that is when the sale is reported. Delivery "
+            "establishes the transaction date, but Gem City Goods still needs the sales invoice for "
+            "the selling price and its internal perpetual inventory record for the merchandise cost."
         ),
+        hint="Focus on the FOB term and the evidence that the goods reached the customer, not the later cash collection.",
         statement_effect=(
             "Reporting waits until the performance obligation is satisfied and the merchandise transfers to the customer."
         ),
@@ -313,6 +331,7 @@ DECISIONS = (
             "A perpetual system records both the amount earned from the customer and the cost of "
             "the merchandise that left inventory."
         ),
+        hint="Separate the selling price from the merchandise cost and trace both sides of a perpetual-system sale.",
         statement_effect=(
             "Assets increase a net $1,200. Revenue increases $2,700, expense increases $1,500, and income increases $1,200."
         ),
@@ -337,6 +356,7 @@ DECISIONS = (
             "A seller's outgoing delivery cost is an operating expense, not part of the cost of "
             "inventory still on hand."
         ),
+        hint="Ask whether this cost acquires inventory or delivers merchandise that has already been sold.",
         statement_effect="Assets and income each decrease $60; operating expenses increase $60.",
         event_id="freight_out",
     ),
@@ -360,6 +380,7 @@ DECISIONS = (
             "The customer no longer owes the selling price of the returned goods. Because the "
             "water bottles can be resold, their cost returns to Inventory and reduces Cost of Goods Sold."
         ),
+        hint="Trace both the selling price the customer no longer owes and the cost of the resalable goods returned to the shelves.",
         statement_effect=(
             "Net sales decrease $450 and expense decreases $250, so income decreases a net $200."
         ),
@@ -371,8 +392,8 @@ DECISIONS = (
         document="Customer remittance",
         title="The customer pays promptly",
         story=(
-            "After the return, the customer owes $2,250. Terms are 2/10, n/30, and payment arrives "
-            "within the discount period."
+            "The original sale transaction date was November 16, and the terms are 2/10, n/30. "
+            "After the return, the customer owes $2,250. Payment arrives on November 24."
         ),
         prompt="What amount is collected, and how does the discount affect the accounts?",
         options=(
@@ -382,8 +403,13 @@ DECISIONS = (
         ),
         correct="Collect $2,205; Accounts Receivable decreases $2,250 and Sales Discounts increases $45",
         explanation=(
-            "The 2% discount is $45 on the $2,250 amount due after the return. The customer pays "
-            "$2,205, and Sales Discounts reduces net sales by $45."
+            "November 24 is within ten days of the November 16 sale date, so the 2% discount is $45 "
+            "on the $2,250 amount due after the return. The customer pays $2,205, and Sales Discounts "
+            "reduces net sales by $45."
+        ),
+        hint=(
+            "Count from the November 16 transaction date to the November 24 payment date, then apply "
+            "the terms to the receivable remaining after the return."
         ),
         statement_effect="Cash increases $2,205, Accounts Receivable becomes $0, and income decreases $45.",
         event_id="sales_discount",
@@ -408,6 +434,7 @@ DECISIONS = (
             "Two missing water bottles at $50 each create $100 of shrinkage. The physical count verifies "
             "what is actually on hand and brings the perpetual record down to that amount."
         ),
+        hint="Compare expected units with counted units, value the shortage at unit cost, and identify the overstated asset.",
         statement_effect="Assets and income decrease $100; Cost of Goods Sold increases $100.",
         event_id="shrinkage",
     ),
@@ -428,6 +455,7 @@ STATEMENT_QUESTIONS = (
             "Net Sales reflects the sale after customer returns and discounts. Cost of Goods Sold "
             "and Freight-Out Expense are then subtracted to determine the $795 income effect."
         ),
+        hint="Begin with Net Sales, then identify which ending balances represent expenses of earning those sales.",
     ),
     StatementQuestion(
         id="contra_revenue",
@@ -442,6 +470,7 @@ STATEMENT_QUESTIONS = (
             "Sales Returns and Allowances and Sales Discounts are separate contra-revenue accounts. "
             "They reduce Net Sales while the original Sales Revenue remains visible."
         ),
+        hint="Separate supplier-side events from customer-side reductions of the amount earned from sales.",
     ),
     StatementQuestion(
         id="cash_vs_income",
@@ -456,5 +485,6 @@ STATEMENT_QUESTIONS = (
             "Paying the supplier reduces Cash but is not an immediate expense, while a credit sale creates "
             "revenue before collection. Cash movement and income therefore measure different parts of the story."
         ),
+        hint="List cash receipts and payments separately from the events that create revenue and expense.",
     ),
 )

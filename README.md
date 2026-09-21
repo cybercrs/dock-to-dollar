@@ -4,6 +4,8 @@ Dock to Dollar is a holistic merchandising Streamlit activity for introductory a
 
 The activity is framed entirely through account increases and decreases, ending account balances, and financial-statement effects. It does not ask students to prepare journal entries, post to a ledger, or use debit-and-credit mechanics.
 
+Incorrect responses receive a targeted hint and a chance to revise without revealing the correct answer. Literal dollar signs are escaped in Streamlit's Markdown-enabled labels so financial amounts retain normal body-text styling.
+
 ## Learning sequence
 
 1. Apply FOB shipping point and FOB destination to ownership, risk, freight responsibility, and sales recognition.
@@ -12,6 +14,7 @@ The activity is framed entirely through account increases and decreases, ending 
 4. Distinguish customer returns and sales discounts from supplier-side events.
 5. Reconcile the perpetual inventory record to a physical count and identify shrinkage.
 6. Read the final running balances and explain how contra-revenue accounts, merchandise costs, delivery expense, and cash timing connect to the financial statements.
+7. Reconcile the opening Cash and Common Stock balances through Net Income to a complete, balanced ending balance sheet.
 
 ## Run locally
 

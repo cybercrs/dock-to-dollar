@@ -37,6 +37,7 @@ def evaluate_decision(item_id: str, selected: str) -> dict[str, object]:
         "selected": selected,
         "expected": item.correct,
         "explanation": item.explanation,
+        "hint": item.hint,
         "statement_effect": item.statement_effect,
     }
 
@@ -75,6 +76,11 @@ def final_values() -> dict[str, int]:
         - balances["Cost of Goods Sold"]
         - balances["Freight-Out Expense"]
     )
+    gross_profit = net_sales - balances["Cost of Goods Sold"]
+    total_assets = balances["Cash"] + balances["Accounts Receivable"] + balances["Inventory"]
+    total_liabilities = balances["Accounts Payable"]
+    retained_earnings = income_effect
+    total_equity = balances["Common Stock"] + retained_earnings
     return {
         "cash": balances["Cash"],
         "accounts_receivable": balances["Accounts Receivable"],
@@ -82,8 +88,15 @@ def final_values() -> dict[str, int]:
         "accounts_payable": balances["Accounts Payable"],
         "net_sales": net_sales,
         "cost_of_goods_sold": balances["Cost of Goods Sold"],
+        "gross_profit": gross_profit,
         "freight_out_expense": balances["Freight-Out Expense"],
         "income_effect": income_effect,
+        "total_assets": total_assets,
+        "total_liabilities": total_liabilities,
+        "common_stock": balances["Common Stock"],
+        "retained_earnings": retained_earnings,
+        "total_equity": total_equity,
+        "total_liabilities_and_equity": total_liabilities + total_equity,
     }
 
 
@@ -95,6 +108,7 @@ def evaluate_statement_responses(responses: Mapping[str, str]) -> dict[str, dict
             "expected": item.correct,
             "correct": responses.get(item.id) == item.correct,
             "explanation": item.explanation,
+            "hint": item.hint,
         }
         for item in STATEMENT_QUESTIONS
     }

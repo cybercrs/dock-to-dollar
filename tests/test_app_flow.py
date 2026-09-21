@@ -15,6 +15,9 @@ class PerfectMerchandiseFlowTests(unittest.TestCase):
     def test_complete_case_reaches_debrief_with_allowed_reasoning_only(self):
         app = AppTest.from_file("streamlit_app.py", default_timeout=60).run()
         self.assertFalse(app.exception)
+        opening_caption = "\n".join(item.value for item in app.caption)
+        self.assertIn("Common Stock", opening_caption)
+        self.assertIn(r"\$10,000 cash", opening_caption)
         button(app, "Open the receiving file").click().run()
 
         for item in DECISIONS:
@@ -31,6 +34,10 @@ class PerfectMerchandiseFlowTests(unittest.TestCase):
         self.assertTrue(any("Case complete" in item.value for item in app.success))
         rendered = "\n".join(item.value for item in app.markdown).lower()
         self.assertIn("final mastery: complete", "\n".join(item.value for item in app.caption).lower())
+        self.assertIn("balance sheet", rendered)
+        self.assertIn("common stock", rendered)
+        self.assertIn("retained earnings", rendered)
+        self.assertIn("total liabilities and stockholders' equity", rendered)
         for banned in (r"\bdebits?\b", r"\bjournal\b", r"\bledger\b", r"\bposting\b"):
             self.assertIsNone(re.search(banned, rendered), banned)
         removed_labels = (
@@ -81,6 +88,7 @@ class PerfectMerchandiseFlowTests(unittest.TestCase):
             "Accounts Receivable",
             "Inventory",
             "Accounts Payable",
+            "Common Stock",
             "Sales Revenue",
             "Sales Returns and Allowances",
             "Sales Discounts",
@@ -90,6 +98,47 @@ class PerfectMerchandiseFlowTests(unittest.TestCase):
             self.assertIn(account, rendered)
         self.assertGreaterEqual(rendered.count("+$5,000"), 2)
         self.assertIn("account-delta positive", rendered)
+
+    def test_wrong_decision_shows_only_a_hint_before_revision(self):
+        app = AppTest.from_file("streamlit_app.py", default_timeout=60).run()
+        button(app, "Open the receiving file").click().run()
+        item = DECISIONS[0]
+        wrong = next(option for option in item.options if option != item.correct)
+        app.radio(key=f"widget_decision_{item.id}").set_value(wrong)
+        button(app, "Check the account analysis").click().run()
+
+        warning_text = "\n".join(alert.value for alert in app.warning)
+        self.assertIn(item.hint, warning_text)
+        self.assertNotIn(item.correct, warning_text)
+        self.assertNotIn("Best analysis", warning_text)
+        self.assertFalse(app.info)
+        rendered = "\n".join(item.value for item in app.markdown)
+        self.assertNotIn("account-delta positive", rendered)
+        self.assertIsNotNone(button(app, "Revise my analysis"))
+
+    def test_statement_labels_escape_currency_and_wrong_feedback_uses_hints(self):
+        app = AppTest.from_file("streamlit_app.py", default_timeout=60).run()
+        button(app, "Open the receiving file").click().run()
+        for decision in DECISIONS:
+            app.radio(key=f"widget_decision_{decision.id}").set_value(decision.correct)
+            button(app, "Check the account analysis").click().run()
+            button(app, "Continue").click().run()
+
+        cash_question = next(item for item in app.radio if "income effect different" in item.label)
+        self.assertIn(r"\$795", cash_question.label)
+        self.assertIn(r"\$1,855", cash_question.label)
+
+        first = STATEMENT_QUESTIONS[0]
+        wrong = next(option for option in first.options if option != first.correct)
+        app.radio(key=f"widget_statement_{first.id}").set_value(wrong)
+        for item in STATEMENT_QUESTIONS[1:]:
+            app.radio(key=f"widget_statement_{item.id}").set_value(item.correct)
+        button(app, "Check the ending financial story").click().run()
+
+        rendered = "\n".join(item.value for item in app.markdown)
+        self.assertIn(first.hint, rendered)
+        self.assertNotIn("Best analysis", rendered)
+        self.assertNotIn(first.correct, rendered)
 
 
 if __name__ == "__main__":
