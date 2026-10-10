@@ -1,0 +1,7 @@
+{
+  "source_repository": "cybercrs/dock-to-dollar",
+  "source_branch": "pilot/stlite-browser-navigation",
+  "source_commit": "52cc8b4dee40a511f8b5efb42174595d9b76735f",
+  "runtime": "stlite 1.8.1 / Streamlit 1.57.0 / Pyodide 0.29.3",
+  "purpose": "Browser pilot; independent from live Streamlit deployment"
+}
