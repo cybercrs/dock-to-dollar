@@ -1,0 +1,95 @@
+{
+  "source_commit": "8a0f25a2bff6f9f1eacbc8ab132ababc94974c87",
+  "unit_apptest": "32 passed",
+  "browser_checks": [
+    {
+      "name": "Actual Wasm UI and runtime versions",
+      "status": "passed"
+    },
+    {
+      "name": "Required selection and wrong-answer lock",
+      "status": "passed"
+    },
+    {
+      "name": "Revision and first-pass score",
+      "status": "passed"
+    },
+    {
+      "name": "Strict read-only Back/Forward through current step",
+      "status": "passed"
+    },
+    {
+      "name": "Drafts, stable answer order, refresh, and bookmark resume",
+      "status": "passed"
+    },
+    {
+      "name": "All 11 decisions and event balances",
+      "status": "passed"
+    },
+    {
+      "name": "Statement reveal gate and revisions",
+      "status": "passed"
+    },
+    {
+      "name": "Final results and full review",
+      "status": "passed"
+    },
+    {
+      "name": "Independent sessions and reset/new game",
+      "status": "passed"
+    },
+    {
+      "name": "Invalid progress and future view rejected",
+      "status": "passed"
+    },
+    {
+      "name": "Narrow viewport rendering",
+      "status": "passed"
+    },
+    {
+      "name": "Static hosting under a subdirectory",
+      "status": "passed"
+    },
+    {
+      "name": "No external assets or execution errors",
+      "status": "passed"
+    }
+  ],
+  "navigation_layout": {
+    "desktop": [
+      {
+        "x": 1054,
+        "y": 326.84375,
+        "width": 44,
+        "height": 44
+      },
+      {
+        "x": 1106,
+        "y": 326.84375,
+        "width": 44,
+        "height": 44
+      }
+    ],
+    "narrow": [
+      {
+        "x": 278,
+        "y": 338.765625,
+        "width": 44,
+        "height": 44
+      },
+      {
+        "x": 330,
+        "y": 338.765625,
+        "width": 44,
+        "height": 44
+      }
+    ]
+  },
+  "navigation_accessibility": "Native Back/Forward accessible names, tooltip, Tab focus ring, Enter navigation passed",
+  "console_errors": [],
+  "page_errors": [],
+  "external_requests": [],
+  "lint_compilation_whitespace": "passed",
+  "runtime_assets": "byte-identical to previous published preview",
+  "hosted_browser_check": "not-run: environment proxy blocks Pages hostname; no alternate route attempted"
+}

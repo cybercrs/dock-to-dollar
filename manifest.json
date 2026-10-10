@@ -245,7 +245,7 @@
   },
   "source_sha256": {
     "browser/__init__.py": "4abfff9ceb9d830a90d0c96ed8d606b07d51686a2d204319bdddb82a59866c20",
-    "browser/app.py": "92fa3fd1fe061f71dc96dbb25de3a1b61ad3787f9c17d7530cd2af492845b3c9",
+    "browser/app.py": "78d194a34a034912f72ed273f5750e33e4247b6bc04bdd93548bf1dda666ae9a",
     "browser/navigation.py": "90efe9de9ec3a58504c6280de483913ab8997564ee6f5c1ee5cb2332bd2d183c",
     "dock_to_dollar/__init__.py": "85638494b009fa9f62f0cbc2df33193abf79049f2688d882c8c0f6fb6db5f2c3",
     "dock_to_dollar/case_data.py": "c0892219d65565a046d90239f6c705d34078514f4f4d0521318ce5f81baea948",
