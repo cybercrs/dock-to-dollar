@@ -38,4 +38,6 @@ The app requires no login, database, or student name. It stores only compact ans
 
 ## Deployment
 
+A separate, locally tested browser pilot is documented in [browser/README.md](browser/README.md). Its static build and Back/Forward navigation are isolated from the Streamlit entrypoint and deployment configuration.
+
 The repository is ready for GitHub-based Streamlit Community Cloud deployment with `streamlit_app.py` as the application file. Public deployment should occur only after local interaction testing and instructor approval.
