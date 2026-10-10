@@ -91,7 +91,7 @@ def main():
 
     def at_view(page, view):
         state = wait_state(page, lambda state, raw: raw == str(view))
-        visible(page, f"Page {view + 1} of {CLOSEOUT + 2}. Back and Forward review reached pages.")
+        visible(page, f"Page {view + 1} of {CLOSEOUT + 2}")
         return state
 
     def click(page, label):
@@ -112,11 +112,28 @@ def main():
         page.get_by_role("button", name="Back", exact=True).wait_for(timeout=120000)
 
     def readonly(page):
+        from playwright.sync_api import expect
         visible(page, "Review only. Return to your current page to continue the activity.")
         assert page.get_by_role("radio").count() == 0
-        buttons = page.locator("[data-testid=stMain]").get_by_role("button").all_text_contents()
-        assert buttons == ["Back", "Forward"], buttons
+        buttons = page.locator("[data-testid=stMain]").get_by_role("button")
+        expect(buttons).to_have_count(2)
+        expect(buttons.nth(0)).to_have_accessible_name("Back")
+        expect(buttons.nth(1)).to_have_accessible_name("Forward")
         disabled(page, "Start over")
+
+    def navigation_layout(page, viewport):
+        nav = page.locator(".st-key-browser_navigation")
+        back = nav.get_by_role("button", name="Back", exact=True)
+        forward = nav.get_by_role("button", name="Forward", exact=True)
+        boxes = [button.bounding_box() for button in (back, forward)]
+        assert all(box is not None and 44 <= box["width"] <= 45
+                   and 44 <= box["height"] <= 45 for box in boxes), boxes
+        assert abs(boxes[0]["y"] - boxes[1]["y"]) <= 1, boxes
+        assert 0 < boxes[1]["x"] - boxes[0]["x"] <= 60, boxes
+        main = page.locator(".block-container").bounding_box()
+        assert boxes[0]["x"] > main["x"] + main["width"] / 2, (main, boxes)
+        assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth")
+        results.setdefault("navigation_layout", {})[viewport] = boxes
 
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(executable_path=args.chromium, headless=True,
@@ -147,6 +164,7 @@ def main():
             assert results["runtime"]["streamlit"] == "1.57.0"
             assert results["runtime"]["pyodide"] == "0.29.3"
             assert results["runtime"]["iframe"]
+            navigation_layout(page, "desktop")
             page.screenshot(path=str(args.results / "briefing.png"), full_page=True)
             passed(0)
 
@@ -188,6 +206,26 @@ def main():
                 click(page, "Forward")
                 assert at_view(page, 1) == state
                 assert page.get_by_role("radio").count() == 0
+            from playwright.sync_api import expect
+            page.get_by_role("button", name="Continue", exact=True).focus()
+            page.keyboard.press("Shift+Tab")
+            back = page.get_by_role("button", name="Back", exact=True)
+            expect(back).to_be_focused()
+            assert back.evaluate("element => element.matches(':focus-visible')")
+            assert back.evaluate("element => getComputedStyle(element).outlineWidth") == "2px"
+            back.hover()
+            page.get_by_text("Back: review the previous reached page. Earlier pages are read-only.",
+                             exact=True).wait_for()
+            page.keyboard.press("Enter")
+            at_view(page, 0)
+            readonly(page)
+            forward = page.get_by_role("button", name="Forward", exact=True)
+            forward.focus()
+            page.keyboard.press("Enter")
+            assert at_view(page, 1) == state
+            results["navigation_accessibility"] = "Native Back/Forward accessible names, tooltip, Tab focus ring, Enter navigation passed"
+            page.get_by_role("button", name="Continue", exact=True).focus()
+            page.mouse.move(0, 0)
             page.screenshot(path=str(args.results / "locked-decision.png"), full_page=True)
             passed(3)
 
@@ -328,7 +366,7 @@ def main():
             at_view(page, 1)
             assert page.get_by_role("button", name="Back", exact=True).is_visible()
             assert page.get_by_role("button", name="Forward", exact=True).is_visible()
-            assert page.evaluate("document.documentElement.scrollWidth <= window.innerWidth")
+            navigation_layout(page, "narrow")
             page.screenshot(path=str(args.results / "narrow.png"), full_page=True)
             passed(10)
 

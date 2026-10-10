@@ -4,6 +4,16 @@ All final checks below completed after the strict navigation clarification: past
 
 Branch: `pilot/stlite-browser-navigation`. Source baseline: `929496a1430ce8ba2ae18edc1afb3fe14332349c`.
 
+## Navigation appearance refinement
+
+The approved browser preview now uses two understated 44-by-44-pixel boxed arrows at the upper right, beside a quiet page counter. The native accessible names remain **Back** and **Forward**. Tooltips explain review navigation, and keyboard users retain Tab focus, a visible focus ring, and Enter activation.
+
+The UI change preserves every navigation callback and validation condition. `browser/navigation.py`, scoring, progress restoration, the current-page Open/Continue/Finish controls, and all protected server files are unchanged. All runtime assets are byte-identical to the previous published preview; the rebuilt bundle changes only `app.json`, `browser/app.py`, and `manifest.json`.
+
+The updated browser harness checks accessible names, tooltips, keyboard navigation, compact touch targets, upper-right placement, and no horizontal overflow at 1280-by-900 and 390-by-844 viewports, alongside the original 13 regression scenarios. Final evidence is recorded in `test-results/arrow-navigation-final/browser-results.json`, with screenshots in the same directory. Unit/AppTest, lint, compilation, and whitespace evidence use the `arrow-` logs.
+
+The approved preview uses the existing repository and `stlite-preview` publishing branch. Main and the live Streamlit deployment are preserved. The original unpublished-delivery notes below are historical. Hosted HTTPS UI testing remains **not run** because the saved environment's proxy rejects the Pages hostname; no alternate route is used. The user's approximately 40-second first load on an extremely slow connection is an observation, not a performance or classroom-capacity measurement. This styling change does not alter the runtime or loading architecture.
+
 ## Final results
 
 | Check | Result | Evidence |

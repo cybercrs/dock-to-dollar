@@ -63,6 +63,39 @@ if VIEW_KEY not in st.session_state:
     restore_view(st.session_state, st.query_params.get(VIEW_PARAM))
 
 st.markdown(app["APP_CSS"], unsafe_allow_html=True)
+st.markdown(
+    """
+    <style>
+    .st-key-browser_navigation button {
+        width: 44px; height: 44px; min-width: 44px; min-height: 44px;
+        position: relative; padding: 0; border: 1px solid #C5CCD8; border-radius: 6px;
+        background: transparent; color: #59677A; box-shadow: none;
+    }
+    .st-key-browser_navigation button::before {
+        content: ""; position: absolute; width: 20px; height: 20px;
+        top: 50%; left: 50%; transform: translate(-50%, -50%);
+        background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2359677A' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 12H5m0 0 7-7m-7 7 7 7'/%3E%3C/svg%3E");
+    }
+    .st-key-browser_forward button::before { transform: translate(-50%, -50%) rotate(180deg); }
+    /* Keep the native labels in the accessibility tree, beside decorative icons. */
+    .st-key-browser_navigation button p {
+        position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+        overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0;
+    }
+    .st-key-browser_navigation button:hover:not(:disabled) {
+        background: #E6EAF1; color: #14213D; border-color: #A7B2C3;
+    }
+    .st-key-browser_navigation button:focus-visible {
+        outline: 2px solid #003087; outline-offset: 2px;
+    }
+    .st-key-browser_navigation button:disabled { opacity: 0.55; }
+    .st-key-browser_navigation [data-testid="stCaptionContainer"] p {
+        color: #59677A; font-size: 0.75rem; margin: 0;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 app["render_hero"]()
 view = st.session_state[VIEW_KEY]
 reviewing = view < frontier(st.session_state)
@@ -72,10 +105,15 @@ with st.sidebar:
     st.write("Progress is saved anonymously in this page's address so a refresh does not erase your work.")
     st.button("Start over", width="stretch", on_click=restart, disabled=reviewing)
 
-left, right = st.columns(2)
-left.button("Back", width="stretch", disabled=view == 0, on_click=move, args=(st.session_state, -1))
-right.button("Forward", width="stretch", disabled=not can_forward(st.session_state), on_click=forward)
-st.caption(f"Page {view + 1} of {CLOSEOUT + 2}. Back and Forward review reached pages.")
+with st.container(key="browser_navigation", horizontal=True, horizontal_alignment="right",
+                  vertical_alignment="center", gap="xsmall"):
+    st.caption(f"Page {view + 1} of {CLOSEOUT + 2}", width="content")
+    st.button("Back", width=44, key="browser_back",
+              help="Back: review the previous reached page. Earlier pages are read-only.",
+              disabled=view == 0, on_click=move, args=(st.session_state, -1))
+    st.button("Forward", width=44, key="browser_forward",
+              help="Forward: review the next reached page. Use Continue or Finish on your current page.",
+              disabled=not can_forward(st.session_state), on_click=forward)
 if reviewing:
     st.info("Review only. Return to your current page to continue the activity.")
 

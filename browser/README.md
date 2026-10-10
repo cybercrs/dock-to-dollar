@@ -38,7 +38,7 @@ The official version-specific [stlite documentation](https://github.com/whitphx/
 
 ## Navigation and progress
 
-Use the activity's **Back** and **Forward** buttons to move between the briefing, eleven decisions, financial-statement connections, and results.
+Use the small boxed **Back** and **Forward** arrows at the upper right, beside the page counter, to move between the briefing, eleven decisions, financial-statement connections, and results. Their tooltips explain review navigation. Native accessible labels, keyboard focus, and 44-pixel touch targets are retained.
 
 - Back revisits earlier pages in a read-only view. Answer inputs and all submission, revision, reveal, and reset controls are unavailable there.
 - Forward traverses reached pages only and stops at the learner's actual current page, even when its answer is correct. Use the existing Open, Continue, or Finish action on that current page to advance through normal validation.
