@@ -4,3 +4,5 @@ __pycache__/
 *.pyc
 browser/dist/
 browser/test-results/
+native/dist/
+native/review/

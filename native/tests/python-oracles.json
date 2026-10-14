@@ -1,0 +1,1439 @@
+{
+  "balances": [
+    {
+      "Cash": 10000,
+      "Accounts Receivable": 0,
+      "Inventory": 0,
+      "Accounts Payable": 0,
+      "Common Stock": 10000,
+      "Sales Revenue": 0,
+      "Sales Returns and Allowances": 0,
+      "Sales Discounts": 0,
+      "Cost of Goods Sold": 0,
+      "Freight-Out Expense": 0
+    },
+    {
+      "Cash": 10000,
+      "Accounts Receivable": 0,
+      "Inventory": 5000,
+      "Accounts Payable": 5000,
+      "Common Stock": 10000,
+      "Sales Revenue": 0,
+      "Sales Returns and Allowances": 0,
+      "Sales Discounts": 0,
+      "Cost of Goods Sold": 0,
+      "Freight-Out Expense": 0
+    },
+    {
+      "Cash": 9920,
+      "Accounts Receivable": 0,
+      "Inventory": 5080,
+      "Accounts Payable": 5000,
+      "Common Stock": 10000,
+      "Sales Revenue": 0,
+      "Sales Returns and Allowances": 0,
+      "Sales Discounts": 0,
+      "Cost of Goods Sold": 0,
+      "Freight-Out Expense": 0
+    },
+    {
+      "Cash": 9920,
+      "Accounts Receivable": 0,
+      "Inventory": 4080,
+      "Accounts Payable": 4000,
+      "Common Stock": 10000,
+      "Sales Revenue": 0,
+      "Sales Returns and Allowances": 0,
+      "Sales Discounts": 0,
+      "Cost of Goods Sold": 0,
+      "Freight-Out Expense": 0
+    },
+    {
+      "Cash": 6000,
+      "Accounts Receivable": 0,
+      "Inventory": 4000,
+      "Accounts Payable": 0,
+      "Common Stock": 10000,
+      "Sales Revenue": 0,
+      "Sales Returns and Allowances": 0,
+      "Sales Discounts": 0,
+      "Cost of Goods Sold": 0,
+      "Freight-Out Expense": 0
+    },
+    {
+      "Cash": 6000,
+      "Accounts Receivable": 2700,
+      "Inventory": 2500,
+      "Accounts Payable": 0,
+      "Common Stock": 10000,
+      "Sales Revenue": 2700,
+      "Sales Returns and Allowances": 0,
+      "Sales Discounts": 0,
+      "Cost of Goods Sold": 1500,
+      "Freight-Out Expense": 0
+    },
+    {
+      "Cash": 5940,
+      "Accounts Receivable": 2700,
+      "Inventory": 2500,
+      "Accounts Payable": 0,
+      "Common Stock": 10000,
+      "Sales Revenue": 2700,
+      "Sales Returns and Allowances": 0,
+      "Sales Discounts": 0,
+      "Cost of Goods Sold": 1500,
+      "Freight-Out Expense": 60
+    },
+    {
+      "Cash": 5940,
+      "Accounts Receivable": 2250,
+      "Inventory": 2750,
+      "Accounts Payable": 0,
+      "Common Stock": 10000,
+      "Sales Revenue": 2700,
+      "Sales Returns and Allowances": 450,
+      "Sales Discounts": 0,
+      "Cost of Goods Sold": 1250,
+      "Freight-Out Expense": 60
+    },
+    {
+      "Cash": 8145,
+      "Accounts Receivable": 0,
+      "Inventory": 2750,
+      "Accounts Payable": 0,
+      "Common Stock": 10000,
+      "Sales Revenue": 2700,
+      "Sales Returns and Allowances": 450,
+      "Sales Discounts": 45,
+      "Cost of Goods Sold": 1250,
+      "Freight-Out Expense": 60
+    },
+    {
+      "Cash": 8145,
+      "Accounts Receivable": 0,
+      "Inventory": 2650,
+      "Accounts Payable": 0,
+      "Common Stock": 10000,
+      "Sales Revenue": 2700,
+      "Sales Returns and Allowances": 450,
+      "Sales Discounts": 45,
+      "Cost of Goods Sold": 1350,
+      "Freight-Out Expense": 60
+    }
+  ],
+  "units": [
+    0,
+    100,
+    100,
+    80,
+    80,
+    50,
+    50,
+    55,
+    55,
+    53
+  ],
+  "final": {
+    "cash": 8145,
+    "accounts_receivable": 0,
+    "inventory": 2650,
+    "accounts_payable": 0,
+    "net_sales": 2205,
+    "cost_of_goods_sold": 1350,
+    "gross_profit": 855,
+    "freight_out_expense": 60,
+    "income_effect": 795,
+    "total_assets": 10795,
+    "total_liabilities": 0,
+    "common_stock": 10000,
+    "retained_earnings": 795,
+    "total_equity": 10795,
+    "total_liabilities_and_equity": 10795
+  },
+  "currency": [
+    [
+      -1000,
+      "-$1,000"
+    ],
+    [
+      -2.5,
+      "-$2"
+    ],
+    [
+      -1.5,
+      "-$2"
+    ],
+    [
+      0,
+      "$0"
+    ],
+    [
+      0.5,
+      "$0"
+    ],
+    [
+      1.5,
+      "$2"
+    ],
+    [
+      2.5,
+      "$2"
+    ],
+    [
+      10795,
+      "$10,795"
+    ]
+  ],
+  "orders": [
+    {
+      "seed": "0",
+      "salt": "decision-answer-order:ownership_inbound",
+      "options": [
+        "November 2, when the carrier accepts the shipment",
+        "November 3, when the shipment arrives",
+        "When Gem City Goods pays the supplier"
+      ],
+      "expected": [
+        "November 3, when the shipment arrives",
+        "November 2, when the carrier accepts the shipment",
+        "When Gem City Goods pays the supplier"
+      ]
+    },
+    {
+      "seed": "0",
+      "salt": "decision-answer-order:purchase_effect",
+      "options": [
+        "Inventory increases $5,000 and Accounts Payable increases $5,000",
+        "Inventory increases $5,000 and Cash decreases $5,000",
+        "Cost of Goods Sold increases $5,000 and Accounts Payable increases $5,000"
+      ],
+      "expected": [
+        "Inventory increases $5,000 and Cash decreases $5,000",
+        "Cost of Goods Sold increases $5,000 and Accounts Payable increases $5,000",
+        "Inventory increases $5,000 and Accounts Payable increases $5,000"
+      ]
+    },
+    {
+      "seed": "0",
+      "salt": "decision-answer-order:freight_in_effect",
+      "options": [
+        "Inventory increases $80 and Cash decreases $80",
+        "Freight-Out Expense increases $80 and Cash decreases $80",
+        "Cost of Goods Sold increases $80 and Cash decreases $80"
+      ],
+      "expected": [
+        "Cost of Goods Sold increases $80 and Cash decreases $80",
+        "Freight-Out Expense increases $80 and Cash decreases $80",
+        "Inventory increases $80 and Cash decreases $80"
+      ]
+    },
+    {
+      "seed": "0",
+      "salt": "decision-answer-order:purchase_return_effect",
+      "options": [
+        "Inventory decreases $1,000 and Accounts Payable decreases $1,000",
+        "Inventory decreases $1,000 and Cash increases $1,000",
+        "Sales Returns and Allowances increases $1,000 and Inventory decreases $1,000"
+      ],
+      "expected": [
+        "Inventory decreases $1,000 and Cash increases $1,000",
+        "Sales Returns and Allowances increases $1,000 and Inventory decreases $1,000",
+        "Inventory decreases $1,000 and Accounts Payable decreases $1,000"
+      ]
+    },
+    {
+      "seed": "0",
+      "salt": "decision-answer-order:purchase_discount_effect",
+      "options": [
+        "Pay $3,920; Accounts Payable decreases $4,000 and Inventory decreases $80",
+        "Pay $4,000; Accounts Payable decreases $4,000 and Inventory is unchanged",
+        "Pay $3,900; Accounts Payable decreases $4,000 and Sales Discounts increases $100"
+      ],
+      "expected": [
+        "Pay $4,000; Accounts Payable decreases $4,000 and Inventory is unchanged",
+        "Pay $3,900; Accounts Payable decreases $4,000 and Sales Discounts increases $100",
+        "Pay $3,920; Accounts Payable decreases $4,000 and Inventory decreases $80"
+      ]
+    },
+    {
+      "seed": "0",
+      "salt": "decision-answer-order:sale_recognition",
+      "options": [
+        "November 16, when the goods reach the customer",
+        "November 15, when the carrier picks up the goods",
+        "When the customer later pays"
+      ],
+      "expected": [
+        "November 15, when the carrier picks up the goods",
+        "When the customer later pays",
+        "November 16, when the goods reach the customer"
+      ]
+    },
+    {
+      "seed": "0",
+      "salt": "decision-answer-order:sale_two_effects",
+      "options": [
+        "Accounts Receivable and Sales Revenue increase $2,700; Cost of Goods Sold increases and Inventory decreases $1,500",
+        "Cash and Sales Revenue increase $2,700; Inventory decreases $2,700",
+        "Accounts Receivable increases $1,500; Sales Revenue and Inventory each increase $2,700"
+      ],
+      "expected": [
+        "Cash and Sales Revenue increase $2,700; Inventory decreases $2,700",
+        "Accounts Receivable increases $1,500; Sales Revenue and Inventory each increase $2,700",
+        "Accounts Receivable and Sales Revenue increase $2,700; Cost of Goods Sold increases and Inventory decreases $1,500"
+      ]
+    },
+    {
+      "seed": "0",
+      "salt": "decision-answer-order:freight_out_effect",
+      "options": [
+        "Freight-Out Expense increases $60 and Cash decreases $60",
+        "Inventory increases $60 and Cash decreases $60",
+        "Cost of Goods Sold decreases $60 and Cash decreases $60"
+      ],
+      "expected": [
+        "Cost of Goods Sold decreases $60 and Cash decreases $60",
+        "Inventory increases $60 and Cash decreases $60",
+        "Freight-Out Expense increases $60 and Cash decreases $60"
+      ]
+    },
+    {
+      "seed": "0",
+      "salt": "decision-answer-order:sales_return_effect",
+      "options": [
+        "Sales Returns and Allowances increases and Accounts Receivable decreases $450; Inventory increases and Cost of Goods Sold decreases $250",
+        "Inventory decreases and Accounts Payable decreases $450; Cost of Goods Sold increases $250",
+        "Cash decreases $450; Sales Revenue decreases $250; Inventory is unchanged"
+      ],
+      "expected": [
+        "Inventory decreases and Accounts Payable decreases $450; Cost of Goods Sold increases $250",
+        "Sales Returns and Allowances increases and Accounts Receivable decreases $450; Inventory increases and Cost of Goods Sold decreases $250",
+        "Cash decreases $450; Sales Revenue decreases $250; Inventory is unchanged"
+      ]
+    },
+    {
+      "seed": "0",
+      "salt": "decision-answer-order:sales_discount_effect",
+      "options": [
+        "Collect $2,205; Accounts Receivable decreases $2,250 and Sales Discounts increases $45",
+        "Collect $2,250; Accounts Receivable decreases $2,250 and Sales Discounts is unchanged",
+        "Collect $2,196; Accounts Receivable decreases $2,250 and Inventory decreases $54"
+      ],
+      "expected": [
+        "Collect $2,196; Accounts Receivable decreases $2,250 and Inventory decreases $54",
+        "Collect $2,205; Accounts Receivable decreases $2,250 and Sales Discounts increases $45",
+        "Collect $2,250; Accounts Receivable decreases $2,250 and Sales Discounts is unchanged"
+      ]
+    },
+    {
+      "seed": "0",
+      "salt": "decision-answer-order:count_effect",
+      "options": [
+        "Inventory decreases $100 and Cost of Goods Sold increases $100",
+        "Inventory increases $100 and Sales Revenue increases $100",
+        "Accounts Payable decreases $100 and Inventory is unchanged"
+      ],
+      "expected": [
+        "Inventory increases $100 and Sales Revenue increases $100",
+        "Accounts Payable decreases $100 and Inventory is unchanged",
+        "Inventory decreases $100 and Cost of Goods Sold increases $100"
+      ]
+    },
+    {
+      "seed": "0",
+      "salt": "statement-answer-order:income_bridge",
+      "options": [
+        "Subtract Cost of Goods Sold and Freight-Out Expense from Net Sales",
+        "Add ending Inventory to Net Sales, then subtract Accounts Payable",
+        "Subtract the supplier payment from the cash collected from the customer"
+      ],
+      "expected": [
+        "Subtract Cost of Goods Sold and Freight-Out Expense from Net Sales",
+        "Subtract the supplier payment from the cash collected from the customer",
+        "Add ending Inventory to Net Sales, then subtract Accounts Payable"
+      ]
+    },
+    {
+      "seed": "0",
+      "salt": "statement-answer-order:contra_revenue",
+      "options": [
+        "The customer return and the sales discount",
+        "The supplier return and the purchase discount",
+        "The inbound freight and the outbound freight"
+      ],
+      "expected": [
+        "The inbound freight and the outbound freight",
+        "The customer return and the sales discount",
+        "The supplier return and the purchase discount"
+      ]
+    },
+    {
+      "seed": "0",
+      "salt": "statement-answer-order:cash_vs_income",
+      "options": [
+        "Cash reflects when amounts were paid or collected; income reflects Net Sales minus the related expenses",
+        "Income always equals ending Cash minus opening Cash once Accounts Receivable reaches zero",
+        "The difference exists only because the physical count changed the number of units on hand"
+      ],
+      "expected": [
+        "The difference exists only because the physical count changed the number of units on hand",
+        "Cash reflects when amounts were paid or collected; income reflects Net Sales minus the related expenses",
+        "Income always equals ending Cash minus opening Cash once Accounts Receivable reaches zero"
+      ]
+    },
+    {
+      "seed": "1",
+      "salt": "decision-answer-order:ownership_inbound",
+      "options": [
+        "November 2, when the carrier accepts the shipment",
+        "November 3, when the shipment arrives",
+        "When Gem City Goods pays the supplier"
+      ],
+      "expected": [
+        "November 3, when the shipment arrives",
+        "When Gem City Goods pays the supplier",
+        "November 2, when the carrier accepts the shipment"
+      ]
+    },
+    {
+      "seed": "1",
+      "salt": "decision-answer-order:purchase_effect",
+      "options": [
+        "Inventory increases $5,000 and Accounts Payable increases $5,000",
+        "Inventory increases $5,000 and Cash decreases $5,000",
+        "Cost of Goods Sold increases $5,000 and Accounts Payable increases $5,000"
+      ],
+      "expected": [
+        "Inventory increases $5,000 and Cash decreases $5,000",
+        "Cost of Goods Sold increases $5,000 and Accounts Payable increases $5,000",
+        "Inventory increases $5,000 and Accounts Payable increases $5,000"
+      ]
+    },
+    {
+      "seed": "1",
+      "salt": "decision-answer-order:freight_in_effect",
+      "options": [
+        "Inventory increases $80 and Cash decreases $80",
+        "Freight-Out Expense increases $80 and Cash decreases $80",
+        "Cost of Goods Sold increases $80 and Cash decreases $80"
+      ],
+      "expected": [
+        "Freight-Out Expense increases $80 and Cash decreases $80",
+        "Cost of Goods Sold increases $80 and Cash decreases $80",
+        "Inventory increases $80 and Cash decreases $80"
+      ]
+    },
+    {
+      "seed": "1",
+      "salt": "decision-answer-order:purchase_return_effect",
+      "options": [
+        "Inventory decreases $1,000 and Accounts Payable decreases $1,000",
+        "Inventory decreases $1,000 and Cash increases $1,000",
+        "Sales Returns and Allowances increases $1,000 and Inventory decreases $1,000"
+      ],
+      "expected": [
+        "Inventory decreases $1,000 and Accounts Payable decreases $1,000",
+        "Sales Returns and Allowances increases $1,000 and Inventory decreases $1,000",
+        "Inventory decreases $1,000 and Cash increases $1,000"
+      ]
+    },
+    {
+      "seed": "1",
+      "salt": "decision-answer-order:purchase_discount_effect",
+      "options": [
+        "Pay $3,920; Accounts Payable decreases $4,000 and Inventory decreases $80",
+        "Pay $4,000; Accounts Payable decreases $4,000 and Inventory is unchanged",
+        "Pay $3,900; Accounts Payable decreases $4,000 and Sales Discounts increases $100"
+      ],
+      "expected": [
+        "Pay $4,000; Accounts Payable decreases $4,000 and Inventory is unchanged",
+        "Pay $3,900; Accounts Payable decreases $4,000 and Sales Discounts increases $100",
+        "Pay $3,920; Accounts Payable decreases $4,000 and Inventory decreases $80"
+      ]
+    },
+    {
+      "seed": "1",
+      "salt": "decision-answer-order:sale_recognition",
+      "options": [
+        "November 16, when the goods reach the customer",
+        "November 15, when the carrier picks up the goods",
+        "When the customer later pays"
+      ],
+      "expected": [
+        "November 15, when the carrier picks up the goods",
+        "When the customer later pays",
+        "November 16, when the goods reach the customer"
+      ]
+    },
+    {
+      "seed": "1",
+      "salt": "decision-answer-order:sale_two_effects",
+      "options": [
+        "Accounts Receivable and Sales Revenue increase $2,700; Cost of Goods Sold increases and Inventory decreases $1,500",
+        "Cash and Sales Revenue increase $2,700; Inventory decreases $2,700",
+        "Accounts Receivable increases $1,500; Sales Revenue and Inventory each increase $2,700"
+      ],
+      "expected": [
+        "Accounts Receivable increases $1,500; Sales Revenue and Inventory each increase $2,700",
+        "Accounts Receivable and Sales Revenue increase $2,700; Cost of Goods Sold increases and Inventory decreases $1,500",
+        "Cash and Sales Revenue increase $2,700; Inventory decreases $2,700"
+      ]
+    },
+    {
+      "seed": "1",
+      "salt": "decision-answer-order:freight_out_effect",
+      "options": [
+        "Freight-Out Expense increases $60 and Cash decreases $60",
+        "Inventory increases $60 and Cash decreases $60",
+        "Cost of Goods Sold decreases $60 and Cash decreases $60"
+      ],
+      "expected": [
+        "Cost of Goods Sold decreases $60 and Cash decreases $60",
+        "Inventory increases $60 and Cash decreases $60",
+        "Freight-Out Expense increases $60 and Cash decreases $60"
+      ]
+    },
+    {
+      "seed": "1",
+      "salt": "decision-answer-order:sales_return_effect",
+      "options": [
+        "Sales Returns and Allowances increases and Accounts Receivable decreases $450; Inventory increases and Cost of Goods Sold decreases $250",
+        "Inventory decreases and Accounts Payable decreases $450; Cost of Goods Sold increases $250",
+        "Cash decreases $450; Sales Revenue decreases $250; Inventory is unchanged"
+      ],
+      "expected": [
+        "Sales Returns and Allowances increases and Accounts Receivable decreases $450; Inventory increases and Cost of Goods Sold decreases $250",
+        "Cash decreases $450; Sales Revenue decreases $250; Inventory is unchanged",
+        "Inventory decreases and Accounts Payable decreases $450; Cost of Goods Sold increases $250"
+      ]
+    },
+    {
+      "seed": "1",
+      "salt": "decision-answer-order:sales_discount_effect",
+      "options": [
+        "Collect $2,205; Accounts Receivable decreases $2,250 and Sales Discounts increases $45",
+        "Collect $2,250; Accounts Receivable decreases $2,250 and Sales Discounts is unchanged",
+        "Collect $2,196; Accounts Receivable decreases $2,250 and Inventory decreases $54"
+      ],
+      "expected": [
+        "Collect $2,205; Accounts Receivable decreases $2,250 and Sales Discounts increases $45",
+        "Collect $2,196; Accounts Receivable decreases $2,250 and Inventory decreases $54",
+        "Collect $2,250; Accounts Receivable decreases $2,250 and Sales Discounts is unchanged"
+      ]
+    },
+    {
+      "seed": "1",
+      "salt": "decision-answer-order:count_effect",
+      "options": [
+        "Inventory decreases $100 and Cost of Goods Sold increases $100",
+        "Inventory increases $100 and Sales Revenue increases $100",
+        "Accounts Payable decreases $100 and Inventory is unchanged"
+      ],
+      "expected": [
+        "Inventory decreases $100 and Cost of Goods Sold increases $100",
+        "Accounts Payable decreases $100 and Inventory is unchanged",
+        "Inventory increases $100 and Sales Revenue increases $100"
+      ]
+    },
+    {
+      "seed": "1",
+      "salt": "statement-answer-order:income_bridge",
+      "options": [
+        "Subtract Cost of Goods Sold and Freight-Out Expense from Net Sales",
+        "Add ending Inventory to Net Sales, then subtract Accounts Payable",
+        "Subtract the supplier payment from the cash collected from the customer"
+      ],
+      "expected": [
+        "Add ending Inventory to Net Sales, then subtract Accounts Payable",
+        "Subtract the supplier payment from the cash collected from the customer",
+        "Subtract Cost of Goods Sold and Freight-Out Expense from Net Sales"
+      ]
+    },
+    {
+      "seed": "1",
+      "salt": "statement-answer-order:contra_revenue",
+      "options": [
+        "The customer return and the sales discount",
+        "The supplier return and the purchase discount",
+        "The inbound freight and the outbound freight"
+      ],
+      "expected": [
+        "The customer return and the sales discount",
+        "The inbound freight and the outbound freight",
+        "The supplier return and the purchase discount"
+      ]
+    },
+    {
+      "seed": "1",
+      "salt": "statement-answer-order:cash_vs_income",
+      "options": [
+        "Cash reflects when amounts were paid or collected; income reflects Net Sales minus the related expenses",
+        "Income always equals ending Cash minus opening Cash once Accounts Receivable reaches zero",
+        "The difference exists only because the physical count changed the number of units on hand"
+      ],
+      "expected": [
+        "The difference exists only because the physical count changed the number of units on hand",
+        "Cash reflects when amounts were paid or collected; income reflects Net Sales minus the related expenses",
+        "Income always equals ending Cash minus opening Cash once Accounts Receivable reaches zero"
+      ]
+    },
+    {
+      "seed": "2",
+      "salt": "decision-answer-order:ownership_inbound",
+      "options": [
+        "November 2, when the carrier accepts the shipment",
+        "November 3, when the shipment arrives",
+        "When Gem City Goods pays the supplier"
+      ],
+      "expected": [
+        "When Gem City Goods pays the supplier",
+        "November 2, when the carrier accepts the shipment",
+        "November 3, when the shipment arrives"
+      ]
+    },
+    {
+      "seed": "2",
+      "salt": "decision-answer-order:purchase_effect",
+      "options": [
+        "Inventory increases $5,000 and Accounts Payable increases $5,000",
+        "Inventory increases $5,000 and Cash decreases $5,000",
+        "Cost of Goods Sold increases $5,000 and Accounts Payable increases $5,000"
+      ],
+      "expected": [
+        "Cost of Goods Sold increases $5,000 and Accounts Payable increases $5,000",
+        "Inventory increases $5,000 and Accounts Payable increases $5,000",
+        "Inventory increases $5,000 and Cash decreases $5,000"
+      ]
+    },
+    {
+      "seed": "2",
+      "salt": "decision-answer-order:freight_in_effect",
+      "options": [
+        "Inventory increases $80 and Cash decreases $80",
+        "Freight-Out Expense increases $80 and Cash decreases $80",
+        "Cost of Goods Sold increases $80 and Cash decreases $80"
+      ],
+      "expected": [
+        "Cost of Goods Sold increases $80 and Cash decreases $80",
+        "Freight-Out Expense increases $80 and Cash decreases $80",
+        "Inventory increases $80 and Cash decreases $80"
+      ]
+    },
+    {
+      "seed": "2",
+      "salt": "decision-answer-order:purchase_return_effect",
+      "options": [
+        "Inventory decreases $1,000 and Accounts Payable decreases $1,000",
+        "Inventory decreases $1,000 and Cash increases $1,000",
+        "Sales Returns and Allowances increases $1,000 and Inventory decreases $1,000"
+      ],
+      "expected": [
+        "Inventory decreases $1,000 and Cash increases $1,000",
+        "Inventory decreases $1,000 and Accounts Payable decreases $1,000",
+        "Sales Returns and Allowances increases $1,000 and Inventory decreases $1,000"
+      ]
+    },
+    {
+      "seed": "2",
+      "salt": "decision-answer-order:purchase_discount_effect",
+      "options": [
+        "Pay $3,920; Accounts Payable decreases $4,000 and Inventory decreases $80",
+        "Pay $4,000; Accounts Payable decreases $4,000 and Inventory is unchanged",
+        "Pay $3,900; Accounts Payable decreases $4,000 and Sales Discounts increases $100"
+      ],
+      "expected": [
+        "Pay $3,920; Accounts Payable decreases $4,000 and Inventory decreases $80",
+        "Pay $3,900; Accounts Payable decreases $4,000 and Sales Discounts increases $100",
+        "Pay $4,000; Accounts Payable decreases $4,000 and Inventory is unchanged"
+      ]
+    },
+    {
+      "seed": "2",
+      "salt": "decision-answer-order:sale_recognition",
+      "options": [
+        "November 16, when the goods reach the customer",
+        "November 15, when the carrier picks up the goods",
+        "When the customer later pays"
+      ],
+      "expected": [
+        "When the customer later pays",
+        "November 16, when the goods reach the customer",
+        "November 15, when the carrier picks up the goods"
+      ]
+    },
+    {
+      "seed": "2",
+      "salt": "decision-answer-order:sale_two_effects",
+      "options": [
+        "Accounts Receivable and Sales Revenue increase $2,700; Cost of Goods Sold increases and Inventory decreases $1,500",
+        "Cash and Sales Revenue increase $2,700; Inventory decreases $2,700",
+        "Accounts Receivable increases $1,500; Sales Revenue and Inventory each increase $2,700"
+      ],
+      "expected": [
+        "Cash and Sales Revenue increase $2,700; Inventory decreases $2,700",
+        "Accounts Receivable and Sales Revenue increase $2,700; Cost of Goods Sold increases and Inventory decreases $1,500",
+        "Accounts Receivable increases $1,500; Sales Revenue and Inventory each increase $2,700"
+      ]
+    },
+    {
+      "seed": "2",
+      "salt": "decision-answer-order:freight_out_effect",
+      "options": [
+        "Freight-Out Expense increases $60 and Cash decreases $60",
+        "Inventory increases $60 and Cash decreases $60",
+        "Cost of Goods Sold decreases $60 and Cash decreases $60"
+      ],
+      "expected": [
+        "Inventory increases $60 and Cash decreases $60",
+        "Cost of Goods Sold decreases $60 and Cash decreases $60",
+        "Freight-Out Expense increases $60 and Cash decreases $60"
+      ]
+    },
+    {
+      "seed": "2",
+      "salt": "decision-answer-order:sales_return_effect",
+      "options": [
+        "Sales Returns and Allowances increases and Accounts Receivable decreases $450; Inventory increases and Cost of Goods Sold decreases $250",
+        "Inventory decreases and Accounts Payable decreases $450; Cost of Goods Sold increases $250",
+        "Cash decreases $450; Sales Revenue decreases $250; Inventory is unchanged"
+      ],
+      "expected": [
+        "Cash decreases $450; Sales Revenue decreases $250; Inventory is unchanged",
+        "Inventory decreases and Accounts Payable decreases $450; Cost of Goods Sold increases $250",
+        "Sales Returns and Allowances increases and Accounts Receivable decreases $450; Inventory increases and Cost of Goods Sold decreases $250"
+      ]
+    },
+    {
+      "seed": "2",
+      "salt": "decision-answer-order:sales_discount_effect",
+      "options": [
+        "Collect $2,205; Accounts Receivable decreases $2,250 and Sales Discounts increases $45",
+        "Collect $2,250; Accounts Receivable decreases $2,250 and Sales Discounts is unchanged",
+        "Collect $2,196; Accounts Receivable decreases $2,250 and Inventory decreases $54"
+      ],
+      "expected": [
+        "Collect $2,196; Accounts Receivable decreases $2,250 and Inventory decreases $54",
+        "Collect $2,250; Accounts Receivable decreases $2,250 and Sales Discounts is unchanged",
+        "Collect $2,205; Accounts Receivable decreases $2,250 and Sales Discounts increases $45"
+      ]
+    },
+    {
+      "seed": "2",
+      "salt": "decision-answer-order:count_effect",
+      "options": [
+        "Inventory decreases $100 and Cost of Goods Sold increases $100",
+        "Inventory increases $100 and Sales Revenue increases $100",
+        "Accounts Payable decreases $100 and Inventory is unchanged"
+      ],
+      "expected": [
+        "Inventory increases $100 and Sales Revenue increases $100",
+        "Accounts Payable decreases $100 and Inventory is unchanged",
+        "Inventory decreases $100 and Cost of Goods Sold increases $100"
+      ]
+    },
+    {
+      "seed": "2",
+      "salt": "statement-answer-order:income_bridge",
+      "options": [
+        "Subtract Cost of Goods Sold and Freight-Out Expense from Net Sales",
+        "Add ending Inventory to Net Sales, then subtract Accounts Payable",
+        "Subtract the supplier payment from the cash collected from the customer"
+      ],
+      "expected": [
+        "Add ending Inventory to Net Sales, then subtract Accounts Payable",
+        "Subtract Cost of Goods Sold and Freight-Out Expense from Net Sales",
+        "Subtract the supplier payment from the cash collected from the customer"
+      ]
+    },
+    {
+      "seed": "2",
+      "salt": "statement-answer-order:contra_revenue",
+      "options": [
+        "The customer return and the sales discount",
+        "The supplier return and the purchase discount",
+        "The inbound freight and the outbound freight"
+      ],
+      "expected": [
+        "The supplier return and the purchase discount",
+        "The inbound freight and the outbound freight",
+        "The customer return and the sales discount"
+      ]
+    },
+    {
+      "seed": "2",
+      "salt": "statement-answer-order:cash_vs_income",
+      "options": [
+        "Cash reflects when amounts were paid or collected; income reflects Net Sales minus the related expenses",
+        "Income always equals ending Cash minus opening Cash once Accounts Receivable reaches zero",
+        "The difference exists only because the physical count changed the number of units on hand"
+      ],
+      "expected": [
+        "The difference exists only because the physical count changed the number of units on hand",
+        "Cash reflects when amounts were paid or collected; income reflects Net Sales minus the related expenses",
+        "Income always equals ending Cash minus opening Cash once Accounts Receivable reaches zero"
+      ]
+    },
+    {
+      "seed": "34107",
+      "salt": "decision-answer-order:ownership_inbound",
+      "options": [
+        "November 2, when the carrier accepts the shipment",
+        "November 3, when the shipment arrives",
+        "When Gem City Goods pays the supplier"
+      ],
+      "expected": [
+        "November 3, when the shipment arrives",
+        "November 2, when the carrier accepts the shipment",
+        "When Gem City Goods pays the supplier"
+      ]
+    },
+    {
+      "seed": "34107",
+      "salt": "decision-answer-order:purchase_effect",
+      "options": [
+        "Inventory increases $5,000 and Accounts Payable increases $5,000",
+        "Inventory increases $5,000 and Cash decreases $5,000",
+        "Cost of Goods Sold increases $5,000 and Accounts Payable increases $5,000"
+      ],
+      "expected": [
+        "Cost of Goods Sold increases $5,000 and Accounts Payable increases $5,000",
+        "Inventory increases $5,000 and Accounts Payable increases $5,000",
+        "Inventory increases $5,000 and Cash decreases $5,000"
+      ]
+    },
+    {
+      "seed": "34107",
+      "salt": "decision-answer-order:freight_in_effect",
+      "options": [
+        "Inventory increases $80 and Cash decreases $80",
+        "Freight-Out Expense increases $80 and Cash decreases $80",
+        "Cost of Goods Sold increases $80 and Cash decreases $80"
+      ],
+      "expected": [
+        "Freight-Out Expense increases $80 and Cash decreases $80",
+        "Cost of Goods Sold increases $80 and Cash decreases $80",
+        "Inventory increases $80 and Cash decreases $80"
+      ]
+    },
+    {
+      "seed": "34107",
+      "salt": "decision-answer-order:purchase_return_effect",
+      "options": [
+        "Inventory decreases $1,000 and Accounts Payable decreases $1,000",
+        "Inventory decreases $1,000 and Cash increases $1,000",
+        "Sales Returns and Allowances increases $1,000 and Inventory decreases $1,000"
+      ],
+      "expected": [
+        "Inventory decreases $1,000 and Accounts Payable decreases $1,000",
+        "Sales Returns and Allowances increases $1,000 and Inventory decreases $1,000",
+        "Inventory decreases $1,000 and Cash increases $1,000"
+      ]
+    },
+    {
+      "seed": "34107",
+      "salt": "decision-answer-order:purchase_discount_effect",
+      "options": [
+        "Pay $3,920; Accounts Payable decreases $4,000 and Inventory decreases $80",
+        "Pay $4,000; Accounts Payable decreases $4,000 and Inventory is unchanged",
+        "Pay $3,900; Accounts Payable decreases $4,000 and Sales Discounts increases $100"
+      ],
+      "expected": [
+        "Pay $4,000; Accounts Payable decreases $4,000 and Inventory is unchanged",
+        "Pay $3,900; Accounts Payable decreases $4,000 and Sales Discounts increases $100",
+        "Pay $3,920; Accounts Payable decreases $4,000 and Inventory decreases $80"
+      ]
+    },
+    {
+      "seed": "34107",
+      "salt": "decision-answer-order:sale_recognition",
+      "options": [
+        "November 16, when the goods reach the customer",
+        "November 15, when the carrier picks up the goods",
+        "When the customer later pays"
+      ],
+      "expected": [
+        "November 16, when the goods reach the customer",
+        "When the customer later pays",
+        "November 15, when the carrier picks up the goods"
+      ]
+    },
+    {
+      "seed": "34107",
+      "salt": "decision-answer-order:sale_two_effects",
+      "options": [
+        "Accounts Receivable and Sales Revenue increase $2,700; Cost of Goods Sold increases and Inventory decreases $1,500",
+        "Cash and Sales Revenue increase $2,700; Inventory decreases $2,700",
+        "Accounts Receivable increases $1,500; Sales Revenue and Inventory each increase $2,700"
+      ],
+      "expected": [
+        "Accounts Receivable increases $1,500; Sales Revenue and Inventory each increase $2,700",
+        "Cash and Sales Revenue increase $2,700; Inventory decreases $2,700",
+        "Accounts Receivable and Sales Revenue increase $2,700; Cost of Goods Sold increases and Inventory decreases $1,500"
+      ]
+    },
+    {
+      "seed": "34107",
+      "salt": "decision-answer-order:freight_out_effect",
+      "options": [
+        "Freight-Out Expense increases $60 and Cash decreases $60",
+        "Inventory increases $60 and Cash decreases $60",
+        "Cost of Goods Sold decreases $60 and Cash decreases $60"
+      ],
+      "expected": [
+        "Inventory increases $60 and Cash decreases $60",
+        "Cost of Goods Sold decreases $60 and Cash decreases $60",
+        "Freight-Out Expense increases $60 and Cash decreases $60"
+      ]
+    },
+    {
+      "seed": "34107",
+      "salt": "decision-answer-order:sales_return_effect",
+      "options": [
+        "Sales Returns and Allowances increases and Accounts Receivable decreases $450; Inventory increases and Cost of Goods Sold decreases $250",
+        "Inventory decreases and Accounts Payable decreases $450; Cost of Goods Sold increases $250",
+        "Cash decreases $450; Sales Revenue decreases $250; Inventory is unchanged"
+      ],
+      "expected": [
+        "Sales Returns and Allowances increases and Accounts Receivable decreases $450; Inventory increases and Cost of Goods Sold decreases $250",
+        "Cash decreases $450; Sales Revenue decreases $250; Inventory is unchanged",
+        "Inventory decreases and Accounts Payable decreases $450; Cost of Goods Sold increases $250"
+      ]
+    },
+    {
+      "seed": "34107",
+      "salt": "decision-answer-order:sales_discount_effect",
+      "options": [
+        "Collect $2,205; Accounts Receivable decreases $2,250 and Sales Discounts increases $45",
+        "Collect $2,250; Accounts Receivable decreases $2,250 and Sales Discounts is unchanged",
+        "Collect $2,196; Accounts Receivable decreases $2,250 and Inventory decreases $54"
+      ],
+      "expected": [
+        "Collect $2,196; Accounts Receivable decreases $2,250 and Inventory decreases $54",
+        "Collect $2,250; Accounts Receivable decreases $2,250 and Sales Discounts is unchanged",
+        "Collect $2,205; Accounts Receivable decreases $2,250 and Sales Discounts increases $45"
+      ]
+    },
+    {
+      "seed": "34107",
+      "salt": "decision-answer-order:count_effect",
+      "options": [
+        "Inventory decreases $100 and Cost of Goods Sold increases $100",
+        "Inventory increases $100 and Sales Revenue increases $100",
+        "Accounts Payable decreases $100 and Inventory is unchanged"
+      ],
+      "expected": [
+        "Inventory increases $100 and Sales Revenue increases $100",
+        "Accounts Payable decreases $100 and Inventory is unchanged",
+        "Inventory decreases $100 and Cost of Goods Sold increases $100"
+      ]
+    },
+    {
+      "seed": "34107",
+      "salt": "statement-answer-order:income_bridge",
+      "options": [
+        "Subtract Cost of Goods Sold and Freight-Out Expense from Net Sales",
+        "Add ending Inventory to Net Sales, then subtract Accounts Payable",
+        "Subtract the supplier payment from the cash collected from the customer"
+      ],
+      "expected": [
+        "Add ending Inventory to Net Sales, then subtract Accounts Payable",
+        "Subtract the supplier payment from the cash collected from the customer",
+        "Subtract Cost of Goods Sold and Freight-Out Expense from Net Sales"
+      ]
+    },
+    {
+      "seed": "34107",
+      "salt": "statement-answer-order:contra_revenue",
+      "options": [
+        "The customer return and the sales discount",
+        "The supplier return and the purchase discount",
+        "The inbound freight and the outbound freight"
+      ],
+      "expected": [
+        "The customer return and the sales discount",
+        "The inbound freight and the outbound freight",
+        "The supplier return and the purchase discount"
+      ]
+    },
+    {
+      "seed": "34107",
+      "salt": "statement-answer-order:cash_vs_income",
+      "options": [
+        "Cash reflects when amounts were paid or collected; income reflects Net Sales minus the related expenses",
+        "Income always equals ending Cash minus opening Cash once Accounts Receivable reaches zero",
+        "The difference exists only because the physical count changed the number of units on hand"
+      ],
+      "expected": [
+        "Income always equals ending Cash minus opening Cash once Accounts Receivable reaches zero",
+        "The difference exists only because the physical count changed the number of units on hand",
+        "Cash reflects when amounts were paid or collected; income reflects Net Sales minus the related expenses"
+      ]
+    },
+    {
+      "seed": "9007199254741091",
+      "salt": "decision-answer-order:ownership_inbound",
+      "options": [
+        "November 2, when the carrier accepts the shipment",
+        "November 3, when the shipment arrives",
+        "When Gem City Goods pays the supplier"
+      ],
+      "expected": [
+        "November 3, when the shipment arrives",
+        "November 2, when the carrier accepts the shipment",
+        "When Gem City Goods pays the supplier"
+      ]
+    },
+    {
+      "seed": "9007199254741091",
+      "salt": "decision-answer-order:purchase_effect",
+      "options": [
+        "Inventory increases $5,000 and Accounts Payable increases $5,000",
+        "Inventory increases $5,000 and Cash decreases $5,000",
+        "Cost of Goods Sold increases $5,000 and Accounts Payable increases $5,000"
+      ],
+      "expected": [
+        "Inventory increases $5,000 and Accounts Payable increases $5,000",
+        "Cost of Goods Sold increases $5,000 and Accounts Payable increases $5,000",
+        "Inventory increases $5,000 and Cash decreases $5,000"
+      ]
+    },
+    {
+      "seed": "9007199254741091",
+      "salt": "decision-answer-order:freight_in_effect",
+      "options": [
+        "Inventory increases $80 and Cash decreases $80",
+        "Freight-Out Expense increases $80 and Cash decreases $80",
+        "Cost of Goods Sold increases $80 and Cash decreases $80"
+      ],
+      "expected": [
+        "Freight-Out Expense increases $80 and Cash decreases $80",
+        "Inventory increases $80 and Cash decreases $80",
+        "Cost of Goods Sold increases $80 and Cash decreases $80"
+      ]
+    },
+    {
+      "seed": "9007199254741091",
+      "salt": "decision-answer-order:purchase_return_effect",
+      "options": [
+        "Inventory decreases $1,000 and Accounts Payable decreases $1,000",
+        "Inventory decreases $1,000 and Cash increases $1,000",
+        "Sales Returns and Allowances increases $1,000 and Inventory decreases $1,000"
+      ],
+      "expected": [
+        "Inventory decreases $1,000 and Cash increases $1,000",
+        "Sales Returns and Allowances increases $1,000 and Inventory decreases $1,000",
+        "Inventory decreases $1,000 and Accounts Payable decreases $1,000"
+      ]
+    },
+    {
+      "seed": "9007199254741091",
+      "salt": "decision-answer-order:purchase_discount_effect",
+      "options": [
+        "Pay $3,920; Accounts Payable decreases $4,000 and Inventory decreases $80",
+        "Pay $4,000; Accounts Payable decreases $4,000 and Inventory is unchanged",
+        "Pay $3,900; Accounts Payable decreases $4,000 and Sales Discounts increases $100"
+      ],
+      "expected": [
+        "Pay $3,900; Accounts Payable decreases $4,000 and Sales Discounts increases $100",
+        "Pay $4,000; Accounts Payable decreases $4,000 and Inventory is unchanged",
+        "Pay $3,920; Accounts Payable decreases $4,000 and Inventory decreases $80"
+      ]
+    },
+    {
+      "seed": "9007199254741091",
+      "salt": "decision-answer-order:sale_recognition",
+      "options": [
+        "November 16, when the goods reach the customer",
+        "November 15, when the carrier picks up the goods",
+        "When the customer later pays"
+      ],
+      "expected": [
+        "When the customer later pays",
+        "November 15, when the carrier picks up the goods",
+        "November 16, when the goods reach the customer"
+      ]
+    },
+    {
+      "seed": "9007199254741091",
+      "salt": "decision-answer-order:sale_two_effects",
+      "options": [
+        "Accounts Receivable and Sales Revenue increase $2,700; Cost of Goods Sold increases and Inventory decreases $1,500",
+        "Cash and Sales Revenue increase $2,700; Inventory decreases $2,700",
+        "Accounts Receivable increases $1,500; Sales Revenue and Inventory each increase $2,700"
+      ],
+      "expected": [
+        "Cash and Sales Revenue increase $2,700; Inventory decreases $2,700",
+        "Accounts Receivable increases $1,500; Sales Revenue and Inventory each increase $2,700",
+        "Accounts Receivable and Sales Revenue increase $2,700; Cost of Goods Sold increases and Inventory decreases $1,500"
+      ]
+    },
+    {
+      "seed": "9007199254741091",
+      "salt": "decision-answer-order:freight_out_effect",
+      "options": [
+        "Freight-Out Expense increases $60 and Cash decreases $60",
+        "Inventory increases $60 and Cash decreases $60",
+        "Cost of Goods Sold decreases $60 and Cash decreases $60"
+      ],
+      "expected": [
+        "Cost of Goods Sold decreases $60 and Cash decreases $60",
+        "Freight-Out Expense increases $60 and Cash decreases $60",
+        "Inventory increases $60 and Cash decreases $60"
+      ]
+    },
+    {
+      "seed": "9007199254741091",
+      "salt": "decision-answer-order:sales_return_effect",
+      "options": [
+        "Sales Returns and Allowances increases and Accounts Receivable decreases $450; Inventory increases and Cost of Goods Sold decreases $250",
+        "Inventory decreases and Accounts Payable decreases $450; Cost of Goods Sold increases $250",
+        "Cash decreases $450; Sales Revenue decreases $250; Inventory is unchanged"
+      ],
+      "expected": [
+        "Inventory decreases and Accounts Payable decreases $450; Cost of Goods Sold increases $250",
+        "Cash decreases $450; Sales Revenue decreases $250; Inventory is unchanged",
+        "Sales Returns and Allowances increases and Accounts Receivable decreases $450; Inventory increases and Cost of Goods Sold decreases $250"
+      ]
+    },
+    {
+      "seed": "9007199254741091",
+      "salt": "decision-answer-order:sales_discount_effect",
+      "options": [
+        "Collect $2,205; Accounts Receivable decreases $2,250 and Sales Discounts increases $45",
+        "Collect $2,250; Accounts Receivable decreases $2,250 and Sales Discounts is unchanged",
+        "Collect $2,196; Accounts Receivable decreases $2,250 and Inventory decreases $54"
+      ],
+      "expected": [
+        "Collect $2,196; Accounts Receivable decreases $2,250 and Inventory decreases $54",
+        "Collect $2,205; Accounts Receivable decreases $2,250 and Sales Discounts increases $45",
+        "Collect $2,250; Accounts Receivable decreases $2,250 and Sales Discounts is unchanged"
+      ]
+    },
+    {
+      "seed": "9007199254741091",
+      "salt": "decision-answer-order:count_effect",
+      "options": [
+        "Inventory decreases $100 and Cost of Goods Sold increases $100",
+        "Inventory increases $100 and Sales Revenue increases $100",
+        "Accounts Payable decreases $100 and Inventory is unchanged"
+      ],
+      "expected": [
+        "Inventory decreases $100 and Cost of Goods Sold increases $100",
+        "Accounts Payable decreases $100 and Inventory is unchanged",
+        "Inventory increases $100 and Sales Revenue increases $100"
+      ]
+    },
+    {
+      "seed": "9007199254741091",
+      "salt": "statement-answer-order:income_bridge",
+      "options": [
+        "Subtract Cost of Goods Sold and Freight-Out Expense from Net Sales",
+        "Add ending Inventory to Net Sales, then subtract Accounts Payable",
+        "Subtract the supplier payment from the cash collected from the customer"
+      ],
+      "expected": [
+        "Subtract Cost of Goods Sold and Freight-Out Expense from Net Sales",
+        "Subtract the supplier payment from the cash collected from the customer",
+        "Add ending Inventory to Net Sales, then subtract Accounts Payable"
+      ]
+    },
+    {
+      "seed": "9007199254741091",
+      "salt": "statement-answer-order:contra_revenue",
+      "options": [
+        "The customer return and the sales discount",
+        "The supplier return and the purchase discount",
+        "The inbound freight and the outbound freight"
+      ],
+      "expected": [
+        "The inbound freight and the outbound freight",
+        "The supplier return and the purchase discount",
+        "The customer return and the sales discount"
+      ]
+    },
+    {
+      "seed": "9007199254741091",
+      "salt": "statement-answer-order:cash_vs_income",
+      "options": [
+        "Cash reflects when amounts were paid or collected; income reflects Net Sales minus the related expenses",
+        "Income always equals ending Cash minus opening Cash once Accounts Receivable reaches zero",
+        "The difference exists only because the physical count changed the number of units on hand"
+      ],
+      "expected": [
+        "Cash reflects when amounts were paid or collected; income reflects Net Sales minus the related expenses",
+        "The difference exists only because the physical count changed the number of units on hand",
+        "Income always equals ending Cash minus opening Cash once Accounts Receivable reaches zero"
+      ]
+    },
+    {
+      "seed": "9223372036854775807",
+      "salt": "decision-answer-order:ownership_inbound",
+      "options": [
+        "November 2, when the carrier accepts the shipment",
+        "November 3, when the shipment arrives",
+        "When Gem City Goods pays the supplier"
+      ],
+      "expected": [
+        "November 3, when the shipment arrives",
+        "November 2, when the carrier accepts the shipment",
+        "When Gem City Goods pays the supplier"
+      ]
+    },
+    {
+      "seed": "9223372036854775807",
+      "salt": "decision-answer-order:purchase_effect",
+      "options": [
+        "Inventory increases $5,000 and Accounts Payable increases $5,000",
+        "Inventory increases $5,000 and Cash decreases $5,000",
+        "Cost of Goods Sold increases $5,000 and Accounts Payable increases $5,000"
+      ],
+      "expected": [
+        "Inventory increases $5,000 and Cash decreases $5,000",
+        "Cost of Goods Sold increases $5,000 and Accounts Payable increases $5,000",
+        "Inventory increases $5,000 and Accounts Payable increases $5,000"
+      ]
+    },
+    {
+      "seed": "9223372036854775807",
+      "salt": "decision-answer-order:freight_in_effect",
+      "options": [
+        "Inventory increases $80 and Cash decreases $80",
+        "Freight-Out Expense increases $80 and Cash decreases $80",
+        "Cost of Goods Sold increases $80 and Cash decreases $80"
+      ],
+      "expected": [
+        "Freight-Out Expense increases $80 and Cash decreases $80",
+        "Cost of Goods Sold increases $80 and Cash decreases $80",
+        "Inventory increases $80 and Cash decreases $80"
+      ]
+    },
+    {
+      "seed": "9223372036854775807",
+      "salt": "decision-answer-order:purchase_return_effect",
+      "options": [
+        "Inventory decreases $1,000 and Accounts Payable decreases $1,000",
+        "Inventory decreases $1,000 and Cash increases $1,000",
+        "Sales Returns and Allowances increases $1,000 and Inventory decreases $1,000"
+      ],
+      "expected": [
+        "Inventory decreases $1,000 and Accounts Payable decreases $1,000",
+        "Sales Returns and Allowances increases $1,000 and Inventory decreases $1,000",
+        "Inventory decreases $1,000 and Cash increases $1,000"
+      ]
+    },
+    {
+      "seed": "9223372036854775807",
+      "salt": "decision-answer-order:purchase_discount_effect",
+      "options": [
+        "Pay $3,920; Accounts Payable decreases $4,000 and Inventory decreases $80",
+        "Pay $4,000; Accounts Payable decreases $4,000 and Inventory is unchanged",
+        "Pay $3,900; Accounts Payable decreases $4,000 and Sales Discounts increases $100"
+      ],
+      "expected": [
+        "Pay $4,000; Accounts Payable decreases $4,000 and Inventory is unchanged",
+        "Pay $3,920; Accounts Payable decreases $4,000 and Inventory decreases $80",
+        "Pay $3,900; Accounts Payable decreases $4,000 and Sales Discounts increases $100"
+      ]
+    },
+    {
+      "seed": "9223372036854775807",
+      "salt": "decision-answer-order:sale_recognition",
+      "options": [
+        "November 16, when the goods reach the customer",
+        "November 15, when the carrier picks up the goods",
+        "When the customer later pays"
+      ],
+      "expected": [
+        "November 16, when the goods reach the customer",
+        "When the customer later pays",
+        "November 15, when the carrier picks up the goods"
+      ]
+    },
+    {
+      "seed": "9223372036854775807",
+      "salt": "decision-answer-order:sale_two_effects",
+      "options": [
+        "Accounts Receivable and Sales Revenue increase $2,700; Cost of Goods Sold increases and Inventory decreases $1,500",
+        "Cash and Sales Revenue increase $2,700; Inventory decreases $2,700",
+        "Accounts Receivable increases $1,500; Sales Revenue and Inventory each increase $2,700"
+      ],
+      "expected": [
+        "Cash and Sales Revenue increase $2,700; Inventory decreases $2,700",
+        "Accounts Receivable and Sales Revenue increase $2,700; Cost of Goods Sold increases and Inventory decreases $1,500",
+        "Accounts Receivable increases $1,500; Sales Revenue and Inventory each increase $2,700"
+      ]
+    },
+    {
+      "seed": "9223372036854775807",
+      "salt": "decision-answer-order:freight_out_effect",
+      "options": [
+        "Freight-Out Expense increases $60 and Cash decreases $60",
+        "Inventory increases $60 and Cash decreases $60",
+        "Cost of Goods Sold decreases $60 and Cash decreases $60"
+      ],
+      "expected": [
+        "Cost of Goods Sold decreases $60 and Cash decreases $60",
+        "Inventory increases $60 and Cash decreases $60",
+        "Freight-Out Expense increases $60 and Cash decreases $60"
+      ]
+    },
+    {
+      "seed": "9223372036854775807",
+      "salt": "decision-answer-order:sales_return_effect",
+      "options": [
+        "Sales Returns and Allowances increases and Accounts Receivable decreases $450; Inventory increases and Cost of Goods Sold decreases $250",
+        "Inventory decreases and Accounts Payable decreases $450; Cost of Goods Sold increases $250",
+        "Cash decreases $450; Sales Revenue decreases $250; Inventory is unchanged"
+      ],
+      "expected": [
+        "Cash decreases $450; Sales Revenue decreases $250; Inventory is unchanged",
+        "Sales Returns and Allowances increases and Accounts Receivable decreases $450; Inventory increases and Cost of Goods Sold decreases $250",
+        "Inventory decreases and Accounts Payable decreases $450; Cost of Goods Sold increases $250"
+      ]
+    },
+    {
+      "seed": "9223372036854775807",
+      "salt": "decision-answer-order:sales_discount_effect",
+      "options": [
+        "Collect $2,205; Accounts Receivable decreases $2,250 and Sales Discounts increases $45",
+        "Collect $2,250; Accounts Receivable decreases $2,250 and Sales Discounts is unchanged",
+        "Collect $2,196; Accounts Receivable decreases $2,250 and Inventory decreases $54"
+      ],
+      "expected": [
+        "Collect $2,250; Accounts Receivable decreases $2,250 and Sales Discounts is unchanged",
+        "Collect $2,205; Accounts Receivable decreases $2,250 and Sales Discounts increases $45",
+        "Collect $2,196; Accounts Receivable decreases $2,250 and Inventory decreases $54"
+      ]
+    },
+    {
+      "seed": "9223372036854775807",
+      "salt": "decision-answer-order:count_effect",
+      "options": [
+        "Inventory decreases $100 and Cost of Goods Sold increases $100",
+        "Inventory increases $100 and Sales Revenue increases $100",
+        "Accounts Payable decreases $100 and Inventory is unchanged"
+      ],
+      "expected": [
+        "Accounts Payable decreases $100 and Inventory is unchanged",
+        "Inventory increases $100 and Sales Revenue increases $100",
+        "Inventory decreases $100 and Cost of Goods Sold increases $100"
+      ]
+    },
+    {
+      "seed": "9223372036854775807",
+      "salt": "statement-answer-order:income_bridge",
+      "options": [
+        "Subtract Cost of Goods Sold and Freight-Out Expense from Net Sales",
+        "Add ending Inventory to Net Sales, then subtract Accounts Payable",
+        "Subtract the supplier payment from the cash collected from the customer"
+      ],
+      "expected": [
+        "Subtract Cost of Goods Sold and Freight-Out Expense from Net Sales",
+        "Subtract the supplier payment from the cash collected from the customer",
+        "Add ending Inventory to Net Sales, then subtract Accounts Payable"
+      ]
+    },
+    {
+      "seed": "9223372036854775807",
+      "salt": "statement-answer-order:contra_revenue",
+      "options": [
+        "The customer return and the sales discount",
+        "The supplier return and the purchase discount",
+        "The inbound freight and the outbound freight"
+      ],
+      "expected": [
+        "The inbound freight and the outbound freight",
+        "The customer return and the sales discount",
+        "The supplier return and the purchase discount"
+      ]
+    },
+    {
+      "seed": "9223372036854775807",
+      "salt": "statement-answer-order:cash_vs_income",
+      "options": [
+        "Cash reflects when amounts were paid or collected; income reflects Net Sales minus the related expenses",
+        "Income always equals ending Cash minus opening Cash once Accounts Receivable reaches zero",
+        "The difference exists only because the physical count changed the number of units on hand"
+      ],
+      "expected": [
+        "Income always equals ending Cash minus opening Cash once Accounts Receivable reaches zero",
+        "Cash reflects when amounts were paid or collected; income reflects Net Sales minus the related expenses",
+        "The difference exists only because the physical count changed the number of units on hand"
+      ]
+    }
+  ],
+  "bookmarks": [
+    {
+      "name": "briefing",
+      "token": "eNqrVkpUsqqu1VFKgVBpECpTycpAR6kATBZChAqhKgqLlazSEnOKU3WUiiAiZUpWxjpKVUDSxNDAvBYA1bYXGA",
+      "json": "{\"a\":{},\"d\":{},\"f\":{},\"i\":0,\"p\":0,\"q\":{},\"qd\":{},\"qs\":false,\"r\":{},\"v\":3,\"z\":34107}",
+      "score": {
+        "correct": 0,
+        "attempted": 0,
+        "total": 14,
+        "revisions": 0
+      },
+      "view": null
+    },
+    {
+      "name": "decision-draft-high-seed",
+      "token": "eNotzDEOwiAARuGrkH9mQLBSWR16BEeDgQaSChRaTW16d0lwesk3vB0aaj8oTA3iJ9hcnE8PH55xDRVxdzaQwb7IzS8bGWI0hSS9FbI4S8qa0uRtRj2MbeShGEWCOlHMjWbzb4Ea9VQsRW7yhhIUX6gr50JIzsSl785Sdj2Txw-ZDy9j",
+      "json": "{\"a\":{},\"d\":{\"ownership_inbound\":\"When Gem City Goods pays the supplier\"},\"f\":{},\"i\":0,\"p\":1,\"q\":{},\"qd\":{},\"qs\":false,\"r\":{},\"v\":3,\"z\":9223372036854775807}",
+      "score": {
+        "correct": 0,
+        "attempted": 0,
+        "total": 14,
+        "revisions": 0
+      },
+      "view": null
+    },
+    {
+      "name": "wrong-decision",
+      "token": "eNqljkEOgjAQRa_S_HUXSMVity44gkuDdgiTYFsoaJBwd2vC0sSFq0lm3p_3F9QwCyzdOLJ3xj8dDbHlcGF39ZOzMLtVwn6gLzecW3Kiors48TiLynsbRajnKMaWRJxC6JgGpA_NL01Td5ESyDCZREheiT6F0qq324wbJjH8XegBoyReMMc8V0rnmTqUxV7rosz0-gZR8l1m",
+      "json": "{\"a\":{\"decision:ownership_inbound\":1},\"d\":{\"ownership_inbound\":\"When Gem City Goods pays the supplier\"},\"f\":{\"decision:ownership_inbound\":false},\"i\":0,\"p\":1,\"q\":{},\"qd\":{},\"qs\":false,\"r\":{\"ownership_inbound\":\"When Gem City Goods pays the supplier\"},\"v\":3,\"z\":9223372036854775807}",
+      "score": {
+        "correct": 0,
+        "attempted": 1,
+        "total": 14,
+        "revisions": 0
+      },
+      "view": 0
+    },
+    {
+      "name": "statement-draft",
+      "token": "eNqFVF9vmzAQ_yonK4-eZGhIO_ZUde20l25aPkBkzBEsEZvaJllX9bvvgJRZjLQvGB3H798dvDDJ8pdXzsrxqMZDszwRnLUsTzl7GmtPfQvTRtkD7gqnyz2ynG27IjipAtxZH8BW8M3a0sPWNiVIU8KDQ72vw6cfXYD73y0aj1A5e4BHDLCVDXrWY3uWV7LxyJnrWZTtTNhhVaEKRPLdHNEE656hROVQevSwSoQYGBaISWTUxcjWqGKnzRJo1H5zxpS-jrluYhDbRdKW_EV4m2W8TY9nTwadr3VLsgoyTPmyR3vEQ4EOUg6nGg2EGkFJ5zTVpFLYBj_U-vcOpJ9w2s6pmnB3pfaz4H7KZ1hd8c-p-AK3anjogYqyaDDWs-binOZi1IP9ieb9BLMJ6j_CeVcM6jB0znw08svY8y7C9rRdhKvs3uigrYnjTTZRvvthc-h1VY95dz7Qkrs3jHCyZ2G0pmyi_oUK9XFg7yUNy0xF0t398wqrlF8Liv_dNb2YfMKzyYtfGPCdbRq661lSkUVDjsRFcNSViUjt1zOgj2ezzibC-VTePPbVUfVt09iTNAr9zM4HStYZZbK0QBc-6dhEJvp_xpHlV5z9oes6EdevfwGe7aE-",
+      "json": "{\"a\":{},\"d\":{},\"f\":{},\"i\":10,\"p\":2,\"q\":{},\"qd\":{\"income_bridge\":\"Subtract Cost of Goods Sold and Freight-Out Expense from Net Sales\"},\"qs\":false,\"r\":{\"count_effect\":\"Inventory decreases $100 and Cost of Goods Sold increases $100\",\"freight_in_effect\":\"Inventory increases $80 and Cash decreases $80\",\"freight_out_effect\":\"Freight-Out Expense increases $60 and Cash decreases $60\",\"ownership_inbound\":\"November 2, when the carrier accepts the shipment\",\"purchase_discount_effect\":\"Pay $3,920; Accounts Payable decreases $4,000 and Inventory decreases $80\",\"purchase_effect\":\"Inventory increases $5,000 and Accounts Payable increases $5,000\",\"purchase_return_effect\":\"Inventory decreases $1,000 and Accounts Payable decreases $1,000\",\"sale_recognition\":\"November 16, when the goods reach the customer\",\"sale_two_effects\":\"Accounts Receivable and Sales Revenue increase $2,700; Cost of Goods Sold increases and Inventory decreases $1,500\",\"sales_discount_effect\":\"Collect $2,205; Accounts Receivable decreases $2,250 and Sales Discounts increases $45\",\"sales_return_effect\":\"Sales Returns and Allowances increases and Accounts Receivable decreases $450; Inventory increases and Cost of Goods Sold decreases $250\"},\"v\":3,\"z\":34107}",
+      "score": {
+        "correct": 0,
+        "attempted": 0,
+        "total": 14,
+        "revisions": 0
+      },
+      "view": 3
+    },
+    {
+      "name": "wrong-statements",
+      "token": "eNqFVN1v2jAQ_1csi8dMCpTQLnuqug_tZZvG3iPjXIilYAefDWVV__edTcrcFOgLSL6739fZeeKCl08cnXCwAe1KKbCtdlgpLc0GeDnN0qLRzorKwg60HxePE9XKqnodas8Zrwmb_prrFI3oEK7RvGkYUcU68ShizTPe83KW8W0gHVPxPy2wWjUNWNASGDwqdMiM7g5sBVJ4BOaopW8PqKTomDReOyZboddQx5L2mxVYZhrmtYqzjKo1z_hYdiRTekUQNWssqHXrGLVGGOPdqwLNj1zxpV8RnnSxH33fd4qIe3EIGdCc2cRK8Eg6uw6kgzo59-gIz3JKZjtsYou8dNZTmDbGE9xVQHFIR4TfNSl3xh5YDdKCQEA2meZ5FP1g0AXX34ypkS1NV5O3tIscDF4o7nOgSfvdgBmkJ1x3KQgl9B_l6_Hww0_v2JfHHjRCirc4j7cIeGavwWKr-mrYBcH9MDuIa5xlbN-CHoK0NiQspISeNhtjp7kQN-H03tI9QKhqhaPgfokDm9xkH2f5J3YvYxEZHYpVB6meeZYPaZ6NOto_0VxPsDhBvSEcd6WgFpy3-r2VX8YedxE2ii7gSrOm96CMTuOdLpJ81_Hm0LhsX1_QAcPtzSCMbik_Uf8GCWoX2YOkJbWGw_jITl7ZZJbd5hT_1Wt6MflpVpy84JkFPxyfV2CZ5UWy5ERcAkddRZ6o_TwAYrqbeXEiHG_lxWM4Paq-7zqzF_TJwpGdd5TMC8rk3AW68KRTE0UePh07Xt5k_C_9zqf57fM_lxQn3Q",
+      "json": "{\"a\":{\"statement:cash_vs_income\":1,\"statement:contra_revenue\":1,\"statement:income_bridge\":1},\"d\":{},\"f\":{\"statement:cash_vs_income\":false,\"statement:contra_revenue\":false,\"statement:income_bridge\":false},\"i\":10,\"p\":2,\"q\":{\"cash_vs_income\":\"The difference exists only because the physical count changed the number of units on hand\",\"contra_revenue\":\"The inbound freight and the outbound freight\",\"income_bridge\":\"Subtract the supplier payment from the cash collected from the customer\"},\"qd\":{},\"qs\":true,\"r\":{\"count_effect\":\"Inventory decreases $100 and Cost of Goods Sold increases $100\",\"freight_in_effect\":\"Inventory increases $80 and Cash decreases $80\",\"freight_out_effect\":\"Freight-Out Expense increases $60 and Cash decreases $60\",\"ownership_inbound\":\"November 2, when the carrier accepts the shipment\",\"purchase_discount_effect\":\"Pay $3,920; Accounts Payable decreases $4,000 and Inventory decreases $80\",\"purchase_effect\":\"Inventory increases $5,000 and Accounts Payable increases $5,000\",\"purchase_return_effect\":\"Inventory decreases $1,000 and Accounts Payable decreases $1,000\",\"sale_recognition\":\"November 16, when the goods reach the customer\",\"sale_two_effects\":\"Accounts Receivable and Sales Revenue increase $2,700; Cost of Goods Sold increases and Inventory decreases $1,500\",\"sales_discount_effect\":\"Collect $2,205; Accounts Receivable decreases $2,250 and Sales Discounts increases $45\",\"sales_return_effect\":\"Sales Returns and Allowances increases and Accounts Receivable decreases $450; Inventory increases and Cost of Goods Sold decreases $250\"},\"v\":3,\"z\":34107}",
+      "score": {
+        "correct": 0,
+        "attempted": 3,
+        "total": 14,
+        "revisions": 0
+      },
+      "view": null
+    },
+    {
+      "name": "completed",
+      "token": "eNqFVMFu2zAM_RVB6NEDnDRuu_RUpNuwSze0uweKTMcCHCmR5GRd0X8fZaWOIsvpJUbEx8dHPlFvlNH5Gy2BCyOUnHPVSruEqgJu6XySnSKVBrGu7VLIi2HVptPVQYI2tdgiwQqLlOfhbat5zQwsS2HGNfSoi0ENttVplYY1Ls7VWgqLB4moPahjqhlGzWV9HjKsbyyzsAFp55yZerk3OASuNhAHlbSaYf4eZBsHfcZypUW5drF3rIvW4ae64KDVLVw2cQQR-hhBElZGiHE3x4CfxaOZRrChrSnAmbMJgPlUbtJfjxm3eBCPXI7jkdEujCYLtDzP6JbOrzO6c47HdegCD4iGqnEdkkMNkrCNawf_gAayZaIkShOuGgeB8p743FPSE1jy4pokGyFbQ2ztgg1KKwn83YI0YGhG4xboH8Tx1lgk08TPhzBZdvnd0MjHaDE7apC-tCtk45YslLFEVeSHUqUhL6opO5Lv_kp--dVa8s2LIJVWm5NaigPaHbdh15uruymd-Ul_SpRslX4laKoGvFqGXE3yvCuUqI9aAxSKT2xQQBrA746czpSg1l1IEi4ZTbUZ8N2k-W4cX2Ij6ZPaw2aFdkwzfxecF5xpLfCMcQ5b6_11ee7iIc_43tLf7JVcXWdfp_k9eeDcXys8ZKsGQj2zLD9OMznqrv3B1qcnWPRUg4IxKiSN1nPE8nHuGIXcw_flNN7JTTDfdXdzMJ3Xft7HnfjgOHuCaF_6GTiIfVfdSfIb-Oy3q--VXE2z2xzHf_Gajk5-khV9L4mXji78q-CqTPMiMDkQF9AhqsgDtY9HQhN6Myv6grErHz26U6_6oWnUgUkOJmrnEyWzAmeSukAjKx02UeTu6dh3j-o__J1N8tv3_5fBPQI",
+      "json": "{\"a\":{\"decision:count_effect\":1,\"decision:freight_in_effect\":1,\"decision:freight_out_effect\":1,\"decision:ownership_inbound\":1,\"decision:purchase_discount_effect\":1,\"decision:purchase_effect\":1,\"decision:purchase_return_effect\":1,\"decision:sale_recognition\":1,\"decision:sale_two_effects\":1,\"decision:sales_discount_effect\":1,\"decision:sales_return_effect\":1,\"statement:cash_vs_income\":1,\"statement:contra_revenue\":1,\"statement:income_bridge\":1},\"d\":{},\"f\":{\"decision:count_effect\":true,\"decision:freight_in_effect\":true,\"decision:freight_out_effect\":true,\"decision:ownership_inbound\":true,\"decision:purchase_discount_effect\":true,\"decision:purchase_effect\":true,\"decision:purchase_return_effect\":true,\"decision:sale_recognition\":true,\"decision:sale_two_effects\":true,\"decision:sales_discount_effect\":true,\"decision:sales_return_effect\":true,\"statement:cash_vs_income\":true,\"statement:contra_revenue\":true,\"statement:income_bridge\":true},\"i\":10,\"p\":3,\"q\":{\"cash_vs_income\":\"Cash reflects when amounts were paid or collected; income reflects Net Sales minus the related expenses\",\"contra_revenue\":\"The customer return and the sales discount\",\"income_bridge\":\"Subtract Cost of Goods Sold and Freight-Out Expense from Net Sales\"},\"qd\":{},\"qs\":true,\"r\":{\"count_effect\":\"Inventory decreases $100 and Cost of Goods Sold increases $100\",\"freight_in_effect\":\"Inventory increases $80 and Cash decreases $80\",\"freight_out_effect\":\"Freight-Out Expense increases $60 and Cash decreases $60\",\"ownership_inbound\":\"November 2, when the carrier accepts the shipment\",\"purchase_discount_effect\":\"Pay $3,920; Accounts Payable decreases $4,000 and Inventory decreases $80\",\"purchase_effect\":\"Inventory increases $5,000 and Accounts Payable increases $5,000\",\"purchase_return_effect\":\"Inventory decreases $1,000 and Accounts Payable decreases $1,000\",\"sale_recognition\":\"November 16, when the goods reach the customer\",\"sale_two_effects\":\"Accounts Receivable and Sales Revenue increase $2,700; Cost of Goods Sold increases and Inventory decreases $1,500\",\"sales_discount_effect\":\"Collect $2,205; Accounts Receivable decreases $2,250 and Sales Discounts increases $45\",\"sales_return_effect\":\"Sales Returns and Allowances increases and Accounts Receivable decreases $450; Inventory increases and Cost of Goods Sold decreases $250\"},\"v\":3,\"z\":34107}",
+      "score": {
+        "correct": 14,
+        "attempted": 14,
+        "total": 14,
+        "revisions": 0
+      },
+      "view": 0
+    }
+  ]
+}

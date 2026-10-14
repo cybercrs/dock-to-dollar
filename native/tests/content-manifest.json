@@ -1,0 +1,13 @@
+{
+  "source_sha256": {
+    "streamlit_app.py": "b982b8fed5d6a13ba0f0ee688c039495e9922a0a50dfa62cde641c1fa0ea51a6",
+    "dock_to_dollar/case_data.py": "c0892219d65565a046d90239f6c705d34078514f4f4d0521318ce5f81baea948",
+    "dock_to_dollar/engine.py": "5880454a01ba4477cf34891571d44aa7dbce095041e9dfd5553edf219f65313f",
+    "dock_to_dollar/progress.py": "7948391faebf70fedd5c97700e92b7efa5e2b790095f56247c49ffc78148c82b"
+  },
+  "screens": 14,
+  "decision_variants": 33,
+  "statement_variants": 3,
+  "original_download_controls": 0,
+  "original_facilitator_routes": 0
+}
