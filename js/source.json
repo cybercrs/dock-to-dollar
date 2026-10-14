@@ -1,0 +1,11 @@
+{
+  "name": "Dock to Dollar",
+  "source_repository": "cybercrs/dock-to-dollar",
+  "source_branch": "native/dock-to-dollar",
+  "source_commit": "5249303a39e913632cd8cf824f39e80a379baa44",
+  "implementation": "HTML/CSS/JavaScript",
+  "saved_state_versions": [
+    3,
+    4
+  ]
+}

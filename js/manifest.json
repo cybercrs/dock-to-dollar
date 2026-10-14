@@ -1,0 +1,23 @@
+{
+  "name": "Dock to Dollar",
+  "entrypoint": "index.html",
+  "canonical_directory": "js/",
+  "runtime_dependencies": [],
+  "files_bytes": {
+    "index.html": 2266,
+    "original.css": 7394,
+    "style.css": 3618,
+    "content.js": 173110,
+    "engine.js": 12897,
+    "app.js": 11265
+  },
+  "application_bytes": 210550,
+  "files_sha256": {
+    "index.html": "fb92a0176447a90ffb1768a8ecfd377d91b4f684b143c93e51c262110daaa74d",
+    "original.css": "4f49f994979ec8156007d7af6630b0794a13c715aca80cc2d23ba1044b8239e1",
+    "style.css": "4774dfd59bfe4243ed0d41d8ce1745981054f03958a09c04e2680c89b9b393bb",
+    "content.js": "c5c8986cf787d60e10545343281955aca8218e753d698ed64164be54a11ea7cc",
+    "engine.js": "f4997df11a84a92099509befa936530d04571d123b8773450b317235eb059371",
+    "app.js": "485bb8b325136e3fbf0df098d22750fb72cf06dd7309d2bbae42bba213bf5974"
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "transport": "local static HTTP; external traffic blocked",
+  "checks": [
+    {
+      "name": "Cold native initialization and rendered briefing",
+      "status": "passed"
+    },
+    {
+      "name": "Required selection, wrong-answer lock and refresh",
+      "status": "passed"
+    },
+    {
+      "name": "Revision, first pass and keyboard review",
+      "status": "passed"
+    },
+    {
+      "name": "Drafts, exact order, bookmarks and future-view clamp",
+      "status": "passed"
+    },
+    {
+      "name": "All decisions, event balances and current-page gates",
+      "status": "passed"
+    },
+    {
+      "name": "Statement reveal, unchanged answers and revisions",
+      "status": "passed"
+    },
+    {
+      "name": "Final statements, scoring and complete read-only review",
+      "status": "passed"
+    },
+    {
+      "name": "Independent sessions and reset",
+      "status": "passed"
+    },
+    {
+      "name": "Legacy links, maximum seed and native refresh",
+      "status": "passed"
+    },
+    {
+      "name": "Every wrong/correct lesson variant and all statement hints",
+      "status": "passed"
+    },
+    {
+      "name": "Over-99 native attempt history and refresh",
+      "status": "passed"
+    },
+    {
+      "name": "Desktop/narrow layout and accessible controls",
+      "status": "passed"
+    },
+    {
+      "name": "Canonical /js/ and repository subdirectory hosting",
+      "status": "passed"
+    },
+    {
+      "name": "Branding, downloads inventory and no runtime/external errors",
+      "status": "passed"
+    }
+  ],
+  "console_errors": [],
+  "page_errors": [],
+  "external_requests": [],
+  "branding_pages": 117,
+  "measurement_conditions": "Fresh Chromium context, empty cache, localhost HTTP, no throttling. Timer excludes browser launch and begins before navigation; ends after UI and URL save are ready.",
+  "cold_initialize_seconds": 0.5332,
+  "browser": "151.0.7922.173",
+  "layout": {
+    "desktop": [
+      {
+        "x": 1094,
+        "y": 276.25,
+        "width": 44,
+        "height": 44
+      },
+      {
+        "x": 1146,
+        "y": 276.25,
+        "width": 44,
+        "height": 44
+      }
+    ],
+    "narrow": [
+      {
+        "x": 278,
+        "y": 265.765625,
+        "width": 44,
+        "height": 44
+      },
+      {
+        "x": 330,
+        "y": 265.765625,
+        "width": 44,
+        "height": 44
+      }
+    ]
+  },
+  "requests": [
+    "/dock-to-dollar/js/",
+    "/dock-to-dollar/js/?progress=eJwtyjEKwCAMRuG7_HOG1BjE3EZoBaFDrdCh4t07pNODjzdRYHMRdk_1NBgTLthG6E79P_qA1XKOg3C7PDAhvLAkSYOyCscsgXOU9QERfhnB&view=1",
+    "/dock-to-dollar/js/app.js",
+    "/dock-to-dollar/js/content.js",
+    "/dock-to-dollar/js/engine.js",
+    "/dock-to-dollar/js/original.css",
+    "/dock-to-dollar/js/style.css",
+    "/js/",
+    "/js/?progress=eJwtzDEOwiAARuGrkH9mQLBSWR16BEeDgQaSChRaTW16d0lwesk3vB0aaj8oTA3iJ9hcnE8PH55xDRVxdzaQwb7IzS8bGWI0hSS9FbI4S8qa0uRtRj2MbeShGEWCOlHMjWbzb4Ea9VQsRW7yhhIUX6gr50JIzsSl785Sdj2Txw-ZDy9j&view=1",
+    "/js/?progress=eJyFVF9vmzAQ_yonK4-eZGhIO_ZUde20l25aPkBkzBEsEZvaJllX9bvvgJRajHQvGB3H798dvDDJ8pdXzsrxqMZDszwRnLUsTzl7GmtPfQvTRtkD7gqnyz2ynG27IjipAtxZH8BW8M3a0sPWNiVIU8KDQ72vw6cfXYD73y0aj1A5e4BHDLCVDXrWY3uWV7LxyJnrWZTtTNhhVaEKRPLdHNEE656hROVQevSwSoQYGBaISWTUxcjWqGKnzRJo1H5zxpS-jrluYhDbRdKW_EV4m2W8TY9nTwadr3VLsgoyTPmyR3vEQ4EOUg6nGg2EGkFJ5zTVpFLYBj_U-vcOpJ9w2s6pmnB3pfaz4H7KZ1hd8c-p-AK3anjogYqyaDDWs-binOZi1IP9iebjBLMJ6h_CeVcM6jB0bnE68cgvY8-7CNvTdhGusnujg7YmjjfZRPnuh82h11U95t35QEvu3jDCyZ6F0ZqyifoXKtTHgb2XNCwzFUl39-4VVim_FhT_h2t6MfmEZ5MXvzDgO9s0dNezpCKLhhyJi-CoKxOR2q9nQB_PZp1NhPOpvHnsq6Pq26axJ2kU-pmd_yhZZ5TJ0gJd-KRjE5no_xlHll9x9oeu60Rcv_4Fnu2hPg&view=3",
+    "/js/?progress=eJyFVMFu2zAM_RVB6NEDnDROu_RUtNuwSze0uweKTMcCHCmR5GRd0X8fZaWOIsvpJUbEx8dHPlFvlNHFGy2BCyOUXHDVSruEqgJu6WKSnSKVBrGu7VLIi2HVptPVQYI2tdgiwQqLlOfhbat5zQwsS2HGNfSoi0ENttVplYY1Ls7VWgqLB4moPahjqhlGzWV9HjKsbyyzsAFpF5yZerk3OASuNhAHlbSaYf4eZBsHfcZypUW5drF3rIvW4ae64KDVLVw2cQQR-hhBElZGiHE3x4CfxaOZRrChrSnAmbMJQMLcJCqpZdziQTxyOY5HRrswmizQ8jyjW7q4zujOOR7XoQ94QDRUjeuQHGqQhG1cO_gHNJAtEyVRmnDVOAiUd8TnnpKewJIX1yTZCNkaYmsXbFBaSeDvFqQBQzMat0D_II63xiKZJn4-hMmyy--GRj5Gi9lRg_SlXSEbt-RBGUtURX4oVRryopqyI_nur-SXX60l37wIUmm1OamlOKDdcRt2vbm6m9KZn_SnRMlW6VeCpmrAq2XI1STPu0KJ-qg1QKH4xAYFpAH89sjpTAlq3YYk4ZLRVJsB3zzNN3d8iY2kT2oPmxXaMc38XXBecKa1wDPGOWyt99fluYuHPON7S3-zV3J1nX2d5nfknnN_rfCQrRoI9cyy_DjN5Ki79gdbn55g0VMNCsaokDRazxHLx7ljFHIP35fTeCfzYL7r7uZgOq_9vI878cFx9gTRvvQzcBD7rrqT5Dfw2W9X3yu5mmY3OY7_4jUdnfwkK_peEi8dffCvgqsyzYvA5EBcQIeoIg_UPh4JTejNrOgLxq589OhOver7plEHJjmYqJ1PlMwKnEnqAo2sdNhEkbunY989qv_wdzbJb97_A5fBPQI&view=0",
+    "/js/?progress=eJyFVN1v2jAQ_1csq4-ZFCihHXuqug_tZZvG3iPjXIilYAefDWVV__edTZa5aWAvIPnufl9n55kLvnrm6ISDHWi3kgKb8oCl0tLsgK9mWVo02llRWjiA9uPieaLcWFVtQ-0l4xVh0199naIWLcI1mjcNI6pYJx5FrHnGO76aZ3wfSMdU_FcDrFJ1DRa0BAZPCh0yo9sT24AUHoE5aumaEyopWiaN147JRugtVLGk_W4Dlpmaea3iLKNqxTM-lh3JlN4QRMVqC2rbOEatEcZ496pA8yNXfO03hCdd7Effda0i4k6cQgY0Z3axEjySzrYF6aBKzj06wrOcktn3m9gjXznrKUwb4wnuSqA4pCPCr5qUO2NPrAJpQSAgu5nleRT9aNAF11-MqZCtTVuRt7SLHPReKO4p0KT9vscM0hOu-xSEEvqH8vl8-O67d-zTUwcaIcVbTuMtA545arDYqK7sd0Fw38wB4hrnGTs2oPsgrQ0JCymho83G2GkuxE04nbd0DxDKSuEouB_ixG5us_fz_AN7kLGIjA7FpoVUzyLL-zQno472B5rrCRYD1BvCcVcKasF5O7mddOWXscddhI2iDbjSbOk9KKPTeGfLJN9tvDk0LpvXF7THcEfTC6NbygfqnyBBHSJ7kLSm1nAYH9ngld3Ms7uc4r96TS8mP8uKwQtOLPjx_LwCyzwvkiUn4hI46iryRO3HHhDT3SyKgXC8lb8ew-lZ9UPbmqOgTxaO7PxHyaKgTKYu0IUnnZoo8vDpOPDVbcZ_0-9ilt-9_AGXFCfd&view=12",
+    "/js/?progress=eJyljkEOgjAQRa_S_HUXSMVity44gkuDdgiTYFsoaJBwd2vC0sSFq0lm3p_3F9QwCyzdOLJ3xj8dDbHlcGF39ZOzMLtVwn6gLzecW3Kiors48TiLynsbRajnKMaWRJxC6JgGpA_NL01Td5ESyDCZREheiT6F0qq324wbJjH8XegBoyReMMc8V0rnmTqUxV7rosz0-gZR8l1m&view=0",
+    "/js/?progress=eJyljsEKgzAQRH8lzDkHjZJAPqK_ULRZMVATTWyEiv_eFTwWeuhcFnbe7syODnaHo4fPPgYbt0Apj36--9DHV3Cw9SHhTuiLh1ssNPWURCPFNlIQ60jiZCYKq-hS8oUy-MPwK2bonpkY9LCVxMy5Egsf8Wpx18wXJpH-LlRgG4k3bKsq1aqapU3VaGWMPj508F2Q&view=1",
+    "/js/?progress=eJyrVkpUsqqu1VFKgVBpECpTycpAR6kATBZChAqhKgqLlazSEnOKU3WUiiAiZUpWxjpKVUDSxNDAvBYA1bYXGA&view=0",
+    "/js/?progress=eJyrVkpUsqqu1VFKgVBpECpTycpAR6kATBZChAqhKgqLlazSEnOKU3WUiiAiZUpWxjpKVUpW5kZmZpbmRiYGFsZG5ubGJpYGxrUAK6IaAg&view=0",
+    "/js/?progress=eJytTzEOwjAM_EpkMWYIAVopGyML4gcodVw1EjhtUooA8XcMYgOJBQ-2dHc--27gwd0gEMYSE7t0Zsqli_0-cpNOHMDZu4bwFH3hYJsmOjaUldXq3BGrsSOFPucomEekfiwv7Ll3JB5BQ3_K2PlCe2pbwlFcNjwJlfJFRcZMwhU1W2ljjPIc1BpRzonRzl98c6APFciL7a8crT8UEmEEN5cnXn2QJYGG8J7lLdOQ_5dYjCdwCw1XcEtr7NLOparaLCpb19X9Aeakgsg&view=1",
+    "/js/?progress=eJytTzEOwjAM_EpkMWYIAVopGyML4gcodVw1EjhtUooA8XcMYgOJBQ-2dHc--27gwd0gEMYSE7t0Zsqli_0-cpNOHMDZu4bwFH3hYJsmOjaUldXq3BGrsSOFPucomEekfiwv7Ll3JB5BQ3_K2PlCe2pbwlFcNjwJlfJFRcZMwhU1W2ljjPIc1BpRzonRzl98c6APFciL7a8crT8UEmEEN5cnXn2QJYGG8J7lLdOQ_5dYjCdwCw1XcEtr7NLOparaLCpb19X9Aeakgsg&view=999",
+    "/js/?progress=eJytjkEOgjAQRa_S_HUXtYDFHsIrmFKG0ERabBESCXe3GJYmblxN8ub9mb_CQK9oybrkgtdh8RRT78ab8014-hb6JMTG0e7aly2uYaahocgkZ0tPnk09MWtidJkZa2mc0oftuYH8hHyt-_W0M_dEWXTQgmPMLTgeOZTRoz1mOjSO-NdyM3TJ8YK-SFkUSoriXFelUlUt1PYGpLVmqQ&view=1",
+    "/js/?progress=eJytjz0OgkAQha8y2doCWXGB1oIjWBp0hzAJ7i4MaJBwd2dNtDKxsfpm8t6bn0XVqoRFWbwQk3elvzscuKVwInf2k7MiF8W6AWVfxm-6OrbooMIrHGicofLeMoR6ZhhbBJ5C6AgHFYc0v7c1dccYvSRNIgzCrbCP2Sj09lPxOyDN8I8Db2LXwkf8O021Nmmi93m2MybLE7M-AXrzYMc&view=1",
+    "/js/?progress=eJztVk1v2zAM_SuC0KMHOG6cbO6p6D6wSzesuweKTMcCHCmV5GRd0f8-Wk4dVZbT_YDkFIjkI_n0SPmZMlo80xK4MELJgqtW2hVUFXBLi1lyslQaxKa2KyHPmlUbD1cHCdrUYocAa0xS0iLzzLtW85oZWJXCTNcweJ01arCtjldpWNPZudpIYfEgYrUHdQw1Y6s5X1_vMs5vLLOwBWkLzky92hskgasthEYlrWYYvwfZhsY-YrXWotygLXvBvN3Vva2GfpcYbJV-IliVBuTDkKtZmhImS3KnjCWqIt-UKg15UE1JENbzogmN3LMH6rl_PGJiR36ujz6Irwb6tT_88KO15MufHUgDPt4ijrfo8CLqofdqD9s1aJIl5FCDJLYGwpnWAs8Y57Czxp11cR2FiDMtM_qTPZGr6-RTlt6QW-6MhuAhWzfg1zNP0iObUapd-yOdxhnMB6hRwtDLBw30NXHl09ihF2KP5-JE72zh8btxysFwXvd8t8aiLPUrxpvpoUPqX8BB7F32rqSHbk7w0Ol86JVcZckyRfrPynSS-VmSD71E5pTeqabBf12WLM29S_aK8-DQK0-9aj8fAY1_N_N8SBjeymuP3Wlf9W3TqAOTHEzQzjuVzHPkJCagiZH2m8hTiouiOrPjrW7h_Jqf8PBnO3CJjGvFGgP_tfADrNEsTdmDCwjcxgqPObyRb8QhoquoV7SW6VdgZA8egtAevAWOW7xmgU9GiouCFtcJfXSPQ5CIuu2qoeomwfRjzba9-A6ggeyYKInShPfDAuUN6WNPQfdgjyOxFbLtV6yGBmsrCfRr3eBUhD3Q3966ID1BTsFuRTu8V24xOuiQPrRrRMPpjei9A4m9LZVW21O13Rw8lhdSxqQMUteX74nL98Tle-LyPfHe98TevTB_aTHP0myezfC3WKbXi2y5XLz8A_KCDgc&view=13",
+    "/js/?progress=eJztVk1v2zAM_SuC0KMHOG6cbO6p6D6wSzesuweKTMcCHCmV5GRd0f8-Wk4dVZbT_YDkFIjkI_nER_mZMlo80xK4MELJgqtW2hVUFXBLi1lyslQaxKa2KyHPmlUbD1cHCdrUYocAa0xS0iLzzLtW85oZWJXCTNcweJ01arCtjldpWNPZudpIYfEgYrUHdQw1Y6s5X1_vMs5vLLOwBWkLzky92hskgasthEYlrWYYvwfZhsY-YrXWotx0thfM213d22rod4nBVuknglVpQD4MuZqlKWGyJHfKWKIq8k2p0pAH1ZQEYT0vmtDIPXugnvvHIyZ25Of66IP400C_9ocffrSWfPmzA2nAx1vE8RYdXmR66L3aw3YNmmQJOdQgia2BcKa1wDPGOeyscWddXEch4kyPGf3JnsjVdfIpS2_ILXdGQ_CQrRvw65kn6ZHNKNWu_dGcxhnMB6hRwtDLBw3ma-LKp7FDL8Qe6-JE72zh8btxk4PhvO75bo3FsdSvGG_UQ4fUv4CD2LvsXUkPnU7w0M350Cu5ypJlivSfHdNJ5mdJPvQS0Sm9U02D_7osWZp7l-wV58GhV5561X4-Ahr_bub5kDC8ldceu9O-6tumUQcmOZignXcqmefISWyAJiTtN5GnFBdFdWbHW93C-TU_4eFrO3CJyLVijYH_WvgB1khLU_bgAgK38YTHHN6Mb8QhMldRr2gt06_AyB48BKE9eAsct3jNAp-FFBeFe1of3eMQJKJuu2qoOiWYXtZs2w_fATSQHRMlUZrwXixQ3pA-9hR0D_Yoia2Qbb9iNTRYW0mgX-sGVRH2QH9764L0BLkJdiva4b1yi9FBh_S2RHBZCrnxlGDVqZikw5HEtGvMiioPt14ng8fywsmIEzNoU18-Jy6fE5fPicvnxHufE3taXCf0Ly3mWZrNsxn-Fsv0epEtl4uXfyedDo4&view=12",
+    "/js/?progress=eNotzDEOwiAARuGrkH9mQLBSWR16BEeDgQaSChRaTW16d0lwesk3vB0aaj8oTA3iJ9hcnE8PH55xDRVxdzaQwb7IzS8bGWI0hSS9FbI4S8qa0uRtRj2MbeShGEWCOlHMjWbzb4Ea9VQsRW7yhhIUX6gr50JIzsSl785Sdj2Txw-ZDy9j&view=1",
+    "/js/?progress=eNqFVF9vmzAQ_yonK4-eZGhIO_ZUde20l25aPkBkzBEsEZvaJllX9bvvgJRZjLQvGB3H798dvDDJ8pdXzsrxqMZDszwRnLUsTzl7GmtPfQvTRtkD7gqnyz2ynG27IjipAtxZH8BW8M3a0sPWNiVIU8KDQ72vw6cfXYD73y0aj1A5e4BHDLCVDXrWY3uWV7LxyJnrWZTtTNhhVaEKRPLdHNEE656hROVQevSwSoQYGBaISWTUxcjWqGKnzRJo1H5zxpS-jrluYhDbRdKW_EV4m2W8TY9nTwadr3VLsgoyTPmyR3vEQ4EOUg6nGg2EGkFJ5zTVpFLYBj_U-vcOpJ9w2s6pmnB3pfaz4H7KZ1hd8c-p-AK3anjogYqyaDDWs-binOZi1IP9ieb9BLMJ6j_CeVcM6jB0znw08svY8y7C9rRdhKvs3uigrYnjTTZRvvthc-h1VY95dz7Qkrs3jHCyZ2G0pmyi_oUK9XFg7yUNy0xF0t398wqrlF8Liv_dNb2YfMKzyYtfGPCdbRq661lSkUVDjsRFcNSViUjt1zOgj2ezzibC-VTePPbVUfVt09iTNAr9zM4HStYZZbK0QBc-6dhEJvp_xpHlV5z9oes6EdevfwGe7aE-&view=3",
+    "/js/?progress=eNqFVMFu2zAM_RVB6NEDnDRuu_RUpNuwSze0uweKTMcCHCmR5GRd0X8fZaWOIsvpJUbEx8dHPlFvlNH5Gy2BCyOUnHPVSruEqgJu6XySnSKVBrGu7VLIi2HVptPVQYI2tdgiwQqLlOfhbat5zQwsS2HGNfSoi0ENttVplYY1Ls7VWgqLB4moPahjqhlGzWV9HjKsbyyzsAFp55yZerk3OASuNhAHlbSaYf4eZBsHfcZypUW5drF3rIvW4ae64KDVLVw2cQQR-hhBElZGiHE3x4CfxaOZRrChrSnAmbMJgPlUbtJfjxm3eBCPXI7jkdEujCYLtDzP6JbOrzO6c47HdegCD4iGqnEdkkMNkrCNawf_gAayZaIkShOuGgeB8p743FPSE1jy4pokGyFbQ2ztgg1KKwn83YI0YGhG4xboH8Tx1lgk08TPhzBZdvnd0MjHaDE7apC-tCtk45YslLFEVeSHUqUhL6opO5Lv_kp--dVa8s2LIJVWm5NaigPaHbdh15uruymd-Ul_SpRslX4laKoGvFqGXE3yvCuUqI9aAxSKT2xQQBrA746czpSg1l1IEi4ZTbUZ8N2k-W4cX2Ij6ZPaw2aFdkwzfxecF5xpLfCMcQ5b6_11ee7iIc_43tLf7JVcXWdfp_k9eeDcXys8ZKsGQj2zLD9OMznqrv3B1qcnWPRUg4IxKiSN1nPE8nHuGIXcw_flNN7JTTDfdXdzMJ3Xft7HnfjgOHuCaF_6GTiIfVfdSfIb-Oy3q--VXE2z2xzHf_Gajk5-khV9L4mXji78q-CqTPMiMDkQF9AhqsgDtY9HQhN6Myv6grErHz26U6_6oWnUgUkOJmrnEyWzAmeSukAjKx02UeTu6dh3j-o__J1N8tv3_5fBPQI&view=0",
+    "/js/?progress=eNqFVN1v2jAQ_1csi8dMCpTQLnuqug_tZZvG3iPjXIilYAefDWVV__edTcrcFOgLSL6739fZeeKCl08cnXCwAe1KKbCtdlgpLc0GeDnN0qLRzorKwg60HxePE9XKqnodas8Zrwmb_prrFI3oEK7RvGkYUcU68ShizTPe83KW8W0gHVPxPy2wWjUNWNASGDwqdMiM7g5sBVJ4BOaopW8PqKTomDReOyZboddQx5L2mxVYZhrmtYqzjKo1z_hYdiRTekUQNWssqHXrGLVGGOPdqwLNj1zxpV8RnnSxH33fd4qIe3EIGdCc2cRK8Eg6uw6kgzo59-gIz3JKZjtsYou8dNZTmDbGE9xVQHFIR4TfNSl3xh5YDdKCQEA2meZ5FP1g0AXX34ypkS1NV5O3tIscDF4o7nOgSfvdgBmkJ1x3KQgl9B_l6_Hww0_v2JfHHjRCirc4j7cIeGavwWKr-mrYBcH9MDuIa5xlbN-CHoK0NiQspISeNhtjp7kQN-H03tI9QKhqhaPgfokDm9xkH2f5J3YvYxEZHYpVB6meeZYPaZ6NOto_0VxPsDhBvSEcd6WgFpy3-r2VX8YedxE2ii7gSrOm96CMTuOdLpJ81_Hm0LhsX1_QAcPtzSCMbik_Uf8GCWoX2YOkJbWGw_jITl7ZZJbd5hT_1Wt6MflpVpy84JkFPxyfV2CZ5UWy5ERcAkddRZ6o_TwAYrqbeXEiHG_lxWM4Paq-7zqzF_TJwpGdd5TMC8rk3AW68KRTE0UePh07Xt5k_C_9zqf57fM_lxQn3Q&view=12",
+    "/js/?progress=eNqljkEOgjAQRa_S_HUXSMVity44gkuDdgiTYFsoaJBwd2vC0sSFq0lm3p_3F9QwCyzdOLJ3xj8dDbHlcGF39ZOzMLtVwn6gLzecW3Kiors48TiLynsbRajnKMaWRJxC6JgGpA_NL01Td5ESyDCZREheiT6F0qq324wbJjH8XegBoyReMMc8V0rnmTqUxV7rosz0-gZR8l1m&view=0",
+    "/js/?progress=eNqrVkpUsqqu1VFKgVBpECpTycpAR6kATBZChAqhKgqLlazSEnOKU3WUiiAiZUpWxjpKVUDSxNDAvBYA1bYXGA&view=0",
+    "/js/?progress=invalid-token&view=999",
+    "/js/app.js",
+    "/js/content.js",
+    "/js/engine.js",
+    "/js/original.css",
+    "/js/style.css"
+  ]
+}
